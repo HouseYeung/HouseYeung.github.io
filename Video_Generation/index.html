@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.whyeung.eu.org","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="对于目前视频生成技术的尝试和总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Stable Diffusion的视频生成实验">
+<meta property="og:url" content="https://www.whyeung.eu.org/Video_Generation/index.html">
+<meta property="og:site_name" content="星灯博客">
+<meta property="og:description" content="对于目前视频生成技术的尝试和总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_3.png">
+<meta property="article:published_time" content="2023-06-18T16:56:13.000Z">
+<meta property="article:modified_time" content="2023-06-18T16:56:13.000Z">
+<meta property="article:author" content="House Yeung">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="AIGC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_1.png">
+
+<link rel="canonical" href="https://www.whyeung.eu.org/Video_Generation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基于Stable Diffusion的视频生成实验 | 星灯博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LPQBZDMF"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-35LPQBZDMF');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="星灯博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星灯博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Whyeung Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.whyeung.eu.org/Video_Generation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="House Yeung">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星灯博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于Stable Diffusion的视频生成实验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-19 00:56:13" itemprop="dateCreated datePublished" datetime="2023-06-19T00:56:13+08:00">2023-06-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tutorials/" itemprop="url" rel="index"><span itemprop="name">Tutorials</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span></span>
+            </span>
+<!--
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>NaN:aN</span>
+            </span> 
+-->
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>对于目前视频生成技术的尝试和总结</center>
+
+<span id="more"></span>
+<br />
+<br />
+
+<h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><p>2022年，人工智能生成图像已经成为一个热门研究领域。随着Stable Diffusion的开源和人工智能绘图社区的发展，我们现在可以利用各种模型和算法生成极为逼真或富有想象力的图像，以满足不同的应用场景和需求。最近Lora和ControlNet等工具的出现进一步提高了图像生成的可控性和效率。</p>
+<p>我们知道，视频是一系列关键帧图像的组合。因此，我们可以采用类似的方法进行视频生成。具体而言，我们首先可以将视频处理成关键帧图像，然后利用Stable Diffusion的图像生成功能重绘关键帧，从而形成连贯的视频。我们可以通过设置绘制参数和提示来控制视频的风格和内容。这样，我们就可以使用AI生成各种各样的视频。</p>
+<p>AI视频生成，如大多数程序一样，是一个从输入到输出的过程。我们可以根据输入的类型将其分为不同的视频生成类别。目前，主流的类别包括根据文字提示（prompt）直接生成视频和根据已有视频加文字提示生成视频。在实际应用中，后一种方法表现得更加成熟。本文尽可能尝试各种方案的实现过程，并通过实验分析其各自的优势和劣势。</p>
+<p>本次实验的环境配置如下：<br>硬件：搭载rtx3090显卡的远程服务器，个人笔记本电脑<br>软件：Stable Diffusion WebUI（AUTOMATIC1111），Ebsynth等<br>插件：Deforum，SD-CN-Animation，ControlNet，LoRa，isnet_Pro等</p>
+<p>各软件和插件的安装过程不再赘述，虽然期间遇到过不少麻烦。Stable Diffusion以及扩散模型生成图像的工作原理也不会在本文中阐述，尽管这些技术对实现视频生成至关重要。本文的后续内容将假定读者对这些技术有一定的理解。</p>
+<p>在不断的研究和实践后，我对当前视频生成技术进行了总结。我发现在大多数视频生成过程中，为了维持帧与帧之间的稳定性，都或多或少地使用了ControlNet技术。我发现使用Deforum插件生成视频十分有趣，能定义许多复杂的动作变换，而使用SD-CN-Animation插件生成视频高效。Ebsynth软件能够通过自动补全视频中抽取的关键帧之间的间隔来生成更加稳定的视频。本人也在研究中建立了一种基于单图渲染的人工智能视频工作流，并将不断优化工作流中的步骤。</p>
+<p>最后，本研究对视频生成技术的未来发展和潜在应用进行了展望。目前无论是英文还是中文，关于AI视频生成技术的介绍在互联网上都较为罕见，希望本研究能增加大家对该技术的了解。</p>
+<h2 id="ControlNet简介"><a href="#ControlNet简介" class="headerlink" title="ControlNet简介"></a>ControlNet简介</h2><p>几乎所有人工智能视频插件都集成或借鉴了ControlNet，因此有必要首先简要介绍ControlNet。</p>
+<p>ControlNet 是一种神经网络结构，可以通过添加额外的条件来控制扩散模型。它将神经网络块的权重复制到一个“锁定”的副本和一个“可训练”的副本。“可训练”的副本学习你的条件。“锁定”的副本保留你的模型。这样，用小规模的图像对数据集进行训练就不会破坏准备好的扩散模型。“零卷积”是1×1卷积，其权重和偏置都初始化为零。在训练之前，所有的零卷积都输出零，ControlNet 不会造成任何失真。没有一层是从头开始训练的。你仍然在微调。你的原始模型是安全的。这允许在小规模或甚至个人设备上进行训练。这也有利于模型&#x2F;权重&#x2F;块&#x2F;层的合并&#x2F;替换&#x2F;偏移。</p>
+<p>我们需要一些ControlNet 模型和预处理来生成更加稳定的视频帧。Depth模型可以很好地区分目标物体和背景，并分析目标物体身体部位之间的前后关系。如果原视频来自3D模型或实拍视频，该预处理器的效果会非常出色。HED是原版中的边缘和细节检测模型，它可以识别目标物体的轮廓和服装细节，这是AI视频稳定度的关键。Tile模型可以生成新的细节，也可以忽略现有的图像细节。因此，本研究使用该模型去除不良细节并添加精细细节，例如，去除图像缩放造成的模糊。</p>
+<h2 id="使用Deforum插件文字生成视频"><a href="#使用Deforum插件文字生成视频" class="headerlink" title="使用Deforum插件文字生成视频"></a>使用Deforum插件文字生成视频</h2><h3 id="插件介绍"><a href="#插件介绍" class="headerlink" title="插件介绍"></a>插件介绍</h3><p>Deforum是一种利用Stable Diffusion的图像生成并将其拼接成视频的工具。它对图像帧应用小的变换，并使用图像到图像功能创建下一帧。由于帧之间的变化很小，因此产生连续视频的感觉。Deforum有两种视频模式:2D和3D。2D模式将图像视为2D并执行各种变换，如缩放和旋转以创建运动幻觉。3D模式将图像视为3D场景的视图。您可以在任何3D操作中移动相机的视口。Deforum还有一个提示系统，您可以在视频的不同时间点提供不同的提示，以改变视频的风格和内容。Deforum可以与其他插件和软件配合使用，以增强视频的效果和质量。</p>
+<h3 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>•	在关键帧选项卡中，设置视频的帧数、运动模式（2D或3D）和运动参数（如缩放、旋转、平移等）。Deforum还提供了通过数学表达式或曲线来精细控制视频运动的功能。<br>•	在提示词选项卡中，添加您想要在视频中使用的提示。您可以指定每个提示生效的帧数，以及提示的权重和混合模式。<br>•	单击生成按钮开始生成视频。完成后，您可以查看和保存视频。</p>
+<p>Stable Diffusion会生成一系列图像，并用过渡图像填充其余部分，创造一个看起来像连续视频的序列。以下是默认的提示，我们可以很好地理解它如何引导SD在不同帧生成不同的图片。我们也可以在下图的选项卡里进行更多设置。</p>
+<p>{<br>    “0”: “tiny cute swamp bunny， highly detailed， intricate， ultra hd， sharp photo， crepuscular rays， in focus， by tomasz alen kopera”，<br>    “30”: “anthropomorphic clean cat， surrounded by fractals， epic angle and pose， symmetrical， 3d， depth of field， ruan jia and fenghua zhong”，<br>    “60”: “a beautiful coconut –neg photo， realistic”，<br>    “90”: “a beautiful durian， trending on Artstation”<br>}</p>
+<p>经过一系列的设置，我生成了视频《Deforum1》 ，这只是一个实验性的作品，用以测试Deforum插件的基础功能。我们可以看到该视频从一条繁华的大街开始，镜头逐渐转向街边的建筑，以及一旁的人群。视频后半段的画面极其模糊，这也是生成时缺少足够的引导所产生的问题。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Deforum最有趣的地方就是对图像进行一系列运动变换，虽然网上没有任何相关资料，但我们可以阅读开源代码来进行理解：</p>
+<p>Deforum使用PyTorch3D库对图像进行3D变换的函数的实现。基本上，它读入一张图像、一份深度图、一些转换参数，然后应用3D变换，最后输出变换后的图像。</p>
+<ol>
+<li>   深度处理：首先，根据选择的深度算法(anim_args.depth_algorithm)调整深度图的处理参数。这些算法可能包括 ‘Midas’， ‘Adabins’， ‘Leres’， ‘Zoe’ 等，用于决定图像深度的计算方式。这个函数可以处理不同格式的深度图。</li>
+<li>   透视摄像机的设置：代码中定义了两个FoVPerspectiveCameras对象：persp_cam_old和persp_cam_new。这两个对象分别表示原始的和经过3D变换后的透视摄像机。</li>
+<li>   生成3D坐标：接下来，代码创建了一个xy网格，并根据深度图生成z坐标，形成3D坐标（x，y，z）。如果提供的深度图无效（depth_tensor_invalid），那么将生成一个平面深度图（所有z坐标都为1）。如果深度图有效，将对其进行标准化和均衡化处理，然后根据其生成z坐标。</li>
+<li>   计算坐标偏移：然后，这个函数通过使用旧的和新的摄像机来变换这些3D坐标，得到新的和旧的摄像机视角下的坐标。然后计算偏移量offset_xy。</li>
+<li>   应用3D变换：然后，这个函数通过torch.nn.functional.affine_grid和torch.nn.functional.grid_sample函数应用3D变换。affine_grid函数生成一个仿射网格，该网格与输入图像的大小相同，且表示图像上的像素坐标。grid_sample函数然后在这个网格上插值图像，根据提供的偏移应用变换。</li>
+<li>   输出：最后，函数将输出图像从torch tensor转换为numpy array，并调整其形状和数据类型以匹配输入图像。</li>
+</ol>
+<p>Deforum插件目前有大量的设置选项，但多数设置不够直观，一般人很难理解其作用。虽然也有视频生成视频功能等更多功能，但可以更改和设置的参数比较少，不适合作为视频生成管线的一部分。接下来我将使用一些更加方便的插件继续实验。</p>
+<h2 id="使用SD-CN-Animation插件视频生成视频"><a href="#使用SD-CN-Animation插件视频生成视频" class="headerlink" title="使用SD-CN-Animation插件视频生成视频"></a>使用SD-CN-Animation插件视频生成视频</h2><h3 id="插件介绍-1"><a href="#插件介绍-1" class="headerlink" title="插件介绍"></a>插件介绍</h3><p> SD-CN-Animation能够利用Stable Diffusion和ControlNet自动生成风格化视频。它还可以根据文字提示生成全新的视频，无论视频分辨率和长度如何。它采用RAFT光流估计算法保持动画的稳定性，并创建遮挡图像用于生成下一帧。在文字到视频模式下，它依赖FloweR方法，该方法从前一帧预测光流。 </p>
+<h3 id="操作步骤-1"><a href="#操作步骤-1" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>SD-CN-Animation有两种模式:视频到视频和文字到视频。在视频到视频模式下，您可以将现有视频作为输入，并添加文字提示以改变视频的风格和内容。它利用ControlNet模型获得更好的结果。在文字到视频模式下，您只需输入一个文字提示即可生成全新的视频。然而，与Deforum相比，它缺乏对视频动作细节的控制，因此我们主要使用其视频到视频功能。</p>
+<p>视频生成视频目前的主要用途为不同画风转描。首先，我们需要获得原始视频。我们可以使用现实世界拍摄的视频或基于三维建模的动画软件(如MMD)渲染的视频进行生成。输入视频并配置参数后SD-CN-Animation会根据设置重绘视频的每一关键帧。本次实验，我使用一段舞蹈视频作为生成素材。经过一系列操作，我们得到《SD-CN-Animation1》视频。虽然该视频相比原视频实现了画风的转变，但我们不难发现许多问题。首先，人物和背景抖动严重，画面缺乏连贯性。其次，个别帧有绘制错误的问题，如左图，出现了本不应该存在的眼镜。虽然更好的参数设置可能可以部分缓解这些问题，但也增加了调试和修改的工作量。</p>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>视频生成视频：</p>
+<p>虽然网上没有SD-CN-Animation如何实现视频生成视频并保持稳定的相关资料，但我们可以阅读开源代码来进行理解：</p>
+<ol>
+<li>   初始化：代码开始时首先导入所需要的库，然后定义一个类sdnc_anim_tmp存储临时数据，例如输入视频、输出视频、帧计数器等。</li>
+<li>   打开输入视频：在start_process函数中，代码打开一个输入视频文件，并获取它的基本信息，例如FPS（每秒帧数）和总帧数。</li>
+<li>   创建输出视频：创建一个输出视频文件，它具有与输入视频相同的FPS，宽度和高度。</li>
+<li>   读取和处理帧：然后，代码逐帧读取输入视频并进行处理。它首先将帧从视频文件中读取出来，然后调整帧的大小以匹配指定的宽度和高度。处理的第一帧作为输入图像，使用img2img方法进行处理。</li>
+<li>   处理循环：在处理循环中，如果代码准备处理的帧数（以10帧为单位）已经准备好了，那么代码会开始处理每一帧。否则，它会读取更多的帧并准备它们进行处理。处理过程包括计算光流（使用RAFT算法），用于检测两个连续帧之间的运动变化。然后，通过compute_diff_map方法计算帧间差异，并创建一个混合图像。</li>
+<li>   步骤1：在第一步中，代码根据处理模式（处理完整的图片或只处理图片的部分区域）来进行处理。处理过程涉及到将原始帧和预处理过的帧混合在一起，然后输入到img2img方法中进行处理。处理完的帧会被保存下来，用于下一帧的预处理。</li>
+<li>   步骤2：在第二步中，代码会再次进行处理，以修复可能存在的错误。处理的结果会被保存为新的预处理帧。</li>
+<li>   保存处理过的帧：最后，每处理完一帧，代码都会将它写入到输出视频，并保存为一个独立的图像文件（如果用户选择保存图像的话）。</li>
+<li>   清理并结束：循环结束后，代码释放输入和输出视频的资源，并清理使用的内存。</li>
+</ol>
+<p>文字生成视频：</p>
+<ol>
+<li>   模型加载（FloweR_load_model）：首先，代码从远程下载 FloweR 模型（如果本地没有）并加载到最佳可用设备（CPU 或 GPU）。</li>
+<li>   视频读取（read_frame_from_video）：定义了一个函数，该函数从输入的视频文件中读取帧。</li>
+<li>   视频处理开始（start_process）：开始处理视频。首先，打开输入视频文件，并为输出创建一个新的视频文件。</li>
+<li>   初始化第一帧：如果用户提供了初始化图像，代码将其用作第一帧。否则，它将从输入的文本生成第一帧。生成的第一帧将被写入到输出视频中。</li>
+<li>   加载 FloweR 模型：加载预训练的 FloweR 模型，并为之后的视频帧生成预留空间。</li>
+<li>   帧生成循环：对于视频中的每一帧，代码首先获取之前帧的信息，然后使用 FloweR 模型生成预测的光流、遮挡和下一帧。之后，它使用生成的下一帧和遮挡信息作为输入，通过另一个图像到图像的过程生成处理后的帧。处理后的帧被写入输出视频，并保存为单独的图像文件（如果用户选择了这个选项）。</li>
+<li>   视频结束和清理：视频处理完成后，关闭输入和输出视频文件，释放 FloweR 模型占用的内存。</li>
+</ol>
+<p>虽然SD-CN-Animation极大简化了视频生成视频的流程，但如果我们要更稳定和流畅的视频，我们需要借助其他插件进行视频生成。</p>
+<h2 id="使用EbSynth插件视频生成视频"><a href="#使用EbSynth插件视频生成视频" class="headerlink" title="使用EbSynth插件视频生成视频"></a>使用EbSynth插件视频生成视频</h2><h3 id="插件介绍-2"><a href="#插件介绍-2" class="headerlink" title="插件介绍"></a>插件介绍</h3><p><img src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_1.png" alt="Ebsynth原理"></p>
+<p>Ebsynth 是一个早在stable diffusion前就发布的转换视频风格软件。该软件将一个或多个手动生成的key帧的样式应用的视频的每一帧上，从而完成整个视频的风格迁移。简单来说，就是从一段视频中选出几幅图，换成你想要的风格，录入程序，整个视频就能全部变成你想要的画风了。</p>
+<p>它的stable diffusion插件版本极大的简化过去繁琐的操作流程。现在我们可以只靠webui一个软件完成和Ebsynth相关的所有内容的处理。</p>
+<h3 id="操作步骤-2"><a href="#操作步骤-2" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>制作视频的过程可以分为以下几个阶段。我们首先要创建一个项目文件夹将该文件夹和视频素材输入插件。</p>
+<p>第一阶段<br>从原始视频中提取帧，并生成一个遮罩图像，用于分离前景和背景。简单的设置后插件会自动提取视频的全部关键帧和背景遮罩</p>
+<p>第二阶段<br>选择关键帧给ebsynth。<br>Ebsynth会自动选取视频中的核心关键帧</p>
+<p>第三阶段<br>使用img2img功能，将关键帧输入到stablediffusion中，让stablediffusion根据提供的文本生成更细致的关键帧。进入图生图界面，选择合适的参数和controlnet设置（可以参考我的下一实验），在脚本里选择Ebsynth，会自动生成核心关键帧的转描图片<br>(可选：对img2img的结果进行颜色校正，期望闪烁减少。或者，你可以简单地从生成的结果中改变色调）。</p>
+<p>第四阶段<br>放大关键帧为原始视频的大小。如果图生图过程中我们缩小了关键帧的分辨率，需要在额外功能界面批量放大。我认为图生图中就使用大分辨率可以取得比后期放大更好的细节，因此除非显存不够否则应该在图生图中使用原始分辨率。</p>
+<p>第五阶段<br>重命名关键帧并生成.ebs文件。前面几步可能生成不符合Ebsynth规定的文件名，我们可以用一个简单的bat文件来重命名。之后就可以生成用于Ebsynth软件处理的.ebs文件。以下是我使用的脚本示例，它会保留文件名前五位：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">setlocal enabledelayedexpansion</span><br><span class="line">for %%a in (upscale\*) do (</span><br><span class="line">    set &quot;filename=%%~na&quot;</span><br><span class="line">    set &quot;extension=%%~xa&quot;</span><br><span class="line">    ren &quot;%%a&quot; &quot;!filename:~0，5!!extension!&quot;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>第六阶段<br>运行Ebsynth软件，利用光流估计算法（optical flow estimation algorithm），为每组相邻的关键帧之间自动填充帧，形成连贯的动画。打开项目目录下生成的.ebs，按[Run All]按钮。如果生成了多个.ebs文件，请全部运行。Ebsynth会自动处理我们的.ebs文件，为每组相邻的核心关键帧之间自动填充帧</p>
+<p>第七阶段<br>在交叉渐变时合并每一帧。将从原始视频中提取的音频文件添加到合并的视频上。如果需要，还可以自定义视频的背景。这步会生成完整的新视频。</p>
+<p>通过上述流畅，我生成了视频《Ebsynth1》。我选取了和SD-CN-Animation实验一样的初始素材。我们可以发现使用mask保留原背景的Ebsynth1解决了背景抖动问题，人物的抖动也得到了改善，找不到绘制错误的帧，连贯性大大提到。我认为使用Ebsynth插件是目前视频转描的最优解之一。不过后续我还进行了进一步尝试。</p>
+<h2 id="AI视频生成视频工作流"><a href="#AI视频生成视频工作流" class="headerlink" title="AI视频生成视频工作流"></a>AI视频生成视频工作流</h2><p>为了更好的视频效果和更高的自定义程度，我希望能摆脱对于自动化视频生成插件的依赖，实现一套完整的使用AI进行视频生成视频的工作流。下面我会介绍它的具体步骤：</p>
+<p>步骤一：选取并处理用于生成的视频素材<br>目前主流的AI生成视频题材主要是真人跳舞视频和3D动漫角色MMD视频。人物在视频画面中的占比要足够大，和背景差距大，这样能有效减少ai绘图时受到的干扰。<br>我们需要手动把视频转换成关键帧，我推荐使用Adobe Premiere Pro 2020工具。首先在序列设置中调整画面大小和比例，再用自动化重构序列（尤其是竖屏视频）自动追踪人物移动。完成后导出里另存为JPR序列，这样就能得到所有的关键帧。<br>如果是真人视频，我们需要使用抠图工具去除视频背景，AI连背景一起重绘会很不稳定。相关插件有很多，最近很火的segment everything也是一个不错的选择。在tag里输入one standing girl with full body，我们就可以得到分离的人物和蒙版图片。</p>
+<p>步骤二：准备用于ai绘画的模型<br>就像通常的ai绘画，我们需要有特定的大模型和用于微调的lora。动漫大模型推荐meinamixV9、anythingV5，lora可以针对要绘制的角色选择，也可以自己训练，当然还要controlnet所需的模型。不同的模型会有截然不同的效果，我们应该根据自己的需求选择合适的模型。</p>
+<p>步骤三：为素材关键帧打tag<br>合理的tag可以很好的避免细节丢失和错误识别，特别是对人物的表情、转身等细节的控制。我们使用Tagger插件来批量打标。批量处理文件夹中，填入输入目录，也就是图片序列的目录，输出目录不填写。注意负面提示词，如果图片中有容易识别错误元素，填写在这里。填写好之后，点击反推提示词。我们可运行BooruDatasetTagManager软件检查是否有错误的tag，例如把小眼睛的人识别为闭眼，并对漏标的细节进行补充。</p>
+<p>步骤四：在图生图界面填写参数<br>正向提示词中填入masterpiece， best quality，以及人物的lora（如果有的话），其他的提示词不要过多填写，脚本会读取txt中的tag。采样方法选择DPM++ 2M Karras。宽度和高度严格按照你生成的切片宽高填写（可以右键图片属性查看）。重绘幅度在0.55起测试，如果波动较大就调小，如果效果不明显就调大，这里是第一个需要在跑图中调整的参数。 脚本选择multi-frame rendering，填写输入输出目录，将重绘幅度选择和上面一样的数值，勾选“单图模式”和“read tags from text files”。如果有蒙版勾选掩码重绘。</p>
+<p>步骤五：设置controlnet参数<br>在如图的controlnet设置界面里，我们选择unit 0，启用并勾选完美像素。在预处理勾选lineart_anime，模型选择lineart_anime对应的模型，controlnet weight设置为0.6。<br>再选择unit 1，启用并勾选完美像素。在预处理勾选tile_colorfix，模型选择tile对应的模型，controlnet weight设置为0.4。tile会补全lineart没有的细节。</p>
+<p>注意，controlnet参数应该视具体情况进行调整，例如重绘现实视频时可以选择lineart_realistic模型，在不适用蒙版的复杂三维场景启用depth模型等。我们可以先拿单张图进行测试，并反复调试图生图和controlnet参数以确保生成图片的质量，特别是人物的面部特征，这关系到后面所有帧的好坏，因此需要格外重视。</p>
+<p>步骤六：用脚本开始生成<br>我们需要安装用于执行多帧渲染的isnet插件。Multi-frame rendering脚本配置完成后点击生成即可。点击生成后可以在目标文件夹中看到图片一张张的生成，如果存在问题，可以中断生成进程，修改参数，并重新点击生成按钮。 </p>
+<p>步骤七：合并关键帧<br>现在我们得到重绘后的所有关键帧，我们要把它们组合成视频。我们可以直接使用deforum或isnet_pro插件的功能。</p>
+<p>通过上述步骤，我生成了《output1》。我发现该单图生成视频在实现风格化的基础上具有较好的稳定性，但还存在一定程度的抖动，整体表现不如Ebsynth插件。我发现，目前最好的结果需要使用isnet脚本多帧渲染再使用Ebsynth软件插帧，有时也可以用面部重绘插件 对角色面部细节进行修复。然而该流程较为复杂，有许多明显冲突且不合理的步骤，我认为这些都是未来需要新的工具来优化的。同时，目前显卡在单帧渲染时速度很慢，Ebsynth插帧能大大提高效率，结果也更稳定，唯一的缺点是在补帧的过程中小概率会出现偏差。单帧渲染的连贯性更好，但是更加费时，因为帧多所以需要后期检查错误帧并修补所花的时间也多。</p>
+<p>根据以上成果，我又进行了大量的实践和优化，生成了《output2》、《output3》、《output4》等视频，我认为后两者的质量已经达到目前网络上ai视频重绘的前沿水平。当然，我的工作流依旧有很多需要改进的地方，我也期待新技术能简化这个流程。</p>
+<h2 id="同类成果比较"><a href="#同类成果比较" class="headerlink" title="同类成果比较"></a>同类成果比较</h2><p>下面我将尝试以”stable diffusion”的视频生成技术作为基准，对比几款同类AI产品。</p>
+<h3 id="对比Zero-Shot-Text-Guided-Video-to-Video-Translation-："><a href="#对比Zero-Shot-Text-Guided-Video-to-Video-Translation-：" class="headerlink" title="对比Zero-Shot Text-Guided Video-to-Video Translation ："></a>对比Zero-Shot Text-Guided Video-to-Video Translation ：</h3><p><img src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_2.jpg" alt="原理图"><br>一种新的零样本文本引导的视频到视频风格转换框架，不需要重新训练大规模的视频数据模型，与现有的图像模型兼容。该框架包括两部分：关键帧转换和全视频转换。第一部分使用适应的扩散模型来生成关键帧，应用分层跨帧约束以强制执行形状、纹理和颜色的连贯性。第二部分通过时间感知的块匹配和帧混合将关键帧传播到其他帧。该框架以低成本（无需重新训练或优化）实现了全局样式和局部纹理的时间一致性。该适应性与现有的图像扩散技术兼容，使该框架可以利用它们，例如使用LoRA定制特定主题，以及使用ControlNet引入额外的空间指导。以下是它具有的创新点：</p>
+<p>•	提出了一种新颖的零样本框架，用于文本引导的视频到视频翻译，该框架实现了全局和局部的时间一致性，无需训练，并且与预训练的图像扩散模型兼容。<br>•	引入了分层的跨帧一致性约束，以强制实现形状、纹理和颜色的时间一致性，从而将图像扩散模型适应到视频。<br>•	结合了基于扩散的生成和基于块的传播，以在质量和效率之间取得平衡。</p>
+<p>虽然目前该研究还未开源代码，但根据目前已公布的结果看几乎完全消除了视频抖动且适应多种风格，我认为该方法很可能是stable diffusion视频生成未来的主要方向。</p>
+<h3 id="对比Gen-2-："><a href="#对比Gen-2-：" class="headerlink" title="对比Gen-2 ："></a>对比Gen-2 ：</h3><p><img src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Illustration/Video_Generation_3.png" alt="原理图"><br>Gen-2 是 Runway 公司开发的一款也基于扩散模型的视频生成软件，这款产品需要在其官方网站上运行，并且是收费的。在研究了 Runway 发表的论文后，我发现它具有以下几个创新点：</p>
+<p>•	该模型不仅在视频数据上进行训练，同时也在图像数据上进行训练。这种做法使得模型可以从图像数据中学习到更通用的特征，并将这些特征应用到视频生成中，从而提升了视频生成的稳定性。<br>•	在模型架构中加入了额外的时间连接，这使得模型在生成视频的每一帧时都能考虑到前后帧的信息，保证了视频在时间维度上的连续性和稳定性。<br>•	该模型使用深度图预测作为输入，有助于模型理解视频的三维结构，并在此结构基础上生成新内容。通过在不同程度的保真度下训练深度图，模型能够调整保留结构的程度，从而增加了生成视频的稳定性。</p>
+<p>Gen-2 在其官方网站上提供了多种模型，包括文字生成视频、文字+图像生成视频、图像生成视频、风格化、故事版、遮罩、渲染等。尽管我没有亲自试用过他们的产品，但根据网友的评论和我观察到的结果，我认为 Gen-2 的优点有：文字和图片引导的生成比 Deforum 更稳定；画风更偏向于写实；风格化和渲染的效果出色，能完全替换视频的人物和场景，远胜于 stable diffusion 的重绘。然而，它也有一些缺点：视频时长限制为 4 秒，难以实现成熟的应用；风格单一，无法生成动漫风格；价格高昂（据说 500 秒的视频需要 30 美元），需要在线运行。我认为，除非 Gen-2 的模型持续更新，否则在实际应用中，它与 stable diffusion 相比并没有优势。</p>
+<h3 id="对比数字人技术："><a href="#对比数字人技术：" class="headerlink" title="对比数字人技术："></a>对比数字人技术：</h3><p>数字人可以根据文本生成具有相应口型的数字人演讲视频，也可以借助动作捕捉技术模拟现实中人的动作。这项技术已经在游戏、直播等领域得到了广泛应用。与数字人技术相比，视频生成不依赖于建模，操作简单，并且可以创造更多样的画风和场景，但不稳定，更适合叙事向的场景。在这个方面，视频生成与数字人没有明显的替代关系。</p>
+<h3 id="对比三维软件-shader-渲染："><a href="#对比三维软件-shader-渲染：" class="headerlink" title="对比三维软件 shader 渲染："></a>对比三维软件 shader 渲染：</h3><p>使用 stable diffusion 对 MMD 动画进行重绘，除了能实现类手绘的艺术风格外，相比于利用 shader 进行高精度渲染的传统 MMD，其优势并不明显。是否节省了显卡工作时间，也仍然是未知数。关于它是否会对动画行业乃至视频制作行业产生巨大影响，甚至取代原有的内容创作者，我认为这很难。除非有一天 AI 真正理解三维世界的结构，并能以此为基础进行建模和控制镜头，否则 AI 生成的视频始终面临着连续性和稳定性的问题，而且脱离了视频素材，很难独立创作成熟的作品。</p>
+<h3 id="对比AI-视频拼接："><a href="#对比AI-视频拼接：" class="headerlink" title="对比AI 视频拼接："></a>对比AI 视频拼接：</h3><p>随着短视频和各大视频平台的普及，许多公司推出了 AI 视频拼接工具。只需提供文字内容，便能将自己上传或搜索到的相关视频素材剪辑成视频，如百度在文心一言发布会展示的技术。这项技术目前还处在实验阶段，主要依据文字内容尽可能地匹配视频素材，并无真正的创新内容生成能力，与 stable diffusion 的视频生成并不处于同一个竞赛领域。这项技术可以方便许多短视频创作者，但也可能导致视频内容的同质化增加，垃圾内容泛滥，并带来版权问题。我认为，随着视频生成技术的成熟，这项技术将会逐渐失去竞争力。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在深入研究并实践了基于 stable diffusion 的视频生成技术之后，我希望从个人角度出发做一些总结。</p>
+<p>直接根据文字提示（prompt）生成视频的技术目前还处在实验阶段。我们可以看到许多作品具有很强的想象力和创新性，但整体上随机性强，缺乏逻辑，帧与帧之间的抖动严重，图像中容易发生突变。其视频只能在较短的时长内创造出惊人的视觉效果，缺乏叙事性和具体意义。要想获取理想的结果，不仅需要对提示和运动参数进行精心编辑，而且还需要容忍多次尝试才能生成。</p>
+<p>根据扩散模型原理，我们知道图像的生成是一个不断降噪的过程。由于 AI 没有接受过视频训练，也缺乏对 3D 世界的理解，因此目前的纯文本生成视频技术很难有进一步的突破。我认为这项技术并无乐观的发展前景，只能在一些前卫的视觉艺术领域得到应用。</p>
+<p>根据已有视频加上文字提示生成视频的技术发展迅速，各大视频网站上也不断出现相关作品。目前主流的技术有三种：直接视频生成视频、单帧渲染、和 Ebsynth 渲染。这三种技术各有优缺点，具体应用哪种，取决于所需的视频效果和操作复杂度。目前，AI 视频效果最好的仍然是 AI 转描动画，这种基于其他视频进行风格化重绘的方式，连贯性非常强，几乎没有抖动，视觉效果优秀。然而，其缺点是和原视频太相似。</p>
+<p>我相信，随着技术的不断完善，AI 视频生成的技术也会逐渐成熟。这能激发创作者的想象力，带来更多优秀的视频作品。但也可能引发一些社会问题，例如 AI 生成难以辨别的包含不良或虚假信息的视频。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>自从我决定研究AI视频生成以来，仅仅两个月的时间，该技术就取得了不少重要突破，尤其是ControlNet1.1版本的推出使得高重绘幅度的视频成为可能。这导致我最初采用的一些方法很快就过时了，尽管它们也只是在几个月前刚刚问世。基于Stable diffusion生成视频的快速发展得益于互联网上一批无私奉献的开源作者，他们开发的工具和软件让创作者能够更好地实现这一流程。同时，也要感谢Bilibili等平台上众多AI绘画爱好者提供的教程和作品，通过与他们的交流，我学到了很多技巧，也在其中做出了一些贡献。我期待未来能有更加优化的软件出现，简化并加速AI生成视频制作的流程，也希望未来能看到更多精彩的AI生成重绘视频甚至AI原创作品。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>House Yeung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.whyeung.eu.org/Video_Generation/" title="基于Stable Diffusion的视频生成实验">https://www.whyeung.eu.org/Video_Generation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/AIGC/" rel="tag"># AIGC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Urbanization%20/" rel="prev" title="城镇化与城市财政问题">
+      <i class="fa fa-chevron-left"></i> 城镇化与城市财政问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/What_Did_I_Buy_2023/" rel="next" title="2023上半年我买了什么">
+      2023上半年我买了什么 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%A8%80"><span class="nav-text">导言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ControlNet%E7%AE%80%E4%BB%8B"><span class="nav-text">ControlNet简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Deforum%E6%8F%92%E4%BB%B6%E6%96%87%E5%AD%97%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91"><span class="nav-text">使用Deforum插件文字生成视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">插件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-text">操作步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8SD-CN-Animation%E6%8F%92%E4%BB%B6%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91"><span class="nav-text">使用SD-CN-Animation插件视频生成视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D-1"><span class="nav-text">插件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4-1"><span class="nav-text">操作步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-1"><span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8EbSynth%E6%8F%92%E4%BB%B6%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91"><span class="nav-text">使用EbSynth插件视频生成视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D-2"><span class="nav-text">插件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4-2"><span class="nav-text">操作步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-text">AI视频生成视频工作流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E7%B1%BB%E6%88%90%E6%9E%9C%E6%AF%94%E8%BE%83"><span class="nav-text">同类成果比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94Zero-Shot-Text-Guided-Video-to-Video-Translation-%EF%BC%9A"><span class="nav-text">对比Zero-Shot Text-Guided Video-to-Video Translation ：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94Gen-2-%EF%BC%9A"><span class="nav-text">对比Gen-2 ：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E6%95%B0%E5%AD%97%E4%BA%BA%E6%8A%80%E6%9C%AF%EF%BC%9A"><span class="nav-text">对比数字人技术：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E4%B8%89%E7%BB%B4%E8%BD%AF%E4%BB%B6-shader-%E6%B8%B2%E6%9F%93%EF%BC%9A"><span class="nav-text">对比三维软件 shader 渲染：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94AI-%E8%A7%86%E9%A2%91%E6%8B%BC%E6%8E%A5%EF%BC%9A"><span class="nav-text">对比AI 视频拼接：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-text">后记</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="House Yeung"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">House Yeung</p>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+</div>
+
+
+   <div class="feed-link motion-element">
+     <a href="/atom.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HouseYeung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HouseYeung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw social-icon"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chiachvn@protonmail.com" title="E-Mail → mailto:chiachvn@protonmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw social-icon"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/yjj0708" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;yjj0708" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw social-icon"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/220180251" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;220180251" rel="noopener" target="_blank"><i class="fas fa-book fa-fw social-icon"></i>豆瓣</a>
+      </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-telegram fa-fw social-icon" data-qr="/images/tele.jpg"></i>telegram</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/tele.jpg" alt="telegram QR Code">
+      </div>
+    </div>
+  </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-qq fa-fw social-icon" data-qr="/images/qq.jpg"></i>QQ</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/qq.jpg" alt="QQ QR Code">
+      </div>
+    </div>
+  </span>
+  </div>
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/MacOS_Run_Windows_Games/" title="在Mac OS运行Windows游戏" target="_blank">在Mac OS运行Windows游戏</a>
+          </li>
+        
+          <li>
+            <a href="/Baichuan_2_deploy/" title="百川2大模型本地部署" target="_blank">百川2大模型本地部署</a>
+          </li>
+        
+          <li>
+            <a href="/Moonlight_and_Zerotier/" title="利用Moonlight和Zerotier高画质低延迟串流PC" target="_blank">利用Moonlight和Zerotier高画质低延迟串流PC</a>
+          </li>
+        
+          <li>
+            <a href="/IOS_Mod_App/" title="在IOS设备上安装Mod App" target="_blank">在IOS设备上安装Mod App</a>
+          </li>
+        
+          <li>
+            <a href="/copilot/" title="GitHub Copilot前瞻" target="_blank">GitHub Copilot前瞻</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">House Yeung</span>
+
+
+
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT</a> 强力驱动
+  </div>
+
+  <!-- 网站运行时间的设置 -->
+  <span id="timeDate">载入天数...</span>
+  <!--       <span id="times">载入时分秒...</span> -->
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("01/29/2023 20:00:00"); //此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+<!--      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒."; -->
+      }
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '1bc492ee578abeb05eb9',
+      clientSecret: 'bb1b4ace40b99384c011b62ef1ab7983bf4abfe2',
+      repo        : 'Blog_Comment',
+      owner       : 'HouseYeung',
+      admin       : ['HouseYeung'],
+      id          : 'b40ea6d5f6ac671929ab95b259622e3a',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

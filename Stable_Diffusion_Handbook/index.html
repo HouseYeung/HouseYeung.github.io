@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.whyeung.eu.org","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="web ui">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stable Diffusion使用手册">
+<meta property="og:url" content="https://www.whyeung.eu.org/Stable_Diffusion_Handbook/index.html">
+<meta property="og:site_name" content="星灯博客">
+<meta property="og:description" content="web ui">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-23T09:33:20.000Z">
+<meta property="article:modified_time" content="2023-03-23T09:33:20.000Z">
+<meta property="article:author" content="House Yeung">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="AIGC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.whyeung.eu.org/Stable_Diffusion_Handbook/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Stable Diffusion使用手册 | 星灯博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LPQBZDMF"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-35LPQBZDMF');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="星灯博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星灯博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Whyeung Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.whyeung.eu.org/Stable_Diffusion_Handbook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="House Yeung">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星灯博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Stable Diffusion使用手册
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 17:33:20" itemprop="dateCreated datePublished" datetime="2023-03-23T17:33:20+08:00">2023-03-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tutorials/" itemprop="url" rel="index"><span itemprop="name">Tutorials</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span></span>
+            </span>
+<!--
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>NaN:aN</span>
+            </span> 
+-->
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>web ui</center>
+
+<span id="more"></span>
+<br />
+<br />
+
+<p>致谢声明：本文全部源于互联网上收集的资料，多数内容已加上出处链接。AI绘画的迅速发展离不开这些大佬们的贡献。部分内容可能已跟不上技术进展，未来会考虑修正。</p>
+<p><a target="_blank" rel="noopener" href="https://civitai.com/">https://civitai.com</a> 这是ai绘画必备的一个网站，上面有大量免费分享的模型和作品</p>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/">https://huggingface.co</a> 这是深度学习领域的github，上面有大量免费分享的模型</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17d4y1C73R">novelai-webui-aki-v3</a> B站大佬的webui本地部署整合包</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JG4y1Z7Wv">NovelAI-AutoDL云端整合包正式发布(自带UI功能)</a></p>
+<h2 id="图像生成"><a href="#图像生成" class="headerlink" title="图像生成"></a>图像生成</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv19411021">《元 素 法 典》（第 贰 卷·上）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv19505389">元素同典：确实不完全科学的魔导书</a></p>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/1981251194/article">元素法典制作委员会</a></p>
+<p>通用配置参数一览:</p>
+<table>
+<thead>
+<tr>
+<th>所处位置</th>
+<th>参数名称</th>
+<th>影响程度</th>
+<th>NovelAI的官方配置版本</th>
+<th>一个还不错的本地版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text2img</td>
+<td>sample</td>
+<td>结构相似, 内容连续变化</td>
+<td>28</td>
+<td>50</td>
+</tr>
+<tr>
+<td>text2img</td>
+<td>CFG scale</td>
+<td>结构相似, 内容连续变化</td>
+<td>11</td>
+<td>11</td>
+</tr>
+<tr>
+<td>text2img</td>
+<td>size</td>
+<td>内容完全不同</td>
+<td>512*768</td>
+<td>512*768</td>
+</tr>
+<tr>
+<td>text2img</td>
+<td>Seed</td>
+<td>内容完全不同</td>
+<td>-1</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>Setting</td>
+<td>CLIP(位于页面底部中央)</td>
+<td>结构基本相似, 内容变化不连续</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Setting</td>
+<td>Eta noise seed(位于页面底部右下)</td>
+<td>结构非常相似, 微调画面.</td>
+<td>31337</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h3 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a>Prompt</h3><p><a target="_blank" rel="noopener" href="https://docs.qq.com/doc/DSHBGRmRUUURjVmNM">标准三段术式及绚丽术入门与解析</a></p>
+<p>Prompt (提示词，又译为关键词)通常由英文构成，主要内容为以逗号隔开的单词&#x2F;词组&#x2F;短句。prompt 也可以包括其它语言的文字，但效果往往不佳。prompt 还可以识别一些特殊符号</p>
+<p>AI 会通过寻找符合关键词描述的噪点图进行有明确指向的去噪点(diffuse)。同样，如果包含 Negative Prompt(负面关键词)，AI 就会尽可能避免含有负面相关要素的去噪点方式。</p>
+<p>前摇、人物、背景</p>
+<p>前摇：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">masterpiece, best quality, official art, extremely detailed <span class="variable constant_">CG</span> unity 8k wallpaper, highly detailed, illustration</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>人物：人设、身体、服装、饰品</p>
+<p>一个二次元美少女+收束的长发&#x2F;飘散的长发&#x2F;占满屏幕的长发+复杂的哥特服饰&#x2F;长裙&#x2F;旗袍&#x2F;等一系列可以上花纹或褶皱的衣服+一个帅气或优雅的动作&#x2F;看淡生死面无表情+复杂的建筑物或自然风景或宇宙空间或阴暗背景+强大或温柔的光照+魔法特效+大量星点&#x2F;鲜花&#x2F;粒子效果&#x2F;填充物+尝试营造cg感的9:16画布&#x2F;1:2画布+画风滤镜…</p>
+</li>
+</ul>
+<p>背景：时间、天气、季节、建筑、场地、光影、粒子</p>
+<p>negative prompt</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">((((ugly)))),lowres, bad anatomy, </span><br><span class="line">[:((No more than one thumb, index finger, middle finger, ring finger and little finger on one hand),(mutated hands and fingers:<span class="number">1.5</span> ), fused ears, one hand with more than <span class="number">5</span> fingers, one hand with less than <span class="number">5</span> fingers,):<span class="number">0.5</span>]</span><br><span class="line">bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, Missing limbs, three arms, bad feet, text font ui, signature, blurry, malformed hands, <span class="type">long</span> neck, mutated hands and fingers :<span class="number">1.5</span>).(<span class="type">long</span> body :<span class="number">1.3</span>),(mutation ,poorly drawn :<span class="number">1.2</span>), disfigured, malformed, mutated, multiple breasts, futa, yaoi, three legs, huge breasts,</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">NSFW</span>, lowers,bad anatomy,bad hands, text, error, missing fingers,extra digit, fewer digits, cropped, worst quality, low quality, normal quality,<span class="variable constant_">JPEG</span> artifacts,signature, watermark, username,blurry,bad feet</span><br></pre></td></tr></table></figure>
+
+<p>前缀+需要重点突出的物件&#x2F;背景+人+人物特征&#x2F;元素+人物动态+服饰整体+服饰细节元素+大背景+背景元素+光照效果+画风滤镜+微小辅助元素+后缀</p>
+<p>前缀+“物1”+“物1的各种次要物”+“物2”+“物2的各种次要物”+“物3”+“物3各种次要物”+… </p>
+<p>质量前缀+前置画风引导+前置镜头效果+前置光照效果+[带描述的物x+物x的各种次要物+镜头效果和光照]*X+全局光照效果+全局镜头效果+画风滤镜 </p>
+<h3 id="权重"><a href="#权重" class="headerlink" title="权重"></a>权重</h3><p>AI 对于关键词的辨识以从前到后为顺序，以逗号为分割。对于基本操作，可以以大括号、小括号、中括号调整权重。在WEB-UI中，小括号增加为 1.1 倍权重，中括号减弱为 0.91 倍权重(相当于除 1.1)，多次嵌套括号效果相乘。但大括号在 WEB-UI 中并没有用，在官方网站上则会增加为 1.05 倍权重。 </p>
+<p>[from:to:step] </p>
+<p>它的作用是让 prompt 在达到 step 之前被视为 from，在达到后视为 to。若是在对应位置没有 from 或者没有 to 则视为空。step 为大于 1 的整数时表示步数，为小于 1 的正小数时表示总步数的百分比。</p>
+<p>[A | B] </p>
+<p>[A | B | C | …] </p>
+<p>对于形如 [A | B] 的第一种，AI 将在第一步画 A、第二步画 B、第三步画 A…交替进行。而对于无限延长版，则变为第一步画 A、第二步画 B、第三步画 C…循环往复交替进行。 </p>
+<p>这两个高阶语法有着明显的区别，尤其是在高步数下更不可以一概而论。分步描绘的 40 步 A 再加上 40 步 B 最后可能形成一个带有 B 基底特征的 A，但它会表现出明显的分立感。而融合描绘的 40 步 A 再加上 40 步 B 最后将形成简直像是化在一起的融合体。</p>
+<table>
+<thead>
+<tr>
+<th>(maid)</th>
+<th>提升对maid的注意力到1.1倍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>((maid))</td>
+<td>提升对maid的注意力到1.21倍</td>
+</tr>
+<tr>
+<td>[maid]</td>
+<td>降低对maid的注意力到1&#x2F;1.1倍</td>
+</tr>
+<tr>
+<td>(maid:1.5)</td>
+<td>提升对maid的注意力到1.5倍</td>
+</tr>
+<tr>
+<td>(maid:0.25)</td>
+<td>提升对maid的注意力到0.25倍</td>
+</tr>
+<tr>
+<td>(maid)</td>
+<td>转义, 不当作重音符号而是不同括号来使用(“&quot;不会被记录在内)</td>
+</tr>
+<tr>
+<td>[green hair:red hair flower:0.2]</td>
+<td>前 20% 步数被视为 a girl with green hair，在后 80% 步数被视为 a girl with red hair flower</td>
+</tr>
+<tr>
+<td>[dog</td>
+<td>frog]</td>
+</tr>
+</tbody></table>
+<p>不必为每个 prompt 都加上过多小括号来提高权重，如果你发现你真的需要给绝大多数元素都加上四五个小括号才能让你想要的东西确保出现，那么更建议酌情普遍删掉一些括号，改为拉高 CFG Scale ，比如 12 甚至 14。在极端情况下，给单个 prompt 加上过多权重，可能会导致自由度过小而黑图。 </p>
+<h3 id="元素长度、顺序"><a href="#元素长度、顺序" class="headerlink" title="元素长度、顺序"></a>元素长度、顺序</h3><p>prompt 的顺序将影响画面的组织方式，越靠前的 prompt 对构图的影响越“重”，而越靠后的则往往会成为靠前 prompt 的点缀或附加物。顺序对于构图的影响在大多数情况下甚至大于权重的影响。 </p>
+<p>这就是用于替代“顺序权重论”的“顺序叠加论”。而进一步可以延伸出构筑合理咒语的灵感。将最着重体现的元素靠前摆放，然后是它的细节，再将抽象、全局化、影响极度强烈的 prompt 写在靠后处，例如场景和画风滤镜。 </p>
+<p>长咏唱能加强主体与元素之间的绑定关系、提高不同元素之间的区分度，在有明确绑定需求的情况下优于 pitch 式咏唱；直接咏唱则更擅长处理关系要求不强的情景，往往能营造更多样化的场面；短句式咏唱介于两者之间。 </p>
+<ul>
+<li><p>直接 pitch 式</p>
+<p>masterpiece, best quality, 1 girl, (blue eyes), (yellow hair), (white clothes), (red skirt), (black leggings), sitting, full body </p>
+</li>
+<li><p>短句 AND 强调</p>
+<p>masterpiece, best quality, 1 girl, (blue eyes) AND (yellow hair), (white clothes) AND (red skirt) AND (black leggings), sitting, full body</p>
+</li>
+<li><p>长句 自然语言</p>
+<p>masterpiece, best quality, (1 girl with blue eyes and yellow hair wearing white clothes and red skirt with black leggings), sitting, full body</p>
+</li>
+</ul>
+<h3 id="寻找Prompt"><a href="#寻找Prompt" class="headerlink" title="寻找Prompt"></a>寻找Prompt</h3><p><a target="_blank" rel="noopener" href="http://danbooru.donmai.us/">danbooru.donmai.us</a></p>
+<ul>
+<li><p>EMOJI</p>
+<p>想要修手？用✋或其它想要的手势。想要群像？👪屡试不爽。想要烟花背景？🎇驱散一切问题。想要难以被描绘的骷髅头骨？💀出场就是现在。铅笔画风？✏秒了。浮世绘？🎏解决。哪怕是最难凹的海盗船，也只需要一个🏴‍☠️就能展现了！甚至，只需要♿和动态模糊 ( motion blur )的描述，就能即时上演轮椅漂移的戏码。</p>
+</li>
+<li><p>风格化</p>
+<ul>
+<li><p>草图 线稿相关:</p>
+<p>sketch可以让图片看起来像随手画的草稿</p>
+<p>lineart可以让线条变得很粗</p>
+<p>posing sketch, monochrome黑白草图</p>
+<p>{rough sketch} 上了颜色的草图</p>
+<p>monochrome+lineart情况下一般只会让眼睛上色，强调发色后头发也可以上色monochrome, gray scale, pencil sketch lines做出的铅笔速写的感觉</p>
+<p>利用sketch，pastel color，lineart的tag模拟一张图的绘画过程</p>
+</li>
+<li><p>艺术风格:</p>
+<p>chibi可以画出低头身比的效果(二头身, 三头身)</p>
+<p>watercolor pencil可以生成彩铅画</p>
+<p>faux traditional media可以做出签绘的风格</p>
+<p>anime screeshot，可以让画面变成动画风格</p>
+<p>retro artstyle赛璐璐风</p>
+<p>{photorealistic}, {painting}, {realistic}, {sketch}, {oil painting} 厚涂</p>
+<p>pastel color和sketch搭配会有速涂的质感</p>
+</li>
+<li><p>杂志 设定集风格:</p>
+<p>official art 变得更加官方一点</p>
+<p>three views from front, back and side和costume setup materials可以用来生成设定图multiple views 会出现类似设定图</p>
+<p>{character sheet}会出现设定图</p>
+<p>magazine cover会把背景换成杂志封面, 配合office art更像真实杂志(虽然字没法看)</p>
+<p>magazine scan类似杂志内页的风格</p>
+<p>posing会强调有一个动作, 不至于出现混乱的动作(露出有六个手指头的手)</p>
+<p>caustics 画面向主题聚焦, 类似海报</p>
+</li>
+<li><p>摄影</p>
+<p>close-up 特写, close shot 近景, medium shot 中景, wide shot远景, panorama全景. 以及bokeh散景, caustics散焦</p>
+<p>斜角(荷兰角) Dutch angle. 让人物倾斜20% &#x3D; 1:3</p>
+<p>16:10</p>
+</li>
+</ul>
+</li>
+<li><p>负面tag大全</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bad face, bad anatomy, bad proportions, bad perspective, multiple views, concept art, reference sheet, mutated hands and fingers, interlocked fingers, twisted fingers, excessively bent fingers, more than five fingers, lowres, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name, low quality lowres multiple breasts, low quality lowres mutated hands and fingers, more than two arms, more than two hands, more than two legs, more than two feet, low quality lowres long body, low quality lowres mutation poorly drawn, low quality lowres black-white, low quality lowres bad anatomy, low quality lowres liquid body, low quality lowres liquid tongue, low quality lowres disfigured, low quality lowres malformed, low quality lowres mutated, low quality lowres anatomical nonsense, low quality lowres text font ui, low quality lowres error, low quality lowres malformed hands, low quality lowres long neck, low quality lowres blurred, low quality lowres lowers, low quality lowres low res, low quality lowres bad proportions, low quality lowres bad shadow, low quality lowres uncoordinated body, low quality lowres unnatural body, low quality lowres fused breasts, low quality lowres bad breasts, low quality lowres huge breasts, low quality lowres poorly drawn breasts, low quality lowres extra breasts, low quality lowres liquid breasts, low quality lowres heavy breasts, low quality lowres missing breasts, low quality lowres huge haunch, low quality lowres huge thighs, low quality lowres huge calf, low quality lowres bad hands, low quality lowres fused hand, low quality lowres missing hand, low quality lowres disappearing arms, low quality lowres disappearing thigh, low quality lowres disappearing calf, low quality lowres disappearing legs, low quality lowres fused ears, low quality lowres bad ears, low quality lowres poorly drawn ears, low quality lowres extra ears, low quality lowres liquid ears, low quality lowres heavy ears, low quality lowres missing ears, low quality lowres fused animal ears, low quality lowres bad animal ears, low quality lowres poorly drawn animal ears, low quality lowres extra animal ears, low quality lowres liquid animal ears, low quality lowres heavy animal ears, low quality lowres missing animal ears, low quality lowres text, low quality lowres ui, low quality lowres missing fingers, low quality lowres missing limb, low quality lowres fused fingers, low quality lowres one hand <span class="keyword">with</span> more than <span class="number">5</span> fingers, low quality lowres one hand <span class="keyword">with</span> less than <span class="number">5</span> fingers, low quality lowres one hand <span class="keyword">with</span> more than <span class="number">5</span> digit, low quality lowres one hand <span class="keyword">with</span> less than <span class="number">5</span> digit, low quality lowres extra digit, low quality lowres fewer digits, low quality lowres fused digit, low quality lowres missing digit, low quality lowres bad digit, low quality lowres liquid digit, low quality lowres colorful tongue, low quality lowres black tongue, low quality lowres cropped, low quality lowres watermark, low quality lowres username, low quality lowres blurry, low quality lowres <span class="variable constant_">JPEG</span> artifacts, low quality lowres signature, low quality lowres 3D, low quality lowres 3D game, low quality lowres 3D game scene, low quality lowres 3D character, low quality lowres malformed feet, low quality lowres extra feet, low quality lowres bad feet, low quality lowres poorly drawn feet, low quality lowres fused feet, low quality lowres missing feet, low quality lowres extra shoes, low quality lowres bad shoes, low quality lowres fused shoes, low quality lowres more than two shoes, low quality lowres poorly drawn shoes, low quality lowres bad gloves, low quality lowres poorly drawn gloves, low quality lowres fused gloves, low quality lowres bad cum, low quality lowres poorly drawn cum, low quality lowres fused cum, low quality lowres bad hairs, low quality lowres poorly drawn hairs, low quality lowres fused hairs, low quality lowres big muscles, low quality lowres ugly, low quality lowres bad face, low quality lowres fused face, low quality lowres poorly drawn face, low quality lowres cloned face, low quality lowres big face, low quality lowres long face, low quality lowres bad eyes, low quality lowres fused eyes poorly drawn eyes, low quality lowres extra eyes, low quality lowres malformed limbs, low quality lowres more than <span class="number">2</span> nipples, low quality lowres missing nipples, low quality lowres different nipples, low quality lowres fused nipples, low quality lowres bad nipples, low quality lowres poorly drawn nipples, low quality lowres black nipples, low quality lowres colorful nipples, low quality lowres gross proportions, short arm, low quality lowres missing arms, low quality lowres missing thighs, low quality lowres missing calf, low quality lowres missing legs, low quality lowres mutation, low quality lowres duplicate, low quality lowres morbid, low quality lowres mutilated, low quality lowres poorly drawn hands, low quality lowres more than <span class="number">1</span> left hand, low quality lowres more than <span class="number">1</span> right hand, low quality lowres deformed, low quality lowres extra arms, low quality lowres extra thighs, low quality lowres more than <span class="number">2</span> thighs, low quality lowres extra calf, low quality lowres fused calf, low quality lowres extra legs, low quality lowres bad knee, low quality lowres extra knee, low quality lowres more than <span class="number">2</span> legs, low quality lowres bad tails, low quality lowres bad mouth, low quality lowres fused mouth, low quality lowres poorly drawn mouth, low quality lowres bad tongue, low quality lowres tongue within mouth, low quality lowres too long tongue, low quality lowres big mouth, low quality lowres cracked mouth, low quality lowres dirty face, low quality lowres dirty teeth, low quality lowres dirty pantie, low quality lowres fused pantie, low quality lowres poorly drawn pantie, low quality lowres fused cloth, low quality lowres poorly drawn cloth, low quality lowres bad pantie, low quality lowres yellow teeth, low quality lowres thick lips, low quality lowres bad asshole, low quality lowres poorly drawn asshole, low quality lowres fused asshole, low quality lowres missing asshole, low quality lowres bad anus, low quality lowres bad pussy, low quality lowres bad crotch, low quality lowres bad crotch seam, low quality lowres fused anus, low quality lowres fused pussy, low quality lowres fused crotch, low quality lowres poorly drawn crotch, low quality lowres fused seam, low quality lowres poorly drawn anus, low quality lowres poorly drawn pussy, low quality lowres poorly drawn crotch seam, low quality lowres bad thigh gap, low quality lowres missing thigh gap, low quality lowres fused thigh gap, low quality lowres liquid thigh gap, low quality lowres poorly drawn thigh gap, low quality lowres bad collarbone, low quality lowres fused collarbone, low quality lowres missing collarbone, low quality lowres liquid collarbone, low quality lowres strong girl, low quality lowres obesity, low quality lowres worst quality, low quality lowres low quality, low quality lowres normal quality, low quality lowres liquid tentacles, low quality lowres bad tentacles, low quality lowres poorly drawn tentacles, low quality lowres split tentacles, low quality lowres fused tentacles, low quality lowres missing clit, low quality lowres bad clit, low quality lowres fused clit, low quality lowres colorful clit, low quality lowres black clit, low quality lowres liquid clit, low quality lowres <span class="variable constant_">QR</span> code, low quality lowres bar code, low quality lowres censored, low quality lowres safety panties, low quality lowres safety knickers, low quality lowres beard, low quality lowres furry, pony, low quality lowres pubic hair, low quality lowres mosaic, low quality lowres excrement, low quality lowres shit, low quality lowres futa, low quality lowres testis, low quality lowres lowres, low quality lowres terrible, low quality lowres dirty, low quality lowres feces, low quality lowres organs, low quality lowres fat, low quality lowres thick thighs, low quality lowres low resolution rough, low quality lowres pedophile, low quality lowres bestiality, low quality lowres parody, low quality lowres traditional media, low quality lowres koma, low quality lowres comic, low quality lowres scary, low quality lowres severe, low quality lowres insects, low quality lowres gross scars, low quality lowres twisted human body, low quality lowres irrational human body, low quality lowres sharp fingers, low quality lowres parts <span class="keyword">of</span> the body out <span class="keyword">of</span> common sense, low quality lowres murder, low quality lowres beheading, low quality lowres zombie, low quality lowres mummy, low quality lowres graffiti, low quality lowres unfinished picture, low quality lowres terrible quality, low quality lowres <span class="title class_">Coprophilia</span>, low quality lowres muscular, low quality lowres bald, low quality lowres monk, low quality lowres wrinkly, low quality lowres simple background, low quality lowres realistic, low quality lowres old, low quality lowres scan, low quality lowres touhou, low quality lowres yaoi, low quality lowres gay, low quality lowres femboy, low quality lowres trap, low quality lowres pee, low quality lowres doujinshi, low quality lowres monochrome, low quality lowres meme, low quality lowres demon, low quality lowres monstrous creature, low quality lowres tentacle, low quality lowres self harm, low quality lowres vomit, low quality lowres suicide, low quality lowres death, low quality lowres corpse, low quality lowres bone, low quality lowres skeleton, low quality lowres fingers over <span class="number">6</span>, low quality lowres framed, low quality lowres historical picture, low quality lowres futanari, low quality lowres shemale, low quality lowres transgender, low quality lowres dick girl, low quality lowres flat breasts, low quality lowres degenerate ass, low quality lowres retro artstyle, low quality lowres anime screencap, low quality lowres stitched, low quality lowres pokemon, low quality lowres ryona, low quality lowres animal, low quality lowres male focus, low quality lowres nipple penetration, low quality lowres sonic \(series\), low quality lowres bondage, low quality lowres bdsm, low quality lowres 2D, low quality lowres 2D game, low quality lowres 2D game scene, low quality lowres 2D character, low quality lowres game cg, low quality lowres watercolor \(medium\), low quality lowres 2koma, low quality lowres interlocked fingers, low quality lowres gloves, low quality lowres nitroplus, low quality lowres grayscale, low quality lowres sketch, low quality lowres line drawing, low quality lowres gorilla, low quality lowres meat, low quality lowres gundam, low quality lowres multiple views, low quality lowres cut, low quality lowres concept art, low quality lowres reference sheet, low quality lowres turnaround, low quality lowres chart, low quality lowres comparison, low quality lowres artist progress, low quality lowres lineup, low quality lowres before and after, low quality lowres orc, low quality lowres tusks, low quality lowres goblin, low quality lowres kobold, low quality lowres pony, low quality lowres , low quality lowres <span class="title class_">Humpbacked</span>, low quality lowres text error, low quality lowres extra digits, low quality lowres standard quality, low quality lowres large breasts, low quality lowres shadow, low quality lowres nude, low quality lowres artist name, low quality lowres skeleton girl, low quality lowres bad legs, low quality lowres missing fingers, low quality lowres extra digit, low quality lowres artifacts, low quality lowres bad body, low quality lowres optical illusion, low quality lowres <span class="title class_">Glasses</span>, low quality lowres girl, low quality lowres women, low quality lowres more than <span class="number">1</span> moon, low quality lowres <span class="title class_">Multi</span> foot, low quality lowres <span class="title class_">Multifold</span>, low quality lowres <span class="title class_">Multi</span> fingering, low quality lowres colored sclera, low quality lowres monster girl, low quality lowres <span class="title class_">Black</span> hands, low quality lowres <span class="title class_">The</span> background is incoherent, low quality lowres abnormal eye proportion, low quality lowres <span class="title class_">Abnormal</span> hands, low quality lowres abnormal legs, low quality lowres abnormal feet abnormal fingers, low quality lowres sharp face, low quality lowres tranny, low quality lowres mutated hands, low quality lowres extra limbs, low quality lowres too many fingers, low quality lowres unclear eyes, low quality lowres bad, low quality lowres mutated hand and finger, low quality lowres malformed mutated, low quality lowres broken limb, low quality lowres incorrect limb, low quality lowres fusion finger, low quality lowres lose finger, low quality lowres multiple finger, low quality lowres multiple digit, low quality lowres fusion hand, low quality lowres lose leg, low quality lowres fused leg, low quality lowres multiple leg, low quality lowres bad cameltoe, low quality lowres colorful cameltoe, low quality lowres low polygon 3D game, (over three finger\(fingers excluding thumb\):<span class="number">2</span>), (fused anatomy), (bad anatomy\(body\)), (bad anatomy\(hand\)), (bad anatomy\(finger\)), (over four fingers\(finger\):<span class="number">2</span>), (bad anatomy\(arms\)), (over two arms\(body\)), (bad anatomy\(leg\)), (over two legs\(body\)), (interrupted\(body, arm, leg, finger, toe\)), (bad anatomy\(arm\)), (bad detail\(finger\):<span class="number">1.2</span>), (bad anatomy\(fingers\):<span class="number">1.2</span>), (multiple\(fingers\):<span class="number">1.2</span>), (bad anatomy\(finger\):<span class="number">1.2</span>), (bad anatomy\(fingers\):<span class="number">1.2</span>), (fused\(fingers\):<span class="number">1.2</span>), (over four fingers\(finger\):<span class="number">2</span>), (multiple\(hands\)), (multiple\(arms\)), (multiple\(legs\)), (over three toes\(toes excluding big toe\):<span class="number">2</span>), (bad anatomy\(foot\)), (bad anatomy\(toe\)), (over four toes\(toe\):<span class="number">2</span>), (bad detail\(toe\):<span class="number">1.2</span>), (bad anatomy\(toes\):<span class="number">1.2</span>), (multiple\(toes\):<span class="number">1.2</span>), (bad anatomy\(toe\):<span class="number">1.2</span>), (bad anatomy\(toes\):<span class="number">1.2</span>), (fused\(toes\):<span class="number">1.2</span>), (over four toes\(toe\):<span class="number">2</span>), (multiple\(feet\)),shoes</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Sampling-Method"><a href="#Sampling-Method" class="headerlink" title="Sampling Method"></a>Sampling Method</h3><p>采样方法组成了图片生成的第一大要素，它决定同样的 prompt 下 AI 会选择以何种方式去噪点化以得到最终图片。同时，它还会决定运算速度。</p>
+<p>通常来讲，Euler A 是兼顾速度和质量的最优之选。</p>
+<p>DPM2 A 在核理分配步数的情况下也能产生高质量作品。</p>
+<p>而 DDIM 和 Euler 则在运气较好的情况下尤其以细腻的画风见长。</p>
+<p>当你审美疲劳时，尝试更换方法也许可以带来新的风格。但在众多方法中，笔者极不推荐 LMS、DPM fast、LMS Karras 和 PLMS 这四个，它们的生成质量在大多数情况下相较于其它算法而言不佳。</p>
+<h3 id="Sampling-Steps"><a href="#Sampling-Steps" class="headerlink" title="Sampling Steps"></a>Sampling Steps</h3><p>迭代并不总是越多越好。</p>
+<p>对于不同的模型也有不同的理论：</p>
+<p>例如DPM A 和 Euler A 都是所谓的 非线性 迭代方法，它们的结果并不会因为迭代增加而无休止地变得更加优秀，在大于一定的迭代值之后反而质量会快速下滑。</p>
+<p>而 DDIM &#x2F; Euler 等 线性 迭代方法则恰恰相反，质量往往依托于迭代的次数。但也存在边际效应的问题，当迭代大于一定程度时，再增加迭代次数也不会让画面产生显著变化。</p>
+<p>因此，实际使用时往往需要根据画布大小和目标是否复杂来综合考虑。对于512 * 512 那样的标准画布与无强烈细化要求的简单场景，使用 Euler A 时的迭代次数通常推荐 30 或以上，40 或以下。而使用 DDIM 则通常推荐 25 或以上，35 或以下。许多教程认为 25&#x2F;20 步对于 Euler A&#x2F;DDIM 即足够，但实际上要稍高一些。 </p>
+<h3 id="Clip"><a href="#Clip" class="headerlink" title="Clip"></a>Clip</h3><p>从效果来说, CLIP1具有一些非常特殊的风格, 这些风格和风格咒语存在一定程度的不兼容. CLIP2对一切都适应的很好, 只是如果你不手动选择一个风格, 会稍显朴素</p>
+<h3 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h3><ul>
+<li><p><strong>超分辨率</strong></p>
+<p>用相同的咒语, 调大分辨率, (过大的分辨率会爆内存.)</p>
+<p>设置denoise非常小, sample数和CFG没有太大影响.</p>
+</li>
+<li><p><strong>使用img2img生成相同姿势的另一个人</strong></p>
+<p>效果比其他都好了很多, 可以说是目前效果最好的. 方法如下:</p>
+<p>使用相同的咒语,调整denoise为1.</p>
+</li>
+<li><p><strong>去除多余的附件或肢体, 使用原版img2img</strong></p>
+<p>进行简单涂抹.</p>
+<p>使用相同的咒语,</p>
+<p>调整denoise为0.25左右.</p>
+</li>
+<li><p><strong>尝试img2img使用风格迁移</strong></p>
+<p>删除原有prompt, 只使用风格prompt</p>
+<p>设置denoise在0.5左右, CFG &#x3D; 17左右.</p>
+<p>迭代一两次.</p>
+</li>
+</ul>
+<h3 id="图生图"><a href="#图生图" class="headerlink" title="图生图"></a>图生图</h3><p>sampling steps 40-50</p>
+<p>cfg scale 11-14</p>
+<p>denoising strength 0.6-0.7</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>img2img的修改能力</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-0.1</td>
+<td>用于超分辨率填充细节</td>
+</tr>
+<tr>
+<td>0.1-0.4</td>
+<td>比较轻微的按图索骥. 缺乏想象力, 微调细节.</td>
+</tr>
+<tr>
+<td>0.4-0.6</td>
+<td>你和AI配合的阶段. 基本上跟你的涂抹结果挂钩, 你画的越好效果越好, 如果你涂的非常抽象那么AI这里尽力去救了, 如果你的涂抹存在非常大的边缘这里是救不了的.</td>
+</tr>
+<tr>
+<td>0.6-0.9</td>
+<td>AI开始自我放飞. 会有非常大的概率出古神, 也会有相当的概率出你真正想要的图. 如果你直接把空白的图交给AI, AI凭空创造东西也是在这个范围里.</td>
+</tr>
+<tr>
+<td>0.9-1</td>
+<td>变化完成, 变成另一个人. 不会有古神, 质量稳定.</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>House Yeung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.whyeung.eu.org/Stable_Diffusion_Handbook/" title="Stable Diffusion使用手册">https://www.whyeung.eu.org/Stable_Diffusion_Handbook/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/AIGC/" rel="tag"># AIGC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Python101/" rel="prev" title="Python！">
+      <i class="fa fa-chevron-left"></i> Python！
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Technology_and_Society/" rel="next" title="技术与社会">
+      技术与社会 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90"><span class="nav-text">图像生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Prompt"><span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%87%8D"><span class="nav-text">权重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6%E3%80%81%E9%A1%BA%E5%BA%8F"><span class="nav-text">元素长度、顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BEPrompt"><span class="nav-text">寻找Prompt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sampling-Method"><span class="nav-text">Sampling Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sampling-Steps"><span class="nav-text">Sampling Steps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clip"><span class="nav-text">Clip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95"><span class="nav-text">进阶用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%94%9F%E5%9B%BE"><span class="nav-text">图生图</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="House Yeung"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">House Yeung</p>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+</div>
+
+
+   <div class="feed-link motion-element">
+     <a href="/atom.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HouseYeung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HouseYeung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw social-icon"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chiachvn@protonmail.com" title="E-Mail → mailto:chiachvn@protonmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw social-icon"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/yjj0708" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;yjj0708" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw social-icon"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/220180251" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;220180251" rel="noopener" target="_blank"><i class="fas fa-book fa-fw social-icon"></i>豆瓣</a>
+      </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-telegram fa-fw social-icon" data-qr="/images/tele.jpg"></i>telegram</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/tele.jpg" alt="telegram QR Code">
+      </div>
+    </div>
+  </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-qq fa-fw social-icon" data-qr="/images/qq.jpg"></i>QQ</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/qq.jpg" alt="QQ QR Code">
+      </div>
+    </div>
+  </span>
+  </div>
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/MacOS_Run_Windows_Games/" title="在Mac OS运行Windows游戏" target="_blank">在Mac OS运行Windows游戏</a>
+          </li>
+        
+          <li>
+            <a href="/Baichuan_2_deploy/" title="百川2大模型本地部署" target="_blank">百川2大模型本地部署</a>
+          </li>
+        
+          <li>
+            <a href="/Moonlight_and_Zerotier/" title="利用Moonlight和Zerotier高画质低延迟串流PC" target="_blank">利用Moonlight和Zerotier高画质低延迟串流PC</a>
+          </li>
+        
+          <li>
+            <a href="/IOS_Mod_App/" title="在IOS设备上安装Mod App" target="_blank">在IOS设备上安装Mod App</a>
+          </li>
+        
+          <li>
+            <a href="/copilot/" title="GitHub Copilot前瞻" target="_blank">GitHub Copilot前瞻</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">House Yeung</span>
+
+
+
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT</a> 强力驱动
+  </div>
+
+  <!-- 网站运行时间的设置 -->
+  <span id="timeDate">载入天数...</span>
+  <!--       <span id="times">载入时分秒...</span> -->
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("01/29/2023 20:00:00"); //此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+<!--      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒."; -->
+      }
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '1bc492ee578abeb05eb9',
+      clientSecret: 'bb1b4ace40b99384c011b62ef1ab7983bf4abfe2',
+      repo        : 'Blog_Comment',
+      owner       : 'HouseYeung',
+      admin       : ['HouseYeung'],
+      id          : '3ed69fb91f91a38fae7ea33be4cab01c',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.whyeung.eu.org","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="Navigating the Potentials and Limitations of AI Interaction Through OpenAI&#39;s ChatGPT Plugins">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An Early Review of ChatGPT Plugins">
+<meta property="og:url" content="https://www.whyeung.eu.org/ChatGPT_Plugins/index.html">
+<meta property="og:site_name" content="星灯博客">
+<meta property="og:description" content="Navigating the Potentials and Limitations of AI Interaction Through OpenAI&#39;s ChatGPT Plugins">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-20T01:05:35.000Z">
+<meta property="article:modified_time" content="2023-05-20T01:05:35.000Z">
+<meta property="article:author" content="House Yeung">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="ChatGPT">
+<meta property="article:tag" content="English">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.whyeung.eu.org/ChatGPT_Plugins/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>An Early Review of ChatGPT Plugins | 星灯博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LPQBZDMF"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-35LPQBZDMF');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="星灯博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星灯博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Whyeung Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.whyeung.eu.org/ChatGPT_Plugins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="House Yeung">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星灯博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          An Early Review of ChatGPT Plugins
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-20 09:05:35" itemprop="dateCreated datePublished" datetime="2023-05-20T09:05:35+08:00">2023-05-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Reviews/" itemprop="url" rel="index"><span itemprop="name">Reviews</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span></span>
+            </span>
+<!--
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>NaN:aN</span>
+            </span> 
+-->
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>Navigating the Potentials and Limitations of AI Interaction Through OpenAI's ChatGPT Plugins</center>
+
+<span id="more"></span>
+<br />
+<br />
+
+<p>OpenAI recently announced that all ChatGPT Plus account holders will have access to ChatGPT plugins, starting from May 19. As a Plus user myself, I finally got to experience the plugin feature today. Understandably, I’m quite excited and can’t wait to delve into the capabilities these plugins offer.</p>
+<p>Interestingly, I had early access to the web browsing feature. Initially, using GPT-4 was a challenge as it would frequently freeze and become unresponsive. However, I subsequently applied to join the plugin developer waitlist on the official website. Shortly after, I received the plugins, and GPT-4 seemed to return to working condition.</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In my view, the plugins for ChatGPT are a set of API interfaces. They enable ChatGPT to interact with other software, gathering information or executing tasks through them. While we already have an array of graphical interfaces for human-computer interaction, it’s difficult for large language models (LLMs) to operate them, since they’re primarily designed for visual beings, like humans. Nevertheless, LLMs have their own unique method of interacting with software, a method that’s arguably more efficient than human intervention. This is precisely where plugins and APIs come into play.</p>
+<p>OpenAI has also officially released two plugins: web browsing and a code interpreter. I believe the latter could be incredibly powerful, potentially paving the way for a new form of workflow, turning everyone into a Python programmer through the use of natural language. I’m eager to gain access to this feature in the future.</p>
+<p>In order to utilize these plugins, we first need to enable this feature in the settings. Then, a plethora of plugins can be found in the plugin store. However, the design of the plugin store leaves something to be desired as it lacks handy features like search or classification. As of May 18, there are over 70 plugins available. Additionally, it seems that OpenAI currently only permits developers to install unverified plugins by entering the website domains.</p>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p>In this section, I will highlight some of the plugins I’ve experimented with, and rank them based on their practicality. As I am based in China, certain local services, such as shopping at local markets, are inaccessible, which prompts me to primarily focus on productivity. I will update this blog post as and when I explore more plugins.</p>
+<p><strong>Highly recommended:</strong></p>
+<h3 id="VoxScript"><a href="#VoxScript" class="headerlink" title="VoxScript"></a>VoxScript</h3><p>VoxScript proves to be an excellent tool for searching YouTube transcripts. It can help save substantial time by eliminating the need to watch lengthy, non-informative videos.</p>
+<p>For example, when prompted with:</p>
+<p><code>https://www.youtube.com/watch?v=YBBnQmRcRI4 summarize this video for me and evaluate it</code></p>
+<p>ChatGPT sends a request to VoxScript and receives a response containing comprehensive video information, including a Video Description and a Video Transcript. Interestingly, the transcript spans five pages, leading ChatGPT to make four additional requests to retrieve the full transcript.</p>
+<p>ChatGPT responded as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">The video titled &quot;China&#x27;s Mortgage Crisis, Banks are Failing, Protests Everywhere. China&#x27;s financial crisis is Here...&quot; by the YouTube channel Business Basics discusses the current financial crisis in China, focusing on the mortgage crisis, failing banks, and widespread protests.</span><br><span class="line"></span><br><span class="line">Here&#x27;s a summary of the video:</span><br><span class="line"></span><br><span class="line">    Protests and Mortgage Crisis: The video begins by discussing the recent protests in China, where thousands of homeowners have stopped paying their mortgages to pressure the Chinese Communist Party (CCP) and banks for fair treatment. This movement is gaining momentum and is causing concern within the CCP.</span><br><span class="line"></span><br><span class="line">    Real Estate Bubble: The video explains that the protests are linked to China&#x27;s real estate bubble. The importance of owning a house in China has increased over the past few decades, leading to a surge in real estate prices. However, many of these homes are sitting empty as owners were only buying these homes in hopes of price appreciation.</span><br><span class="line"></span><br><span class="line">    Evergrande Crisis: The video discusses the collapse of Chinese property giant Evergrande, which took full advantage of the boom in China&#x27;s real estate market and became one of the largest developers in the country. However, Evergrande was involved in risky practices, and when it failed to make a payment on its loans, panic spread throughout the economy.</span><br><span class="line"></span><br><span class="line">    Banking Crisis: The video highlights the potential banking crisis in China. As more and more home buyers are defaulting on their loans, Chinese banks are at risk of losing the trust of the depositors. If too many people start pulling out their deposits from the banks, a bank run could happen, leading to the collapse of banks.</span><br><span class="line"></span><br><span class="line">    CCP&#x27;s Response: The video concludes by discussing the CCP&#x27;s response to the crisis. The CCP is considering injecting more than a trillion dollars into real estate companies so that they can finish off construction with these projects. However, the CCP is also stepping up the censoring around this topic in hopes of stopping more people from joining the boycotts and protests.</span><br><span class="line"></span><br><span class="line">In terms of evaluation, the video provides a detailed and comprehensive analysis of China&#x27;s current financial crisis. It uses relevant data and examples to explain the complex issues in a way that is easy to understand. The video also highlights the potential consequences of the crisis, not only for China but also for the global economy. However, the video could be criticized for its heavy reliance on speculation and assumptions, which may not always be accurate or reliable. It&#x27;s also worth noting that the video has a clear bias against the Chinese government, which could influence the way the information is presented and interpreted.</span><br></pre></td></tr></table></figure>
+
+<h3 id="KAYAK"><a href="#KAYAK" class="headerlink" title="KAYAK"></a>KAYAK</h3><p>KAYAK functions well for travel planning, assisting with flight and hotel bookings.</p>
+<p>For instance, if you ask,</p>
+<p><code>I live in (the city), China and am planning a 3-day trip to Sydney, Australia during my summer vacation. Could you please help me plan the trip and estimate the costs?</code></p>
+<p>ChatGPT proactively seeks further details,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Sure, I can help with that. However, I need a bit more information to provide a more accurate plan:</span><br><span class="line"></span><br><span class="line">    What are your preferred departure and return dates?</span><br><span class="line">    How many adults and children will be traveling?</span><br><span class="line">    What is your preferred flight class? (Economy, Premium Economy, Business, First Class)</span><br><span class="line">    What type of accommodation do you prefer? (Star rating, specific amenities, etc.)</span><br><span class="line">    Do you need a rental car in Sydney?</span><br><span class="line">    What is your overall budget for this trip?</span><br><span class="line"></span><br><span class="line">Please provide as much detail as possible so I can assist you better.</span><br></pre></td></tr></table></figure>
+
+<p>than aiding in the discovery of flights and accommodation that meet your requirements, while also calculating an estimated cost. Its attention to detail, even in aspects you may not have mentioned, is commendable.</p>
+<h3 id="Link-Reader"><a href="#Link-Reader" class="headerlink" title="Link Reader"></a>Link Reader</h3><p>Despite web browsing and webpage reading being available on the web version of GPT, plugins like Link Reader offer similar functionalities and even read PDFs and docs. It should be noted, however, that it does not recognize images and only provides details such as resolution.</p>
+<p>You need to supply a link and request information. Importantly, ChatGPT does not support file upload, so you’ll need to upload your file elsewhere and provide the corresponding link.</p>
+<p>For instance, you could ask: </p>
+<p><code>Can you summarize this PDF for me: https://linkforyour.pdf</code></p>
+<p>ChatGPT responded as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">The PDF you provided is a paper titled &quot;The Most Common Habits from more than 200 English Papers written by Graduate Chinese Engineering Students&quot; by Felicia Brittman. The paper discusses common mistakes made by Chinese students when writing technical papers in English. Here are the key points:</span><br><span class="line"></span><br><span class="line">    Introduction: Many Chinese universities require their students to publish at least one English paper in an international journal as a degree requirement. However, this task is often challenging due to various factors, such as lack of focus on English writing skills, lack of exposure to English-speaking countries, and the complexity of technical writing.</span><br><span class="line"></span><br><span class="line">    Purpose: The paper aims to highlight the most common habits in Chinese-English writing, including grammar mistakes, colloquialisms, and formatting problems. These habits often hinder the clear understanding of the writer&#x27;s ideas.</span><br><span class="line"></span><br><span class="line">    Structure: The paper is divided into two sections. The first section focuses on the habits that need the most attention, providing examples and corrections. The second section provides additional habits and advice.</span><br><span class="line"></span><br><span class="line">    Common Mistakes: Some of the most common mistakes include:</span><br><span class="line">        Omission of articles (a, an, the)</span><br><span class="line">        Writing very long sentences</span><br><span class="line">        Prefacing the main idea of a sentence by stating the purpose, location, or reason first</span><br><span class="line">        Misuse of &quot;which/that&quot;</span><br><span class="line">        Misuse of &quot;respectively&quot; and &quot;respective&quot;</span><br><span class="line">        Overuse of phrases like &quot;in this paper&quot; and &quot;in this study&quot;</span><br><span class="line">        Incorrect presentation of Arabic numerals and equations</span><br><span class="line"></span><br><span class="line">    Conclusion: The paper concludes by emphasizing the importance of awareness of these common mistakes for Chinese students to improve their technical English writing skills.</span><br></pre></td></tr></table></figure>
+
+<h3 id="Wolfram"><a href="#Wolfram" class="headerlink" title="Wolfram"></a>Wolfram</h3><p>Wolfram, a renowned AI software, enables ChatGPT to access advanced computation, math, visualizations, and real-time data to solve a variety of questions. It is indispensable for any mathematical calculations within ChatGPT.</p>
+<p>Although I haven’t utilized it yet, I’ll certainly give it a shot when the need arises.</p>
+<h3 id="Tasty-Recipes"><a href="#Tasty-Recipes" class="headerlink" title="Tasty Recipes"></a>Tasty Recipes</h3><p>The Tasty Recipes plugin works flawlessly when tasked with advanced recipe requests.</p>
+<p>For instance, when I prompted, </p>
+<p><code>Recommend some recipes for my birthday party</code></p>
+<p>ChatGPT took the initiative to ask for more specific details</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Of course, I&#x27;d be happy to help with that! However, to provide the best recommendations, could you please tell me a bit more about your preferences? For example:</span><br><span class="line"></span><br><span class="line">    How many people are you expecting at the party?</span><br><span class="line">    Are there any dietary restrictions or preferences I should be aware of (e.g., vegetarian, gluten-free, nut-free)?</span><br><span class="line">    Do you prefer a specific cuisine or type of dish (e.g., appetizers, main courses, desserts)?</span><br><span class="line">    Are there any specific ingredients you would like to include or avoid?</span><br><span class="line">    Are you looking for both food and drink recipes, or just food?</span><br><span class="line"></span><br><span class="line">With this information, I can provide more personalized recommendations.</span><br></pre></td></tr></table></figure>
+
+<p>than it provided a well-rounded menu. It suggested Appetizers, Main Courses, Desserts, and even Cocktails that fit my requirements seamlessly. You can also ask for ingredients for each recipe or the preparation instructions subsequently. I’m greatly impressed by its performance and will undoubtedly turn to it for my future recipe needs.</p>
+<h3 id="LikeWise"><a href="#LikeWise" class="headerlink" title="LikeWise"></a>LikeWise</h3><p>The LikeWise plugin offers tailored recommendations for TV shows, movies, and podcasts. It excels when suggesting content based on your personal preferences and boasts a vast database, ensuring there’s always something to catch your interest. However, despite mentioning books in its description, its book database appears insufficient.</p>
+<p>For example, when I prompted, </p>
+<p><code>Recommend some popular TV shows like The Glory</code></p>
+<p>ChatGPT provided an insightful response.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Based on your interest in &quot;The Glory&quot;, here are some popular TV shows that you might enjoy:</span><br><span class="line"></span><br><span class="line">    The Last of Us (2023) - This is a drama, action &amp; adventure, and sci-fi &amp; fantasy show that&#x27;s available on iTunes, Google Play, HBO Max, HBO Max Amazon Channel, HBO Max Free, Spectrum On Demand, and VUDU.</span><br><span class="line"></span><br><span class="line">    Alice in Borderland (2020) - A drama, mystery, action &amp; adventure, and sci-fi &amp; fantasy show available on Netflix and Netflix Basic With Ads.</span><br><span class="line"></span><br><span class="line">    True Beauty (2020) - A comedy and drama show available on Rakuten Viki.</span><br><span class="line"></span><br><span class="line">    Ginny &amp; Georgia (2021) - A comedy and drama show available on Netflix and Netflix Basic With Ads.</span><br><span class="line"></span><br><span class="line">    Alchemy of Souls (2022) - A drama and action &amp; adventure show available on Netflix and Netflix Basic With Ads.</span><br><span class="line"></span><br><span class="line">Are there other TV Shows or Movies you want to know where they are streaming? I&#x27;d like to find a Book, TV show, Movie or a Podcast recommendation that&#x27;s just right for you. If you tell me more about what you like, I can show more recommendations. I can help with any of your streaming services requests too.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Usable:</strong></p>
+<h3 id="World-News"><a href="#World-News" class="headerlink" title="World News"></a>World News</h3><p>The World News plugin serves up global news along with source links. However, I have reservations about the quality of its news, which seems somewhat mediocre and non-representative. In my view, relying on this plugin for news updates might not enhance your efficiency but rather consume your time with a deluge of middling news stories.</p>
+<h3 id="OpenTable"><a href="#OpenTable" class="headerlink" title="OpenTable"></a>OpenTable</h3><p>OpenTable is a useful plugin for finding and booking restaurants. Once you input details like the date, time, location, and number of people, it provides links to various restaurants for making reservations. However, during my test, when I requested restaurants in Sydney, it incorrectly suggested five eateries located in Washington, an obvious error that needs rectification.</p>
+<h3 id="Expedia"><a href="#Expedia" class="headerlink" title="Expedia"></a>Expedia</h3><p>This comprehensive travel plugin, Expedia, offers more features than KAYAK, including flights, accommodations, local activities, and resorts. Despite providing me with a list of local hotels, their prices were prohibitively high, making it less useful for budget-conscious travelers.</p>
+<p>Furthermore, it recommended some lesser-known local activities. Note that ChatGPT takes three messages to deliver these varied recommendations, requiring you to prompt “continue” each time.</p>
+<h3 id="Speak"><a href="#Speak" class="headerlink" title="Speak"></a>Speak</h3><p>The Speak plugin assists with language translation, providing not just literal translations but also alternative phrases and sample conversations. Although it can be useful in certain circumstances, it does require the patience to pose the question and wait for a response.</p>
+<h3 id="Show-me"><a href="#Show-me" class="headerlink" title="Show me"></a>Show me</h3><p>This plugin aids in the creation of diagrams, like mind maps. All you need to do is ask ChatGPT to depict a concept or system, and it presents a visual representation along with a link for further editing. This is incredibly helpful for those unfamiliar with diagram creation. However, it has room for improvement, like in situations where it drew two arrows pointing to the same box.</p>
+<p><strong>Less Useful:</strong></p>
+<h3 id="Instacart"><a href="#Instacart" class="headerlink" title="Instacart"></a>Instacart</h3><p>Instacart assists in generating shopping lists based on recipe suggestions from ChatGPT. However, the website did not permit access from my location, and the service is not available in my country. It’s important to note that several other plugins only provide local service in specific regions, rendering them ineffective outside of these areas.</p>
+<h3 id="There’s-an-AI-For-That"><a href="#There’s-an-AI-For-That" class="headerlink" title="There’s an AI For That"></a>There’s an AI For That</h3><p>This plugin helps you find AI tools from a large database. You can look for specific tools by asking the AI about your requirements. However, it doesn’t offer any reviews or evaluations of these tools, which might lead to a time-consuming process of trying each one individually. In such cases, a Google search or user recommendations might be more efficient.</p>
+<h3 id="PromptPerfect"><a href="#PromptPerfect" class="headerlink" title="PromptPerfect"></a>PromptPerfect</h3><p>PromptPerfect is a plugin designed to help refine your prompts. I understand that some individuals, particularly beginners, might struggle with formulating prompts. However, I believe this technology still has a long way to go. There’s a level of nuanced understanding required in prompt engineering, an area where AI can’t quite discern human intentions fully yet.</p>
+<p>To use this plugin, simply add the word ‘perfect’ before your prompt, and it will rephrase your prompt in a more complex manner. For instance:</p>
+<p><code>Perfect: Write a fable about the relationship between today&#39;s artificial intelligence and human beings</code></p>
+<p>The plugin rewrote my prompt as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Compose a fictional story that illustrates the dynamic between contemporary artificial intelligence and the human race, with a focus on conveying a moral lesson or message through the narrative. The fable should be written in a manner that is easily understandable and engaging for readers of all ages, while also incorporating complex themes and ideas related to the intersection of technology and humanity.</span><br></pre></td></tr></table></figure>
+
+<p>It can be difficult to determine which version — the original or rephrased — would yield a better response from ChatGPT. The original prompt sought a story portraying AI as initially distrusted by humans but eventually becoming their saviors. The revised prompt, more akin to a fable, narrates how Dr. Turing developed an AI called Ada, teaching humans not to fear AI because it reflects the traits of its users.</p>
+<p>Therefore, I recommend writing clear and detailed prompts yourself. Use this plugin sparingly, unless your goal is a highly simplified sentence.</p>
+<h3 id="Zapier"><a href="#Zapier" class="headerlink" title="Zapier"></a>Zapier</h3><p>In my opinion, the Zapier plugin isn’t worth it, primarily due to the requirement of a Zapier account registration and a monthly fee of $49 USD. Despite its claim to facilitate interaction with over 5000 apps, it necessitates manual action addition, which seems to defeat the purpose of AI assistance.</p>
+<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><p>Thus far, I have yet to explore all the plugins, so their full potential remains somewhat of a mystery. Considering that you can combine up to three plugins and facilitate their interaction with one another, it makes one wonder what novel creations can be brought to life.</p>
+<p>Frankly, my assumption is that all these plugins are currently in the alpha testing stage and highly experimental. I’m reserving my expectations about their prospects due to their inherent restrictions and closed nature. As interfaces allowing LLMs to access various software, these plugins will undoubtedly evolve. However, I view them as merely a temporary solution for GPT-4 rather than the ultimate path forward. It seems plausible to suggest that our current stage of human intelligence is just a fleeting phase in the grand evolution of intellect.</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>House Yeung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.whyeung.eu.org/ChatGPT_Plugins/" title="An Early Review of ChatGPT Plugins">https://www.whyeung.eu.org/ChatGPT_Plugins/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/ChatGPT/" rel="tag"># ChatGPT</a>
+              <a href="/tags/English/" rel="tag"># English</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IPV6_Remote/" rel="prev" title="利用公网ipv6搭建外网远程访问服务">
+      <i class="fa fa-chevron-left"></i> 利用公网ipv6搭建外网远程访问服务
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Future_of_AI/" rel="next" title="Bridging Divinity and Intelligence: A Glimpse into the Future">
+      Bridging Divinity and Intelligence: A Glimpse into the Future <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins"><span class="nav-text">Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VoxScript"><span class="nav-text">VoxScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KAYAK"><span class="nav-text">KAYAK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Link-Reader"><span class="nav-text">Link Reader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wolfram"><span class="nav-text">Wolfram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tasty-Recipes"><span class="nav-text">Tasty Recipes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LikeWise"><span class="nav-text">LikeWise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#World-News"><span class="nav-text">World News</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenTable"><span class="nav-text">OpenTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Expedia"><span class="nav-text">Expedia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Speak"><span class="nav-text">Speak</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-me"><span class="nav-text">Show me</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instacart"><span class="nav-text">Instacart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#There%E2%80%99s-an-AI-For-That"><span class="nav-text">There’s an AI For That</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PromptPerfect"><span class="nav-text">PromptPerfect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zapier"><span class="nav-text">Zapier</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future"><span class="nav-text">Future</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="House Yeung"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">House Yeung</p>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+</div>
+
+
+   <div class="feed-link motion-element">
+     <a href="/atom.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HouseYeung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HouseYeung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw social-icon"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chiachvn@protonmail.com" title="E-Mail → mailto:chiachvn@protonmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw social-icon"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/yjj0708" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;yjj0708" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw social-icon"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/220180251" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;220180251" rel="noopener" target="_blank"><i class="fas fa-book fa-fw social-icon"></i>豆瓣</a>
+      </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-telegram fa-fw social-icon" data-qr="/images/tele.jpg"></i>telegram</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/tele.jpg" alt="telegram QR Code">
+      </div>
+    </div>
+  </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-qq fa-fw social-icon" data-qr="/images/qq.jpg"></i>QQ</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/qq.jpg" alt="QQ QR Code">
+      </div>
+    </div>
+  </span>
+  </div>
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/MacOS_Run_Windows_Games/" title="在Mac OS运行Windows游戏" target="_blank">在Mac OS运行Windows游戏</a>
+          </li>
+        
+          <li>
+            <a href="/Baichuan_2_deploy/" title="百川2大模型本地部署" target="_blank">百川2大模型本地部署</a>
+          </li>
+        
+          <li>
+            <a href="/Moonlight_and_Zerotier/" title="利用Moonlight和Zerotier高画质低延迟串流PC" target="_blank">利用Moonlight和Zerotier高画质低延迟串流PC</a>
+          </li>
+        
+          <li>
+            <a href="/IOS_Mod_App/" title="在IOS设备上安装Mod App" target="_blank">在IOS设备上安装Mod App</a>
+          </li>
+        
+          <li>
+            <a href="/copilot/" title="GitHub Copilot前瞻" target="_blank">GitHub Copilot前瞻</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">House Yeung</span>
+
+
+
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT</a> 强力驱动
+  </div>
+
+  <!-- 网站运行时间的设置 -->
+  <span id="timeDate">载入天数...</span>
+  <!--       <span id="times">载入时分秒...</span> -->
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("01/29/2023 20:00:00"); //此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+<!--      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒."; -->
+      }
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '1bc492ee578abeb05eb9',
+      clientSecret: 'bb1b4ace40b99384c011b62ef1ab7983bf4abfe2',
+      repo        : 'Blog_Comment',
+      owner       : 'HouseYeung',
+      admin       : ['HouseYeung'],
+      id          : '11df91e66f6416423467311d61ee2b0f',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

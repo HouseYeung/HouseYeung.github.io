@@ -1,0 +1,4344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.whyeung.eu.org","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="摘自 Learning Prompt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Midjourney使用手册">
+<meta property="og:url" content="https://www.whyeung.eu.org/Midjourney_Handbook/index.html">
+<meta property="og:site_name" content="星灯博客">
+<meta property="og:description" content="摘自 Learning Prompt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-15T18:37:24.000Z">
+<meta property="article:modified_time" content="2023-04-15T18:37:24.000Z">
+<meta property="article:author" content="House Yeung">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="AIGC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.whyeung.eu.org/Midjourney_Handbook/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Midjourney使用手册 | 星灯博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LPQBZDMF"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-35LPQBZDMF');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="星灯博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星灯博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Whyeung Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.whyeung.eu.org/Midjourney_Handbook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="House Yeung">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星灯博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Midjourney使用手册
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-04-16 02:37:24" itemprop="dateCreated datePublished" datetime="2023-04-16T02:37:24+08:00">2023-04-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tutorials/" itemprop="url" rel="index"><span itemprop="name">Tutorials</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span></span>
+            </span>
+<!--
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>NaN:aN</span>
+            </span> 
+-->
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>摘自 <a target="_blank" rel="noopener" href="https://learningprompt.wiki/docs/midjourney-learning-path">Learning Prompt</a></center>
+
+<span id="more"></span>
+<br />
+<br />
+
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a><strong>基本操作</strong></h1><p>使用&#x2F;imagine来生成图片</p>
+<h2 id="Upscale"><a href="#Upscale" class="headerlink" title="Upscale"></a><strong>Upscale</strong></h2><p>生成的四格图，单格图片的分辨率是 512  <em>512（如果你是 V5 版本，则是 1024</em> 1024），如果你想要生成一个更清晰的图片，则可以点击四宫格图片下的 U 按钮，U1 代表左上角第一张图，U2 是右上角，U3 是左下角，U4 是右下角。点击后，你需要等待一会，就会生成高清图。需要注意，V5 版本，U 按钮已经不会影响分辨率了，只是做为一个裁切图片的功能。换句话说就是将第一次生成的四格图，裁成一张。</p>
+<h2 id="Variation"><a href="#Variation" class="headerlink" title="Variation"></a><strong>Variation</strong></h2><p>V 按钮，这个按钮代表 variation ，点击该按钮后，程序会用你选择的那张图片，再生成新的 4 张图，不过这 4 张图的整体会跟你选择的那张图比较像：</p>
+<h2 id="重新生成"><a href="#重新生成" class="headerlink" title="重新生成"></a><strong>重新生成</strong></h2><p>最后一个按钮 🔄 则是 re-roll 重新生成，点击后程序会按照你的 prompt 重新生成 4 张图片。</p>
+<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a><strong>参数</strong></h1><p>prompt:<br><code>http://imageURL1.png http://imageURL2.jpg description of what to image --parameter1 --parameter2</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>参数名称</strong></th>
+<th><strong>调用方法</strong></th>
+<th><strong>使用案例</strong></th>
+<th><strong>注意事项</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>版本</td>
+<td>在关键词后加空格，然后带上版本参数：    –v 或者 —v    –version 或者 —version</td>
+<td>vibrant california poppies –v 5</td>
+<td>版本仅支持 1、2、3、4、5。</td>
+</tr>
+<tr>
+<td>长宽比</td>
+<td>在关键词后加空格，然后带上长宽比参数：    –ar 或者 —ar   –aspect 或者—aspect</td>
+<td>vibrant california poppies –ar 5:4</td>
+<td>默认比例是 1:1。  比例数需要是整数，比如 1.3:1 是不行的，但 13:10 可以。   长宽比会影响生成图像的形状和构图。当放大图片时，有些长宽比可能会发生轻微的改变。比如 –ar 16:9(1.75) 最终生成的图片可能是 7:4(1.74)。</td>
+</tr>
+<tr>
+<td>no</td>
+<td>在关键词后加空格，然后带上你不想 AI 生成的内容：  –no 或者 —no</td>
+<td>—no plants</td>
+<td>无</td>
+</tr>
+<tr>
+<td>随机程度</td>
+<td>在关键词后加空格，然后带数字：  –c 或者 —c  –chaos 或者—chaos</td>
+<td>—no 10</td>
+<td>可以输入 0 - 100，默认是 0</td>
+</tr>
+<tr>
+<td>风格化程度</td>
+<td>在关键词后加空格，然后带数字：  –s 或者 —s  –stylize 或者—stylize</td>
+<td>—s 50</td>
+<td>默认是 100</td>
+</tr>
+<tr>
+<td>细节丰富度</td>
+<td>在关键词后加空格带上参数：  –q 或者 —q  –quality 或者—quality</td>
+<td>woodcut birch forest –q .25</td>
+<td>默认为 1      -   仅支持 .25，.5 ，1 和 2，如果输入大于 2 会被降级到 2</td>
+</tr>
+<tr>
+<td>种子</td>
+<td>在关键词后加空格带上参数：  –seed 或者 —seed  –sameseed 或者—sameseed</td>
+<td>woodcut birch forest –seed 123</td>
+<td>输入完全一样的文字 prompt，并且加上 seed 参数，才能生成一样的图。  V1、2、3 还有 test、testp 版本即使加了这个 seed 也没法生成一模一样的图，只能生成近似的图。</td>
+</tr>
+<tr>
+<td>图片权重</td>
+<td>在关键词后加空格带上参数：  –iw 或者 —iw</td>
+<td>flowers.jpg birthday cake –iw .5</td>
+<td>默认为 1，区间是 0.5-2。这个参数在不同版本有不同的默认值和区间</td>
+</tr>
+</tbody></table>
+<p>注意：貌似目前只有–的写法管用</p>
+<p><strong>设置</strong></p>
+<p>使用&#x2F;settings进入设置</p>
+<p><strong>blend</strong></p>
+<p>  在 Discord 输入框里 &#x2F;blend，点击这个框，然后选择你电脑上的照片，添加完成后融合图片</p>
+<p><strong>Remix</strong></p>
+<p>  在 Remix 模式下，点击 Variation 按钮，会弹出一个 Prompt 输入框，输入完后，模型会在不改变第一张图的结构的情况下，增加 Prompt 里提到的内容</p>
+<p><strong>Image Prompts</strong></p>
+<ul>
+<li><p>你输入的是图片的 URL 地址，而且必须是公开可访问的地址。</p>
+</li>
+<li><p>图片格式仅支持 png、gif 和 jpg。</p>
+</li>
+<li><p>你最多只能放两张图的 URL，或者一张图的 URL + 一段话。</p>
+</li>
+</ul>
+<p><strong>Version</strong></p>
+<p>  在关键词后加空格，然后带上版本参数：</p>
+<ul>
+<li>–v 或者 —v</li>
+</ul>
+<p>  <code>vibrant california poppies --v 5</code></p>
+<p><strong>Aspect Ratios</strong></p>
+<p>  第一个参数是图片的长宽比</p>
+<ul>
+<li>–ar 或者 —ar</li>
+<li>–aspect 或者—aspect</li>
+</ul>
+<p>  <code>vibrant california poppies --ar 5:4</code></p>
+<p>  长宽比在业界也有最佳实践：</p>
+<ul>
+<li>5:4 多用于传统打印</li>
+<li>3:2 多用于照片打印</li>
+<li>7:4 比例接近于 HD TV 的比例，或者是智能手机</li>
+</ul>
+<p><strong>No</strong></p>
+<p>  这个参数的意思是不要什么，如果你不想让 AI 生成的图片里出现树，那就输入 plants 即可：</p>
+<p>  在关键词后加空格，然后带上你不想 AI 生成的内容：</p>
+<ul>
+<li>-no 或者 —no</li>
+</ul>
+<p>  <code>—no plants</code></p>
+<p><strong>Chaos</strong></p>
+<p>  控制模型的随机性，数字越高，约有可能产生一些意想不到的结果，数字越低一致性会更高。可以输入 0 - 100，默认是 0</p>
+<p>  当 Chaos 为 0 的时候，一致性会比较高，西瓜和猫头鹰的融合的方式，在四次输出里都比较类似，另外在单次输出里，4张图（四宫格）的风格相似度也比较高：</p>
+<p>  Chaos 为 100 的时候，你会发现多次输出的融合风格都不太一样，且即使是在单次输出里，4 张图的风格区别也比较大。如果你是想让 AI 帮你做一些探索性的事情，我建议初期可以将 Chaos 调高一点，结果会发散一些。</p>
+<p>  在关键词后加空格，然后带数字：</p>
+<ul>
+<li>-c 或者 —c</li>
+<li>-chaos 或者—chaos</li>
+</ul>
+<p>  <code>—c 10</code></p>
+<p><strong>Stylize</strong></p>
+<p>  控制生成图片的风格化程度。简单理解，这个值越低会更符合 prompt 的描述，数值越高艺术性就会越强，但跟 prompt 关联性就会比较弱。默认是 100</p>
+<p>  在关键词后加空格，然后带数字：</p>
+<ul>
+<li>-s 或者 —s</li>
+<li>-stylize 或者—stylize</li>
+</ul>
+<p>  <code>—s 50</code></p>
+<p><strong>Niji</strong></p>
+<p>  生成动漫类的图片</p>
+<p>  在关键词后加空格，然后带上版本参数：</p>
+<ul>
+<li>-niji或者 —niji</li>
+</ul>
+<p>  <code>vibrant california poppies --niji</code></p>
+<h1 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a><strong>Prompt</strong></h1><h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a><strong>框架</strong></h2><p>  表格总结下这个框架，各位可以根据不同场景有选择地使用。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Prompt 解释</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>比如水彩画、插画等等</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>描述下图片里的主体是什么，越多细节描述就越好，如果细节没有描述清楚，Midjourney 就会随机画给你。主体一般为两大类：  Who：人物就描述下性别、样貌、表情、神态、衣着等  What：实物的话就要描述它是什么、材质、颜色等等</td>
+</tr>
+<tr>
+<td>环境是怎样的？</td>
+<td>环境最主要的构成是以下几个：  Background 背景，这个一般分为两类：    ◦ 纯色：主要是颜色为主，或者渐变    ◦ 风景：比如室内背景、街景背景等  Light 灯光：光是从哪里投射到主体的？什么类型的光？  Weather 天气：如果是室外的场景可以适当加一个，这样会让你的照片更自然。 另外最好描述跟主体比较搭的背景，不然会很奇怪，如果你并不需要太特别的背景，那我建议你这一栏不用填，让 AI 帮你生成，一般不会太差。</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>主体和环境都确认后，就要想想如何构图。比如：  镜头的焦点在哪里？  主体的朝向是是哪里？  主体和背景的画面占比是怎样的？</td>
+</tr>
+<tr>
+<td>拍摄媒介是什么？</td>
+<td>这里有几个关键：  相机型号  胶卷  镜头  相机设置（如曝光、光圈等）</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>可以用 4W 记忆：  When：什么年代的风格？  Who：你想要谁的风格？（人或组织）  What：什么艺术类型的风格？或者艺术运动的风格？  Where：什么国家的风格？</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>这些类似照片的参数设定，比如：  清晰度  长宽比  详情请见参数相关的介绍。</td>
+</tr>
+</tbody></table>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a><strong>语法</strong></h3><p>  使用形容词+名词的词序来替换介词短语。</p>
+<ul>
+<li>hair flowing in the wind 应该改为 flowing hair</li>
+<li>a carrot for a nose 应该改为 carrot nose</li>
+</ul>
+<p>  使用非常具体的动词来替换介词短语。</p>
+<ul>
+<li><p>a girl with a flashlight 应该改为 a girl using a flashlight</p>
+</li>
+<li><p>a girl with a big smile on her face 应该改为 smiling girl</p>
+<ol>
+<li>big （大）这个词，到底指多大？越具象的大，对于 Midjourney 来说，效果越好，比如用 gigantic 就比用通用的 big 好。</li>
+<li>cats（猫）这个词是个复数，但到底是多少只？对于 Midjourney 来说，two cats（两只猫）比 cats 更明确。</li>
+</ol>
+</li>
+</ul>
+<p>你应该将你想要的东西说清楚，而不是告诉 Midjourney 不要什么，如果你想让 Midjourney 不生成某样东西，就需要用到 参数 — no。</p>
+<h2 id="摄影"><a href="#摄影" class="headerlink" title="摄影"></a><strong>摄影</strong></h2><table>
+<thead>
+<tr>
+<th>照片</th>
+<th>介绍</th>
+<th>适合场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GoPro</td>
+<td>运动相机视角</td>
+<td>自拍，或者运动场景</td>
+</tr>
+<tr>
+<td>Drone</td>
+<td>无人机视角</td>
+<td>适合航拍，或者天空景色</td>
+</tr>
+<tr>
+<td>polaroid</td>
+<td>宝丽来</td>
+<td>应该不需要解释了吧</td>
+</tr>
+<tr>
+<td>black and white film</td>
+<td>黑白照</td>
+<td>应该不需要解释了吧</td>
+</tr>
+<tr>
+<td>Kodachrome</td>
+<td>柯达生产的彩色幻灯片底片品牌</td>
+<td>具有非常高的颜色鲜艳度、对比度和持久性。</td>
+</tr>
+<tr>
+<td>shot on 8mm</td>
+<td>电影 8 毫米胶卷是一种便携式、简单易用的胶片，分辨率比较低</td>
+<td>适用于拍摄家庭和旅游等普通场景</td>
+</tr>
+<tr>
+<td>shot on 16mm</td>
+<td>电影 16 毫米胶卷</td>
+<td>16毫米和35毫米主要用于制作电影、纪录片和商业广告。</td>
+</tr>
+<tr>
+<td>shot on 35mm</td>
+<td>电影 35 毫米胶卷</td>
+<td>16毫米和35毫米主要用于制作电影、纪录片和商业广告。</td>
+</tr>
+<tr>
+<td>Microscopic</td>
+<td>显微镜</td>
+<td>适合一些需要放大观察的实物</td>
+</tr>
+<tr>
+<td>Fisheye Lens</td>
+<td>鱼眼镜头</td>
+<td>鱼眼镜头可以将整个场景拍摄在一个范围内，这种镜头的视角通常在 100° 至 180° 之间，可以呈现出非常夸张的透视效果。</td>
+</tr>
+<tr>
+<td>Wide Angle</td>
+<td>广角镜头</td>
+<td>适合风景照，可以让画面容纳更多内容</td>
+</tr>
+<tr>
+<td>Ultra-Wide Angle</td>
+<td>超广镜头</td>
+<td>适合风景照，可以让画面容纳更多内容</td>
+</tr>
+<tr>
+<td>Panorama</td>
+<td>全景</td>
+<td>适合风景照，可以让画面容纳更多内容</td>
+</tr>
+<tr>
+<td>Short Exposure</td>
+<td>短曝光</td>
+<td>通常用于追拍运动员、表演者或动物等，或者是拍摄需要快速决定瞬间捕捉的场景，例如拍摄火车、汽车、快速移动的车辆等。由于短曝光时间的限制，这种方式可以冻结运动物体并防止出现模糊的情况。</td>
+</tr>
+<tr>
+<td>Long Exposure</td>
+<td>长曝光</td>
+<td>在长曝光的拍摄中，快速移动的物体会出现轨迹，例如流星、车灯、瀑布等，这种方式会给照片创造出愉悦而神秘的氛围。此外，长曝光可以用于拍摄夜晚的大片景象，例如景色、城市夜景、星空等。</td>
+</tr>
+<tr>
+<td>Double Exposure</td>
+<td>双重曝光</td>
+<td>双重曝光的技术，可以创造出疏密有致和扭曲的、手绘和黑白艺术风格的照片。这种技术在拍摄人像、风景和建筑等领域十分受欢迎，因为它可以创造出独特的环境、浪漫和奇异感觉的图像。</td>
+</tr>
+<tr>
+<td>f2.8</td>
+<td>2.8 光圈</td>
+<td>在拍摄时，光圈值越大，相应的光线进入相机的量就越大，使得相机所获得的图像更亮。f:2.8  的值是一个比较大的光圈值，因此镜头具有很高的传光能力，适合在低光环境中使用。同时，在大光圈下可以创造出较小的景深效果，突出焦点主题而模糊背景或前景，从而产生轻柔的背景效果，适合拍摄人物肖像或商品照片等类似主题。</td>
+</tr>
+<tr>
+<td>Depth of Field</td>
+<td>景深</td>
+<td>是指在摄影中，被拍摄的画面中被认为是清晰的范围，也称为焦距深度区域，通常用来描述在照片中被认为是清晰的范围。</td>
+</tr>
+<tr>
+<td>Soft Focus</td>
+<td>柔焦</td>
+<td>指将相机镜头前加入一层特殊的滤镜，使被拍摄的主体轻微模糊以呈现柔和的美感效果。柔焦的视觉效果相较于深景和浅景来说更强调画面的情感主题，把重点集中在逐渐化解结构感的质感效果上，使它在照片上产生一种有点朦胧的妆容，刻画出一幅浪漫的画面。</td>
+</tr>
+<tr>
+<td>Deep Focus</td>
+<td>深焦</td>
+<td>将摄像头在一个较大的光圈下设置，保持整个画面都清晰锐利的技术。深景通常需要使用较小的焦距或较远的拍摄距离，以保持整个画面的清晰度，是类似于大景深的一种刻画效果。</td>
+</tr>
+<tr>
+<td>Shallow Focus</td>
+<td>浅焦</td>
+<td>将相机的光圈调整到一个相对较大的开口，以使摄影师可以根据需要保持相机在平面上的一个特定区域或主体清晰，而照片中的其他区域则变得模糊不清的技术。这种效果常用于摄影肖像，使人物在画面上的清晰度突出，并且画面背景透露轻微的模糊感，带来更具艺术美感的效果。</td>
+</tr>
+<tr>
+<td>Vanishing Point</td>
+<td>消失点</td>
+<td>消失点指的是位于无穷远处，用于视觉处理的一点。在透视绘画中，我们可以想象一个位于无穷远处的点，使得所有线条都向它聚拢。消失点可以帮助画家或摄影师达到精致的透视处理效果，从而创造出独特的空间感；</td>
+</tr>
+<tr>
+<td>Vantage Point</td>
+<td>俯瞰视角</td>
+<td>一般呈现的效果是照片中会有一个点是最高点，然后在此最高点斜上方拍摄</td>
+</tr>
+</tbody></table>
+<h2 id="动漫"><a href="#动漫" class="headerlink" title="动漫"></a><strong>动漫</strong></h2><p>  <strong>多种 Anime Style</strong></p>
+<p>  在 niji 5 模型下，默认生成的内容都会自带 Anime 风格，你可以在 prompt 语句的风格部分中添加国家、年代和创作者，还有一种方法是加动漫风格，根据 <a target="_blank" rel="noopener" href="https://www.midlibrary.io/midguide/niji-anime-version-of-midjourney-v4">Midlibrary</a><br>   的统计，Midjourney 支持的 Anime Style 超过 120 多种。</p>
+<table>
+<thead>
+<tr>
+<th>风格</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chibi Anime Style</td>
+<td>Chibi Anime Style  是指卡通迷你风格。是一种独特的绘画风格，特别受到日本动漫迷和卡通迷的喜爱。该风格的特点是将角色绘制成缩小版的样式，更加可爱和卡通化。在这种风格下，一些角色的头比正常比例大得多，人物的描绘也更加简化，并且动画在绘制时常常用短暂时间的快速动作来传递动态效果。</td>
+</tr>
+<tr>
+<td>Gakuen Anime Style</td>
+<td>Gakuen Anime Style是指在日本动漫中常见的一种风格，主要呈现校园生活与高中生活的情境。这种风格的作品通常涉及到学生会、文化节、恋爱、友情、竞争等校园主题，角色也往往是年龄在16-18岁之间的学生。</td>
+</tr>
+<tr>
+<td>Gekiga Anime Style</td>
+<td>Gekiga Anime Style是一种比较沉重、严肃的日本漫画风格，常常涉及社会问题、人生哲理等成人主题。这种风格的特点是以黑色、灰色为主色调，图像表现力较强，人物表情和行为也更加真实。</td>
+</tr>
+<tr>
+<td>J Horror Anime Style</td>
+<td>J Horror Anime Style是指恐怖题材的日本动漫风格，这种风格的作品常常涉及灵异、鬼怪、妖怪等超自然力量。</td>
+</tr>
+<tr>
+<td>Jidaimono Anime Style</td>
+<td>Jidaimono Anime Style是指日本历史剧题材的动漫风格，通常呈现古代日本的历史背景和文化特征。这种风格的作品往往描绘战争、家族斗争、忍者、武士道、神话传说等元素，以及用具有浓重日本特色的艺术表现手法来传递历史文化的内涵。</td>
+</tr>
+<tr>
+<td>Kawaii Anime Style</td>
+<td>Kawaii Anime Style是一种非常可爱和萌的动漫风格，通常呈现出像动物、小孩、角色等可爱的形象。这种风格的作品以颜色鲜明、轮廓粗糙、脸部表情夸张为主要特点。</td>
+</tr>
+<tr>
+<td>Mecha Anime Style</td>
+<td>Mecha Anime Style是以机器人为主题的日本动漫风格，通常呈现出大型机器、机甲战争、铁甲舞者等元素。这种风格的作品常常运用科幻、未来世界设定、大规模战斗等元素，以及动态的战斗场面和机器人设计，塑造出复杂的机器人世界和角色人物关系。</td>
+</tr>
+<tr>
+<td>Realistic Anime Style</td>
+<td>Realistic Anime Style是一种真实主义的日本动漫风格，通常呈现出秉持着更加现实和真实的人物形象和情节。这种风格的作品表现力很强，人物形象、环境场景等具有更多的细节，刻画出更为真实的情感世界。</td>
+</tr>
+<tr>
+<td>Semi-Realistic Anime Style</td>
+<td>Semi-Realistic Anime Style是在Realistic Anime Style和 Anime  Style之间的一个中间状态的风格，风格上比较真实，但是仍带有一定的动漫风格。这种风格的作品通常涉及到带有现实性的情节和人物，但是也常常运用到动漫风格的表现手法。</td>
+</tr>
+<tr>
+<td>Shoji Anime Style</td>
+<td>Shoji Anime Style是按照日本漫画家小学馆长生涯逐步形成的一种风格。这种风格的作品，通常以聚焦单个人物或小团体的故事为主线。其特点是画面明亮，颜色和谐，人物表情和行为搞笑夸张，情节简洁易懂。</td>
+</tr>
+<tr>
+<td>Kemonomimi Anime Style</td>
+<td>Kemonomimi Anime  Style是一种带有动物耳朵和尾巴等特征的日本动漫风格，通常以人类或近似人类的形象呈现，但却带有不同种类的动物耳朵和尾巴等特征。这种风格的作品与少女漫画(girls’ manga)、少年漫画(boys’ manga)等风格都有一定的关系。</td>
+</tr>
+</tbody></table>
+<p>  <strong>将图片转为动漫风格</strong></p>
+<p>  <code>panel from manga --iw 2</code></p>
+<h2 id="灯光"><a href="#灯光" class="headerlink" title="灯光"></a><strong>灯光</strong></h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>适合场景</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mood Lighting</td>
+<td>Mood lighting通常用于室内设计、酒店、餐厅及居家装饰等领域，旨在创造出一种特定的气氛和体验。</td>
+<td>氛围灯。主要是通过在特定的环境中改变灯光的颜色和亮度等参数来创造一种特定的氛围，以营造舒适、浪漫、放松等感觉。从技术实现上看，Mood lighting则着重于灯光的颜色和亮度控制，注重创造强烈的视觉效果。</td>
+</tr>
+<tr>
+<td>Moody Lighting</td>
+<td>Moody lighting通常用于影视制作、游戏界面、舞台表演等领域，设计的目的是为了增加故事情节的戏剧效果。</td>
+<td>情绪灯。它更强调在情感表达和为故事情节服务方面的应用，设计的目的是要把灯光与剧情完美结合起来，以展现角色的个性和情感世界。从技术实现上看，Moody lighting通常采用低亮度和大比例遮挡阴影，强调暗部的扫描，以增加画面的纹理和层次感。</td>
+</tr>
+<tr>
+<td>Studio Lighting</td>
+<td>Studio lighting 主要应用于商业摄影、时装摄影、艺术摄影、人像摄影、广告拍摄、电影和电视制作等领域，目的是通过精细的照明设计来突出主体的特点，达到最佳的拍摄效果。</td>
+<td>工作室灯光。是一种专门用于摄影工作室、电视和电影等领域的照明设计。它将光源和灯具放置在一个专用的摄影工作室中，通过精细的照明来创造出各种不同的氛围和场景效果，以满足各种不同的拍摄需求。</td>
+</tr>
+<tr>
+<td>Cove Lighting</td>
+<td>这种照明技术可以为房间提供均匀的光线，同时提高房间的美感和时尚度。</td>
+<td>壁角灯。是一种常用的室内照明设计，其灯具通常安装在墙壁或吊顶壁橱之间的壁角（即“壁橱”)中，从而营造出舒适、柔和、光滑的环境照明效果。</td>
+</tr>
+<tr>
+<td>Soft Lighting</td>
+<td>柔和照明效果可以降低照度，减轻视觉疲劳，创造出舒适的氛围和感觉。</td>
+<td>柔和照明。是指通过使用柔和、漫射的光线来创造出柔和、温暖的氛围效果。柔和的光线通常是通过使用的漫射灯具来实现的，较为常见的是壁灯、台灯、阅读灯等。</td>
+</tr>
+<tr>
+<td>Hard Lighting</td>
+<td>创造出刚硬、明亮的照明效果。硬朗照明常常用于展示场合，如美术馆、商场等环境，以突出展品或商品的特点和质感。</td>
+<td>硬朗照明。是指通过使用聚光灯、筒灯等灯具来聚焦到一个特定的区域中，其光线是相对集中而直接的。</td>
+</tr>
+<tr>
+<td>Volumetric Lighting</td>
+<td>适用于多种场景设计中，如电影、电视、视频游戏、动画等领域。它可以让场景更加逼真、立体，增加场景的紧张度和视觉层次感，并带来更具有表现力的视觉效果。</td>
+<td>体积光。是一种创造逼真渲染效果的照明效果技术。它通过在某些场景中添加灯光和各种视觉效果，如扩散、雾、粒子、阴影等，在照明场景中模拟空气中的粒子和尘埃微粒的现象，从而创造出动态、逼真、增强立体感和体积感的照明效果。</td>
+</tr>
+<tr>
+<td>Low-Key Lighting</td>
+<td>低键照明广泛应用于电影、电视、摄影等领域中，常常用来表现悬疑、恐怖、犯罪等要素。</td>
+<td>低键照明。指的是一种特殊的照明效果，该效果通常通过强烈的侧光或背光和阴影来创造高对比度的画面效果。低键照明的特点是明暗分明、阴影浓重、暗调占主导地位，常常构建一种紧张、神秘或黑暗的氛围。</td>
+</tr>
+<tr>
+<td>High-Key Lighting</td>
+<td>高键照明通常用于广告、情感电影、电视剧等中。</td>
+<td>高键照明。这种照明效果通过使用明亮、均匀的光线来避免明暗对比并压低阴影的出现。这种照明效果特点是亮度高、细节丰富，适用于需要传递愉悦、轻松和开心氛围的场景和环境。</td>
+</tr>
+<tr>
+<td>Epic Light</td>
+<td>Epic Light通常用于影视制作、游戏开发、演出等领域中，以营造出一种崇高、壮丽、宏伟的氛围，可以使观众在看到这些效果时，感到非常震撼和难以忘怀。史诗光线的特点是亮度较高、颜色鲜艳，通常用于表现重要的剧情点，如武器的激光、宇宙战争中的太阳和星星、幻想电影和电子游戏中的神秘光芒等。</td>
+<td>史诗光线。是一种创建极富戏剧性、威严感和视觉效果的照明技术，它可以在场景中添加非常亮烈、盛大、壮观的光线，以吸引观众注意力并增加场景的震撼力。</td>
+</tr>
+<tr>
+<td>Rembrandt Lighting</td>
+<td>能营造出一种柔和而神秘的效果。</td>
+<td>伦勃朗特效是一种起源于荷兰画家伦勃朗的照明效果，其主要特点是在人物脸部形成一个菱形的明暗分界线，嘴巴和下巴的一侧用阴影覆盖，人物的另一侧则被亮光照亮。</td>
+</tr>
+<tr>
+<td>Contre-Jour</td>
+<td>于光源位置造成的暗摄影整体的虚化，高对比度和鲜明的轮廓线可以带来文艺和抽象的氛围。</td>
+<td>逆光照明。指的是摄影师将光源放置在被摄物体的背后，令照射效果在镜头前面产生，形成被摄体轮廓明显的负片形态。</td>
+</tr>
+<tr>
+<td>Veiling Flare</td>
+<td></td>
+<td>透镜毛玻璃。指当光线从透镜或镜头穿过时，透过玻璃或镜头的反光或散射使得图像出现散射光线或最终成像看起来失真的现象。</td>
+</tr>
+<tr>
+<td>Crepuscular Rays</td>
+<td>Crepuscular Rays通常会在云层上形成明显的束状光线，给人以美丽的感觉。</td>
+<td>黎明、黄昏光线。也称为太阳光柱，是由日光在云层或尘埃中被反射形成的光线束。因为只有在日出和日落时才有足够的光线穿过云层或照射到恰当的夹角，所以Crepuscular Rays通常只出现在日出和日落时刻。</td>
+</tr>
+<tr>
+<td>Rays of Shimmering Light</td>
+<td></td>
+<td>闪烁光线。是指在光线散射和折射时出现的光线折射现象。在某些特定的环境下，光线经过不同密度和温度不同的气氛，会出现一种光线折射、散射的效果，从而形成闪烁光束效果。</td>
+</tr>
+<tr>
+<td>Godrays</td>
+<td></td>
+<td>神光。是一种由光线穿过云朵、树枝或其他障碍物时，形成的亮光条纹效果。Godrays通常在光线较强的时分出现，将光线分割成条纹状，形成一种梦幻般的效果，也被称为 “crepuscular rays” 的一种。</td>
+</tr>
+</tbody></table>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a><strong>类型</strong></h2><h3 id="Stock-Photo"><a href="#Stock-Photo" class="headerlink" title="Stock Photo"></a><strong>Stock Photo</strong></h3><ul>
+<li><p>第一部分（红色线）：描述你想要的内容主体。</p>
+</li>
+<li><p>第二部分（蓝色线）：描述主体背景&#x2F;环境。</p>
+</li>
+<li><p>第三部分（黄色线）：照片的焦点位置。</p>
+</li>
+<li><p>第四部分（绿色线）：照片的风格或者说是特殊要求。</p>
+<ol>
+<li>将你看到的不错的 stock photo 发给 Midjourney Bot（我还是以前面的那张握手照为例）</li>
+<li>右键复制该图片的链接，然后黏贴到输入框</li>
+<li>在链接后加个空格</li>
+<li>接着输入你想要的内容，比如将其中一个人的手换成黑人，一个人换成女性：</li>
+</ol>
+</li>
+</ul>
+<h3 id="Logo"><a href="#Logo" class="headerlink" title="Logo"></a><strong>Logo</strong></h3><p>  常见的品牌 Logo 一般分成以下 4 种形式：</p>
+<ul>
+<li>Graphic Logo：一般以图形为主，像 Apple、Twitter 以及 Midjourney 就是这种 logo。</li>
+<li>Lettermark Logo：一般用公司名字的首字母作为 logo 主体，像 Facebook、Tesla 还有 IBM （IBM 全称是 International Business Machines）都是用公司名的首字母作为 logo。</li>
+<li>Geometric Logo：几何图形组成的 logo，比如 Nike、百事可乐、万事达卡就是这个类型。</li>
+<li>Mascot Logo：以公司吉祥物为 logo 的相对来说比较少见，像米其林的 logo 就是吉祥物轮胎人，我最喜欢的烤鸡餐厅 Nando’s 就是一只🐔</li>
+</ul>
+<p><em>Graphic Logo</em></p>
+<p>  首先我们来分析一下 Graphic Logo 的特性：</p>
+<pre><code>1. Logo 类型：graphic logo
+2. Logo 图形描述：比如猫
+3. 风格：
+   1. 多为扁平化设计：flat
+   2. 多为矢量图形：vector graphic
+   3. 简洁：simple
+</code></pre>
+<p>  根据特性撰写的 prompt ，核心的关键就是将风格描述清楚：</p>
+<p>  <code>flat vector graphic (line) logo of cat, simple minimal</code></p>
+<p><em>Lettermark Logo</em><br>  AI 生成反而效果很一般</p>
+<pre><code>1. Logo 类型：lettermark
+2. Logo 图形描述：
+   1. 纯字母
+   2. 字体样式：可以按需加上喜欢的字体
+3. 风格：
+   1. 矢量
+   2. 简洁：simple minimal
+</code></pre>
+<p>根据特性撰写 prompt，语法并不重要，lettermark 不一样要按照语法要求，写成 lettermark logo of letter A：<br><code>letter A logo, lettermark, typography, vector simple minimal</code></p>
+<p><em>Geometric Logo</em></p>
+<ul>
+<li><p>循环重复</p>
+<p>如果你用的是 iPhone ，可以看看 iPhone 里的照片应用的 Logo，它也是一个 Geometric Logo ，而且它是椭圆图形旋转重复，最后组合成了一朵花的形状。拆解一下，关键词是：</p>
+<ol>
+<li>Logo 类型：geometric logo</li>
+<li>Logo 图形描述：<ol>
+<li>旋转重复：radial repeating</li>
+</ol>
+</li>
+<li>风格：<ol>
+<li>简洁：simple minimal</li>
+</ol>
+</li>
+</ol>
+<p>让我们来写一个类似的 prompt：</p>
+<p><code>Flat geometric vector geometric logo of flower, petals radial repeating, simple minimal </code></p>
+<ul>
+<li>渐变</li>
+</ul>
+<p>另一个常见玩法就是渐变色，如果你用的是电脑的浏览器是 Edge，可以去看看它的 Logo，它的 Logo 就是一个渐变色，然后是个浪的外观。拆解一下，关键词是：</p>
+<ol>
+<li>Logo 类型：geometric logo</li>
+<li>Logo 图像描述<ol>
+<li>浪的形状：curved wave shape</li>
+<li>蓝绿渐变：blue green gradient</li>
+</ol>
+</li>
+<li>风格：<ol>
+<li>简洁：simple minimal</li>
+</ol>
+</li>
+</ol>
+<p>让我们来写一个类似的 prompt：</p>
+<p><code>Flat geometric vector graphic logo of curved wave shape, blue green gradient ,simple minimal</code></p>
+</li>
+</ul>
+<p><em>Mascot Logo</em></p>
+<pre><code>1. Logo 类型：mascot logo
+2. Logo 主体描述：比如机器人 robot
+3. 风格：
+   1. 简洁：simple
+</code></pre>
+<p>  最后 prompt：</p>
+<p>  <code> a mascot vector logo of a robot, simple,</code></p>
+<p>  还有给一家泡面公司生成一个吉祥物又会怎样：</p>
+<p>  <code>simple mascot logo for a Instant Noodles company</code></p>
+<p><em>徽章 Logo</em></p>
+<p>  学校的校徽就是典型的徽章 Logo，使用方法也非常简单，只需要调整 Logo 类型为emblem 就可以，另外，跟徽章很搭的风格是 Vintage，两个都加上后 prompt 是这样的：</p>
+<p>  <code>emblem for a Instant Noodles company, vintage, simple minimal</code></p>
+<p>因为 Midjourney 对文字不是很擅长，我还要去掉 text。以下是我的 prompt，我在最后加了 no realistic color（没有颜色）text（字）。</p>
+<p>  <code>emblem for a university with large book, vintage --no realistic color text</code></p>
+<p><em>App</em></p>
+<p>  其实 App Logo 可以使用前一章提到的品牌 Logo，加上一个矩形边框就 OK 了，用 Figma 几步就能完成 😂，但如果你实在不想用 Figma ，也可以用 Midjourney 生成。</p>
+<p>  不妨看看你手机上的 App，想想 App Logo Prompt 应该怎么写？</p>
+<p>  我用前一章的案例，写了两个 prompt ，输出的结果如下：</p>
+<p>  关键是：</p>
+<pre><code>1. Logo 类型：mobile app logo
+2. Logo 图形描述：
+   1. iOS 的都是圆角矩形：squared with round edges
+   2. Logo 图形描述，比如 an icon for a Instant Noodles company
+3. 风格：
+   1. 延续使用上一章提到的方法即可，我这加了个 prp art
+</code></pre>
+<p>  <code>squared with round edges mobile app logo, an icon for a Instant Noodles company, pop art, by Paul Rand</code></p>
+<p>  在榜的 Logo 设计师，只有 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E4%BF%9D%E7%BD%97%C2%B7%E5%85%B0%E5%BE%B7">Paul Rand</a>和 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E7%B4%A2%E7%88%BE%C2%B7%E5%B7%B4%E6%96%AF">Saul Bass</a></p>
+<h2 id="画风"><a href="#画风" class="headerlink" title="画风"></a><strong>画风</strong></h2><h3 id="增加风格"><a href="#增加风格" class="headerlink" title="增加风格"></a><strong>增加风格</strong></h3><p>  右边边四个的 prompt 是这样的，我在 prompt 里加上了 De Stijl 。</p>
+<p>  <code>letter A logo, lettermark, typography, vector simple,De Stijl</code></p>
+<p>  De Stijl 是什么？</p>
+<p>  它是一个荷兰艺术运动，始于 1917 年，致力于简化视觉元素，包括直线，平面和基本色彩。</p>
+<p>  它的成员包括画家 Piet Mondrian 和 Theo van Doesburg 等人。De Stijl 的成员致力于将艺术与设计融合，以创造出具有实用性和功能性的美学。</p>
+<p>  De Stijl 的特点有：</p>
+<ul>
+<li>常常用几何图形进行设计，如矩形和直线。</li>
+<li>用色基本只用基本色彩，比如黑、白、灰、红、黄、蓝。</li>
+<li>追求平衡和和谐，强调形式和结构，不注重细节和表现力。</li>
+</ul>
+<h3 id="插画"><a href="#插画" class="headerlink" title="插画"></a><strong>插画</strong></h3><ul>
+<li>撰写 prompt 核心是「描述清楚你想要的画面」，「越详细」生成的图片就约符合你的要求。</li>
+<li>要想提高 prompt 撰写能力，最好的方法是临摹别人的作品，然后自己尝试写一写，最后再看看别人的 prompt。</li>
+<li>要想描述清楚画面，可以从以下几个角度进行解构：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Stock Image</th>
+<th>Logo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>stock photo of</td>
+<td>graphic logo of</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>two Asian men in suits shaking hands</td>
+<td>cat</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>in front of the main entrance of the office building</td>
+<td>null（该场景不需要填写）</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>focus on two hands</td>
+<td>null（该场景不需要填写）</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>background bokeh</td>
+<td>vector simple minimal</td>
+</tr>
+</tbody></table>
+<p>   在风格这块，有两个小技巧，可以使用艺术运动，以及艺术家名字。</p>
+<p>  <em>水彩</em></p>
+<p>  从本章开始，我们会进行一些更复杂的设计。水彩插画相对来说，应该会是小朋友比较喜欢的风格。</p>
+<p>  我们按照之前所学的模板来一步步写一下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>light watercolor</td>
+<td>水彩</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>a sleeping cat</td>
+<td>睡觉的猫</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>white background</td>
+<td>因为一般水彩都是在白纸上画，所以这里加了白色背景</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Studio Ghibli</td>
+<td>我很喜欢吉卜力风格所以加了个风格进去</td>
+</tr>
+</tbody></table>
+<p>  <em>百科插画</em></p>
+<p>  我们一起画一副玫瑰：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>botanical illustration</td>
+<td>植物学插画</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>types of rose</td>
+<td>我想画一组玫瑰科普插画</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>white background</td>
+<td>一般画在白纸上，所以白色背景也 OK</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Pierre-Joseph Redoute</td>
+<td>他是著名植物学家兼画家</td>
+</tr>
+</tbody></table>
+<p>  再画一组恐龙：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>dinosaur scientific illustration</td>
+<td>恐龙科学插画</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Tyrannosaurus</td>
+<td>霸王龙</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>white background</td>
+<td>一般画在白纸上，所以白色背景也 OK</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Andrey Atuchin</td>
+<td>他是著名俄罗斯古艺术家、生物学家、插画师</td>
+</tr>
+</tbody></table>
+<p>  <em>绘本插画</em></p>
+<p>  增加风格——艺术家，基本上就能做出一些不差的插画。我绘本看得不算多，但应该不少人知道彼得兔，我们试试画一副和彼得兔类似风格的小猫：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>illustration</td>
+<td>插画</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>A cat standing and running on two legs in a denim jacket</td>
+<td>我想画一只站立跑动的猫</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Beatrix Potter</td>
+<td>她是彼得兔的作者</td>
+</tr>
+</tbody></table>
+<p>  <em>风科技插画</em></p>
+<p>  坦率说来，这个并不是一种插画风，但作为互联网行业从业人士，我觉得这个还挺刚需的，但需要注意，经过我的测试，只要在最前面加入 tech illustration 也能生成类似的风格插画，但效果比较一般，当我加上 behance style 后（Behance 简单理解是一个设计师分享作品的网站，分享的作品多与科技产品有关，如 App 设计等），就变得精致和漂亮了：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>tech illustration</td>
+<td>科技风插画</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>man jogging by the waterfront</td>
+<td>一个在海边跑步的男人</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>style of behance</td>
+<td>增加后，感觉风格的确有变成 behance 风</td>
+</tr>
+</tbody></table>
+<p>  另外，我还做了一个大家比较熟悉的咖啡馆场景：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主体是什么？</td>
+<td>a lady drinking coffee at the computer in a cafe</td>
+<td>一位在咖啡店坐在电脑前喝咖啡的女士</td>
+</tr>
+</tbody></table>
+<p>  <em>填色插画</em></p>
+<p>  最后一个要介绍的也不知道是不是插画，但可能不少朋友见过，就是那种可以让你在上面用蜡笔，或水笔填色的填色插画。我觉得非常适合让小朋友自己生成填色插画，然后打印出来，让小朋友上色。以下是霸王龙的例子：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>clean coloring book page</td>
+<td>填色书籍</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Tyrannosaurus</td>
+<td>霸王龙</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>black and white</td>
+<td>黑白风格</td>
+</tr>
+</tbody></table>
+<h3 id="头像"><a href="#头像" class="headerlink" title="头像"></a><strong>头像</strong></h3><table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>Portraits &#x2F; Avatar</td>
+<td>如果你的原图是证件照，可以在 prompt 里加入「肖像」一词，或者「Avatar 头像」。</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>smiling cute boy, undercut hairstyle</td>
+<td>这里可以是选填，你可以先不加这个描述，只填其余 prompt，然后如果生成的图片不像你。那你就在这里加点描述下你的头像的词，一般就是性别、样貌、发型、配饰（比如眼镜、耳环等）、表情等。注意，尽量挑特征比较强的部分输入，特征对了，生成的图片基本会有几份像。</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>white background</td>
+<td>我这里保留了证件照的白底，你可以加一些实际场景的背景，比如餐厅之类的。</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>因为我们预先传了图片，图片是张证件照，所以不填</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>soft focus</td>
+<td>柔焦是指摄影中，使用柔焦镜头，使得拍摄的影像既清晰又柔和的效果。一般多在拍摄人像的时候使用，我在 prompt 里加上这个，可以使照片更柔和。你也可以不加。</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>3d render,Pixar style</td>
+<td>因为目标是生成 3d 照片，所以这里加了 3d render（3d 渲染），以及我喜欢的皮克斯风格</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>—iw 2</td>
+<td>iw 是一个文字和 img 权重参数。数值越大，就越像原图，关于这个值的介绍，可以看高级参数篇。</td>
+</tr>
+</tbody></table>
+<p>  如果生成的图片还是不像，你可以在 —iw 2 基础上，再加一个参数 —s 200 ，注意同时用两个参数时，中间不要有逗号。我发现加了 s 参数之后的确像了很多，我个人猜测是 s 和 iw 连用会进步一削弱 text 的权重。</p>
+<p>  s 是控制生成图片的风格化程度。简单理解，这个值越低会更符合 text prompt 的描述，数值越高艺术性就会越强，但跟 text prompt 关联性就会比较弱。所以如果你生成的图还是不像，就加大这个值，比如调到 500。</p>
+<p>  <em>动漫风头像</em></p>
+<table>
+<thead>
+<tr>
+<th>是什么风格？</th>
+<th>anime, Studio Ghibli</th>
+<th>目标是制作动漫风的头像，所以这里加了 anime（动漫），然后加了吉卜力风格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数</td>
+<td>—iw 2 —s 500</td>
+<td>注意同时用两个参数时，中间不要有逗号。</td>
+</tr>
+</tbody></table>
+<p>  <em>赛博朋克头像</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主体是什么？</td>
+<td>cyberpunk robot face, holographic VR glasses, holographic cyberpunk clothing</td>
+<td>加了脸的修饰，还有戴上 VR 眼镜，穿上赛博朋克风衣服</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>neon-lit cityscape background</td>
+<td>为了让图片更像是赛博朋克，就加了个霓虹灯城市背景，让其看起来更有赛博那味</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Cyberpunk, by Josan Gonzalez</td>
+<td>加了赛博朋克风格，以及我非常喜欢的赛博朋克画家 Josan Gonzalez</td>
+</tr>
+</tbody></table>
+<p>  基于某一次生成的结果进行二次 prompt 修改，理论上我认为是可以的，以赛博朋克头像为例，我先用上述 prompt 生成了四张图片，然后在消息的右上角点击 emoji 按钮（下图1），然后再输入框里（下图2）输入 envelope，然后点击信封 emoji（下图3），接着 bot 就会将 seed 号码发给你。</p>
+<h3 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a><strong>游戏</strong></h3><p><em>像素游戏</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>16-bit pixel art</td>
+<td>16 bit 风格</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>island in the clouds, ancient ruins</td>
+<td>天空岛，岛上有遗迹</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>null</td>
+<td>主题描述里其实已经有背景了（clouds），所以我就没重复写</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Zelda style</td>
+<td>因为是复刻塞尔达，所以加了塞尔达风格</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>null</td>
+<td>没有加任何参数</td>
+</tr>
+</tbody></table>
+<p><em>3D 游戏——场景</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>isometric clean pixel art</td>
+<td>这个风格我是问了 ChatGPT 的，不确定是不是叫这个。</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>robotics lab</td>
+<td>机器人实验室</td>
+</tr>
+</tbody></table>
+<p><em>3D 游戏——人物</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>blender 3d</td>
+<td>我测试了下，只写 3d 也行，但不知道为啥没那味，加了 blender（一个 3D 建模软件）就会好很多。</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Dark Vader, full body, cute</td>
+<td>达斯维达的全身像，然后我希望它生成一个 Q 版的</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>isometric</td>
+<td>等轴侧投影，这是一种用二维平面呈现三维物体的方法，效果可以看后面生成的图片，各位就知道是啥了。</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>Pixar, style of artstation</td>
+<td>我这里加了皮克斯风格，以及跟之前讲插画的那章加了 behance 类似，加了 artstation 后效果有变好（artstation 跟 behance 类似，也是设计师分享作品的一个网站，但主要分享 3d 或游戏相关的内容）</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>null</td>
+<td>没有加任何参数</td>
+</tr>
+</tbody></table>
+<p><em>3D 游戏——装备</em></p>
+<table>
+<thead>
+<tr>
+<th>类型是什么？</th>
+<th>blender 3d</th>
+<th>这个可加可不加</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主体是什么？</td>
+<td>star war, signet ring</td>
+<td>星球大战的印章戒指</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类型是什么？</th>
+<th>blender 3d, game sheet</th>
+<th>game sheet 简单说是那种游戏设定图，一般就是罗列各种装备</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主体是什么？</td>
+<td>lightsabers, paladin armor,</td>
+<td>希望生成一些列的星球大战的光剑和圣骑士盔甲</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>style of Hearthstone</td>
+<td>我很喜欢炉石传说的风格，也很好奇，中古风格，遇上未来题材，会生成怎样的设计</td>
+</tr>
+</tbody></table>
+<ol>
+<li>每次仅修改一个，其余变量不变。</li>
+<li>修改完一条，效果符合预期后，再修改下一个。</li>
+<li>我的经验优先修改主体内容，因为主体有的时候会影响其余的变量。</li>
+<li>如果想确定这个修改是否具有一致性，或者说是否符合要求，而不是恰巧符合，可以用相同的 prompt 再生成一次。不过因为没生成一次都要花钱，所以这个是可选项。</li>
+</ol>
+<p><em>游戏设定稿</em></p>
+<table>
+<thead>
+<tr>
+<th>类型是什么？</th>
+<th>concept design sheet</th>
+<th>设定稿</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主体是什么？</td>
+<td>female paladin, character design,</td>
+<td>生成一个女性圣骑士的角色设定</td>
+</tr>
+<tr>
+<td>背景是什么？</td>
+<td>white background</td>
+<td>设定稿一般都是白底的</td>
+</tr>
+</tbody></table>
+<h3 id="实物"><a href="#实物" class="headerlink" title="实物"></a><strong>实物</strong></h3><p><em>玩具</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>product photography</td>
+<td>产品照片</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Stormtrooper, plastic, toy</td>
+<td>继续用风暴兵和达斯维达为例。因为手办一般都是塑料玩具，所以加了两个词</td>
+</tr>
+<tr>
+<td>环境是怎样的？</td>
+<td>white background, studio lighting</td>
+<td>背景：为了突出手办，强调一下白色背景 灯光：增加一些灯光，突出产品</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>hand painted,</td>
+<td>我查了下，好像手办的风格应该只有手绘？</td>
+</tr>
+</tbody></table>
+<p><strong>增加风格——国家</strong></p>
+<p>说到手办，大家应该第一反应会想起日本，再介绍一个技巧，在 prompt 里加入 Japanese style 即可，拿圣女贞德作手办，以及之前做的 logo 作为例子：</p>
+<p><strong>增加权重</strong></p>
+<p><em>增加权重的方法有很多，最简单的方法就是调整顺序</em><br>，比如将上面的 Chinese Style 放到最前面（然后生成的结果就是眯眯眼 style 了 🤣，我生成了两次，第二次好一些）：</p>
+<p><em>第二种方法是 Slider 方法。</em></p>
+<p>你需要在 prompt 最后加 ，然后加上你需要调整权重的词语，接着再加 ，最后加上权重值。比如还是上面的例子，我想突出 Chinese style 但不想调整顺序，就可以改为：</p>
+<p><code>several sad cats watch a crying woman in a home-office environment with laptop:: several sad cats::0.5 crying woman::0.6 laptop::0.7</code></p>
+<p><strong>cowbell</strong>此时你可以重复重复再重复</p>
+<p><em>食物</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>food photography</td>
+<td>食物照片</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>steak, medium rare, steaming, light garnishes, sitting on plate</td>
+<td>牛排，五分熟，带蒸汽，仅有一点配菜，放在一个碟子上</td>
+</tr>
+<tr>
+<td>环境是怎样的？</td>
+<td>epic lighting</td>
+<td>为了突出食物，我加了个聚光灯</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>depth of field</td>
+<td>为了突出食物，我加了背景虚化，这是背景虚化的另一种表达（有景深）</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>null</td>
+<td>没有加任何参数</td>
+</tr>
+</tbody></table>
+<p><strong>善用灯光</strong></p>
+<ol>
+<li>主灯 (Key Light)：主灯是最基本的摄影灯光之一，通常放置在被拍摄物体的正前方或正侧方，用于照明主体，决定拍摄物体的主要明暗度。主灯通常是亮度最高的灯光。</li>
+<li>填光灯 (Fill Light)：填光灯用于弥补主灯照射的阴影部分，调整阴影的深浅程度，使照片明亮一些。通常填充光应该比主光暗一些，以避免出现过度曝光。</li>
+<li>逆光灯 (Back Light)：逆光灯用于照射被拍摄物体的背面，能够区别出主体和背景，并使物体轮廓变得清晰，常用于拍摄骨感、重物感和逆光效果的照片等。</li>
+<li>环境光 (Ambient Light)：环境光就是摄影环境自然产生的光线，包括室内照明、自然光、街灯等，它可以补充被拍摄物体的表面，提升照片的自然度和真实感。</li>
+<li>故事性灯光 (Special Light)：通常是为了制造出某种情境或者表达某种意义而使用的，例如烛光、亮光等。它们能够产生温暖、浪漫、神秘等场景和气氛，以探索和表达艺术的想象力和创造力。</li>
+</ol>
+<p>基于这些灯进行排列组合，你会得到不同使用场景的灯光。灯光的细节种类，可以去我归纳的 Lighting List 里查看，我这里主要分享一些常用和易用的场景灯光：</p>
+<h3 id="人物"><a href="#人物" class="headerlink" title="人物"></a><strong>人物</strong></h3><p><em>名人照片</em></p>
+<p>这算是 V5 的新特性，Midjourney 在 V5 版本认识很多名人，你可以在描述主体的时候，加上名人的名字，就可以生成该名人的照片</p>
+<p><em>老照片</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>photography</td>
+<td>照片</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>a group of Chinese people gathered around Darth Vader</td>
+<td>一群中国人在围观达斯维达</td>
+</tr>
+<tr>
+<td>环境是怎样的？</td>
+<td>on the street</td>
+<td>大街上</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>fuji film</td>
+<td>为了使得照片更有那味，增加了一个富士电影镜头</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>style of 1990s</td>
+<td>增加了一个 90s风格</td>
+</tr>
+</tbody></table>
+<p><strong>增加风格——年份</strong></p>
+<h3 id="风景"><a href="#风景" class="headerlink" title="风景"></a><strong>风景</strong></h3><p><em>微缩景观</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>Miniature faking</td>
+<td>迷你化仿效果（Miniature faking），也称为玩具世界效果，是一种通过特定的拍摄和处理技术来创造出一种缩小的场景感觉的方法。这种技术可以让实际大小的对象看起来像是一些小的塑料或金属模型。</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Train Lines</td>
+<td>火车线路</td>
+</tr>
+<tr>
+<td>环境是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>用什么镜头？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>style of Japanese</td>
+<td>我想要那种日本火车style，所以加了这个参数</td>
+</tr>
+</tbody></table>
+<p><em>建筑</em></p>
+<p>主体是什么？Structure by Dame Zaha Mohammad Hadid我的母校香港理工大学设计学院大楼的设计师 Dame Zaha Mohammad Hadid</p>
+<p><strong>改变相机与镜头</strong></p>
+<ol>
+<li>相机：支持不同种类的相机，比如运动相机 GoPro</li>
+<li>胶卷：比如 8 mm 电影胶卷</li>
+<li>镜头：比如 15 mm 镜头</li>
+<li>相机设置：比如长曝光、双重曝光</li>
+<li>景深 &amp; 焦点：比如深景、浅景，还有消失点</li>
+</ol>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a><strong>其他</strong></h3><p><em>贴纸</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>sticker</td>
+<td>制作 sticker</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Stormtrooper, cute</td>
+<td>Q 版的风暴兵</td>
+</tr>
+<tr>
+<td>环境是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>构图是怎样的？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>拍摄媒介是什么？</td>
+<td>null</td>
+<td>不太重要，就让 AI 自由发挥</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>vector</td>
+<td>考虑到时打印的，所以加了个 vector</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>null</td>
+<td>没有加任何参数</td>
+</tr>
+</tbody></table>
+<p><em>剪纸</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>layered paper art</td>
+<td>多层剪影</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Death Star, shadowbox, volumetric lighting,</td>
+<td>星球大战里的死星，但我不想仅仅单纯地搞一个剪影，我想做一个我常在某宝看到的那种带灯的剪影产品，所以加了个后面两个词，一个是指它是个剪影盒，另一个是带灯</td>
+</tr>
+</tbody></table>
+<p><em>邮票</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>vintage postage stamp</td>
+<td>复古邮票</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Stormtrooper, red ink,</td>
+<td>继续用风暴兵和达斯维达为例。然后我规定了邮票的颜色是红色</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>line engraving, intaglio</td>
+<td>传统邮票当年工艺是母版印刷，一般是那种线雕、版画风格，所以我这里加了这两个关键词，一个指线雕，一个指版画。</td>
+</tr>
+</tbody></table>
+<p><em>海报</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>movie poster</td>
+<td>电影海报</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Star War</td>
+<td>星球大战</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>studio ghibli, retro anime</td>
+<td>我想让 AI 搞一个吉卜力工作室复古漫画风的海报</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型是什么？</td>
+<td>advertising poster</td>
+<td>广告海报</td>
+</tr>
+<tr>
+<td>主体是什么？</td>
+<td>Darth Vader points his finger at the viewer</td>
+<td>达斯维达手指指着观众</td>
+</tr>
+<tr>
+<td>是什么风格？</td>
+<td>studio ghibli, retro anime</td>
+<td>照旧</td>
+</tr>
+</tbody></table>
+<p><strong>看到别人的图，想知道它的 prompt 是啥</strong></p>
+<p>Midjourney 支持图片转 prompt 功能。方法很简单。第一步在输入框输入 &#x2F;desctrible：</p>
+<h3 id="艺术家和摄影师"><a href="#艺术家和摄影师" class="headerlink" title="艺术家和摄影师"></a><strong>艺术家和摄影师</strong></h3><details> 
+<summary>艺术家</summary>
+  Aaron DouglasAaron Horkey
+  Aaron Jasinski
+  Aaron McGruder
+  Aaron Siskind
+  Abanindranath Tagore
+  Abbott Fuller Graves
+  Abbott Handerson Thayer
+  Abigail Larson
+  Abraham Ortelius
+  Ad Reinhardt
+  Adam Martinakis
+  Adelaide Labille-Guiard
+  Adolf Loos
+  Adolf Wölfli
+  Adolph Gottlieb
+  Adolph Menzel
+  Adonna Khare
+  Adriaen van de Venne
+  Afarin Sajedi
+  Affandi
+  Agnes Lawrence Pelton
+  Agnes Martin
+  Agnolo Bronzino
+  Ai Weiwei
+  Ajin
+  Akos Major
+  Al Hirschfeld
+  Al Williamson
+  Alain Laboile
+  Alan Aldridge
+  Alan Bean
+  Alan Fletcher
+  Alan Kenny
+  Alan Lee
+  Albert Bierstadt
+  Albert Edelfelt
+  Albert Joseph Moore
+  Albert Lebourg
+  Albert Pinkham Ryder
+  Albert Uderzo
+  Albert Watson
+  Alberto Giacometti
+  Alberto Vargas
+  Albrecht Durer
+  Albrect Altdorfer
+  Alec Soth
+  Alejandro Aravena
+  Aleksi Briclot
+  Alena Aenami
+  Alessandro Gottardo
+  Alessio Albi
+  Alex Grey
+  Alex Gross
+  Alex Horley-Orlandelli
+  Alex Howitt
+  Alex Janvier
+  Alex Katz
+  Alex Pardee
+  Alex Raymond
+  Alex Ross
+  Alex Scheffler
+  Alex Strohl
+  Alex Timmermans
+  Alex Toth
+  Alex Webb
+  Alexander Archipenko
+  Alexander Calder
+  Alexander Jansson
+  Alexander McQueen
+  Alexander Rodchenko
+  Alexandre Cabanel
+  Alexei Leonov
+  Alexei Savrasov
+  Alexej von Jawlensky
+  Alfonso Ossorio
+  Alfred Cheney Johnston
+  Alfred Eisenstaedt
+  Alfred Kubin
+  Alfred Sisley
+  Alfred Stieglitz
+  Alice Bailly
+  Alice Neel
+  Alison Bechdel
+  Aliza Razell
+  Allan Sekula
+  Alma Woodsey Thomas
+  Alois Arnegger
+  Alphonse Mucha
+  Alphonse Osbert
+  Alvar Aalto
+  Alvaro Siza Vieira
+  Alvin Lustig
+  Alyssa Monks
+  Amanda Sage
+  Ambrogio Lorenzetti
+  Ambrosius Bosschaert
+  Amedeo Modigliani
+  Amrita Sher-Gil
+  Amy Brown
+  Amy Judd
+  Amy Sherald
+  Amy Sillman
+  Amy Sol
+  Ana Mendieta
+  Anders Zorn
+  Ando Fuchs
+  Andre Breton
+  Andre Derain
+  André Franquin
+  André Kertész
+  Andre Masson
+  Andrea Kowch
+  Andrea Mantegna
+  Andrea Palladio
+  Andreas Achenbach
+  Andreas Gursky
+  Andreas Rocha
+  Andrei Rublev
+  Andrew Wyeth
+  Andrey Remnev
+  Andy Goldsworthy
+  Andy Kehoe
+  Andy Kubert
+  Andy Warhol
+  Angela Barrett
+  Angie Lewin
+  Angus McKie
+  Anish Kapoor
+  Anna Ancher
+  Anna Atkins
+  Anna Balbusso
+  Anna Dittmann
+  Anna Valdez
+  Anne Brigman
+  Anne Geddes
+  Anne Stokes
+  Anne Truitt
+  Anni Albers
+  Annibale Carracci
+  Annie Leibovitz
+  Annie Ovenden
+  Ansel Adams
+  Anselm Kiefer
+  Anthony van Dyck
+  Anton Pieck
+  Anton Semenov
+  Antoni Gaudi
+  Antoni Tapies
+  Antonio Allegri Da Correggio
+  Antonio Canova
+  Antonio Mancini
+  Antonio Stradivari
+  Antony Gormley
+  Apollonia Saintclair
+  Ara Güler
+  Arata Isozaki
+  Archibald Motley
+  Aries Moross
+  Aristarkh Lentulov
+  Aristide Maillol
+  Arkhip Kuindzhi
+  Armand Guillaumin
+  Arne Jacobsen
+  Arnold Böcklin
+  Arnold Newman
+  Aron Demetz
+  Aron Wiesenfeld
+  Arshile Gorky
+  Art Frahm
+  Art Spiegelman
+  Artemisia Gentileschi
+  Artgerm
+  Arthur Dove
+  Arthur Rackham
+  Arthur Szyk
+  Arthur Tress
+  Arthur Wardle
+  Arthur Wesley Dow
+  Asaf Hanuka
+  Asger Jorn
+  Asher Brown Durand
+  Ashley Wood
+  Atelier Olschinsky
+  Atey Ghailan
+  Aubrey Beardsley
+  Audemars Piguet
+  Audrey Kawasaki
+  August Macke
+  August Rodin
+  August Sander
+  Augustus Edwin Mulready
+  Augustus John
+  Austin Briggs
+  Austin Osman Spare
+  Axel Scheffler
+  Balthus
+  Banksy
+  Barbara Hepworth
+  Barbara Kruger
+  Barclay Shaw
+  Barkley L. Hendricks
+  Barnett Newman
+  Barry Blitt
+  Barry McGee
+  Barry Windsor-Smith
+  Bas Princen
+  Basil Gogos
+  Basil Wolverton
+  Bastien Lecouffe-Deharme
+  Beatrice Wood
+  Beatrix Potter
+  Beauford Delaney
+  Becky Cloonan
+  Beeple
+  Ben Quilty
+  Ben Shahn
+  Ben Templesmith
+  Benjamin West
+  Benjamin-Constant
+  Benozzo Gozzoli
+  Berenice Abbott
+  Bernard Buffet
+  Bernard Tschumi
+  Bernardo Bellotto
+  Bernardo Strozzi
+  Bernd Becher
+  Bernie Wrightson
+  Bert Hardy
+  Bert Stern
+  Berthe Morisot
+  Bertil Nilsson
+  Betsey Johnson
+  Bettina Rheims
+  Beverly Joubert
+  Bijou Karman
+  Bill Brandt
+  Bill Carman
+  Bill Durgin
+  Bill Gekas
+  Bill Henson
+  Bill Sienkiewicz
+  Bill Traylor
+  Bill Watterson
+  Bill Willingham
+  Billy Childish
+  Bjarke Ingels
+  Blek le Rat
+  Blutch
+  Bob Byerley
+  Bob Eggleton
+  Bob Layton
+  Bob Layzell
+  Bob Masse
+  Bob Ross
+  Boris Kustodiev
+  Boris Vallejo
+  Brandon Kidwell
+  Brandon Mably
+  Brandon Woelfel
+  Brassaï
+  Brett Walker
+  Brett Weston
+  Brian Bolland
+  Brian Despain
+  Brian Froud
+  Brian Jungen
+  Brian Kesinger
+  Brian Skerry
+  Brian Stelfreeze
+  Brice Marden
+  Bridget Bate Tichenor
+  Bridget Riley
+  Brooke DiDonato
+  Brooke Shaden
+  Brothers Hildebrandt
+  Bruce Catalano
+  Bruce Davidson
+  Bruce McLean
+  Bruce Munro
+  Bruce Nauman
+  Bruce Pennington
+  Bruce Timm
+  Bruce Weber
+  Bruno Munari
+  Bruno Walpoth
+  Buckminster Fuller
+  Buff Monster
+  Bunny Yeager
+  Burt Glinn
+  Butcher Billy
+  C215
+  Cai Guo-Qiang
+  Caitlin Hackett
+  Callie Fink
+  Calvin Klein
+  Camilla d'Errico
+  Camille Claudel
+  Camille Corot
+  Camille Pissarro
+  Camille Rose Garcia
+  Camille Walala
+  Canaletto
+  Candido Portinari
+  Caravaggio
+  Carl Andre
+  Carl Barks
+  Carl Faberge
+  Carl Gustav Carus
+  Carl Holsoe
+  Carl Kleiner
+  Carl Larsson
+  Carl Spitzweg
+  Carl Theodor Dreyer
+  Carleton Watkins
+  Carlo Crivelli
+  Carlos Cruz-Diez
+  Carmine Infantino
+  Carne Griffiths
+  Carol Hagan
+  Carolee Schneemann
+  Carolina Herrera
+  Carrie Mae Weems
+  Caspar David Friedrich
+  Catherine Opie
+  Catrin Welz-Stein
+  Cecil Aldin
+  Cecil Beaton
+  Cecily Brown
+  Cerith Wyn Evans
+  Chaim Soutine
+  Chantal Joffe
+  Charles Addams
+  Charles Angrand
+  Charles Blackman
+  Charles Burns
+  Charles Camoin
+  Charles Conder
+  Charles Dana Gibson
+  Charles Demuth
+  Charles E. Burchfield
+  Charles Eames
+  Charles Hinman
+  Charles Rennie Mackintosh
+  Charles Schulz
+  Charles Sheeler
+  Charles Vess
+  Charles-François Daubigny
+  Charles-Marie Dulac
+  Charley Harper
+  Charlotte Perriand
+  Chema Madoz
+  Chesley Bonestell
+  Chick Tract
+  Chiharu Shiota
+  Chiho Aoshima
+  Childe Hassam
+  Choi Jeong-hwa
+  Chris Bachalo
+  Chris Burkard
+  Chris Cunningham
+  Chris Foss
+  Chris Marker
+  Chris Moore
+  Chris Ofili
+  Chris Ryniak
+  Chris Ware
+  Christian Boltanski
+  Christian Lacroix
+  Christian Louboutin
+  Christian Marclay
+  Christian Riese Lassen
+  Christian Schad
+  Christo
+  Christoffer Relander
+  Christoph Niemann
+  Christophe Vacher
+  Christopher Bucklow
+  Christopher Richard Wynne Nevinson
+  Christopher Wool
+  Christopher Wren
+  Chuck Close
+  Chuck Jones
+  Chuck Sperry
+  Cicely Mary Barker
+  Cimabue
+  Cindy Sherman
+  Claes Oldenburg
+  CLAMP
+  Clara Peeters
+  Clarence H. White
+  Clarence Holbrook Carter
+  Claude Cahun
+  Claude Lorrain
+  Claude Monet
+  Cleve Gray
+  Clyde Caldwell
+  Clyfford Still
+  Coby Whitmore
+  Codex Seraphinianus
+  Coles Phillips
+  Colin McCahon
+  Collier Schorr
+  Conrad Roset
+  Constantin Brancusi
+  Cornelia Parker
+  Craig Davison
+  Craig Mullins
+  Cristobal Balenciaga
+  Cuno Amiet
+  Curt Swan
+  Cy Twombly
+  Cyrus Cuneo
+  Daidō Moriyama
+  Dale Chihuly
+  Damien Hirst
+  Dan Colen
+  Dan Flavin
+  Dan Hillier
+  Dan Matutina
+  Dan McPharlin
+  Dan Mumford
+  Dan Seagrave
+  Daniel Arsham
+  Daniel Buren
+  Daniel Clowes
+  Daniel Gerhartz
+  Daniel Libeskind
+  Daniel Merriam
+  Daniel Ridgway Knight
+  Danny Lyon
+  Dante Gabriel Rossetti
+  Daphne Odjig
+  Darrell K. Sweet
+  Darwyn Cooke
+  Dave Dorman
+  Dave Gibbons
+  Dave MacDowell
+  Dave McKean
+  Dave Perillo
+  Dave Sim
+  Dave Stevens
+  David A Hardy
+  David Adjaye
+  David Altmejd
+  David Burliuk
+  David Chipperfield
+  David Hockney
+  David Inshaw
+  David LaChapelle
+  David Mann
+  David McKee
+  David Milne
+  David Shrigley
+  David Welker
+  David Wojnarowicz
+  David Yarrow
+  David Zinn
+  Dawoud Bey
+  Dean Cornwell
+  Dean Ellis
+  Deana Lawson
+  Derek Jarman
+  Diane Arbus
+  Diane Dillon
+  Diego Rivera
+  Diego Velazquez
+  Dieter Rams
+  Dirk Braeckman
+  Do Ho Suh
+  Don Bluth
+  Don Hertzfeldt
+  Don Maitz
+  Don McCullin
+  Don Rosa
+  Donald Judd
+  Donatello
+  Donato Giancola
+  Donna Karan
+  Dora Maar
+  Doris Salcedo
+  Dorothea Lange
+  Dorothea Tanning
+  Dorothy Lathrop
+  Dr. Seuss
+  Drew Struzan
+  Duane Hanson
+  Duane Michals
+  Duccio Di Buoninsegna
+  Duro Olowu
+  Dustin Nguyen
+  E.H. Shepard
+  Eadweard Muybridge
+  Earl Norem
+  Earle Bergey
+  Ed Binkley
+  Ed Emberley
+  Ed Emshwiller
+  Ed Piskor
+  Ed Roth
+  Eddie Campbell
+  Edgar Degas
+  Edgard Maxence
+  Edmund Dulac
+  Edmund Leighton
+  Edouard Manet
+  Edouard Vuillard
+  Eduardo Kobra
+  Eduardo Paolozzi
+  Edvard Munch
+  Edward Burne-Jones
+  Edward Burtynsky
+  Edward Curtis
+  Edward Gorey
+  Edward Henry Corbould
+  Edward Hopper
+  Edward Lear
+  Edward Moran
+  Edward Robert Hughes
+  Edward Ruscha
+  Edward Steichen
+  Edward Weston
+  Edwin Austin Abbey
+  Edwin Deakin
+  Edwin Landseer
+  Edwin Lord Weeks
+  Eero Saarinen
+  Egon Schiele
+  Eiichiro Oda
+  Eikoh Hosoe
+  Eileen Agar
+  El Anatsui
+  El Greco
+  El Lissitzky
+  Elaine de Kooning
+  Elena Balbusso
+  Elena Kalis
+  Elia Locardi
+  Elie Saab
+  Elina Brotherus
+  Elisabeth Sonrel
+  Elizabeth Catlett
+  Elizabeth Murray
+  Elizabeth Shippen Green
+  Elke Vogelsang
+  Ellen Jewett
+  Ellen von Unwerth
+  Elliott Erwitt
+  Ellsworth Kelly
+  Elmer Bischoff
+  Elsa Beskow
+  Elsa von Freytag-Loringhoven
+  Emek
+  Emil Nolde
+  Emile Bernard
+  Emilio Pucci
+  Emily Carr
+  Emmanuel Lubezki
+  Emmanuel Shiu
+  Emmet Gowin
+  Emory Douglas
+  Enki Bilal
+  Erez Marom
+  Eric Carle
+  Eric Lacombe
+  Erich Heckel
+  Erik Kessels
+  Erik Madigan Heck
+  Erik Nitsche
+  Erik Spiekermann
+  Erin Hanson
+  Ernesto Neto
+  Ernie Barnes
+  Ernst Barlach
+  Ernst Fuchs
+  Ernst Haas
+  Ernst Haeckel
+  Ernst Ludwig Kirchner
+  Erté
+  Erwin Blumenfeld
+  Erwin Olaf
+  Erwin Wurm
+  Esao Andrews
+  Esteban Maroto
+  Esther Pissarro
+  Etel Adnan
+  Ethan Van Sciver
+  Eugène Atget
+  Eugene Atget
+  Eugene Boudin
+  Eugene Carriere
+  Eugene Delacroix
+  Eugene Grasset
+  Eugenio Recuenco
+  Eva Hesse
+  Eve Ventrue
+  Evelyn De Morgan
+  Ewin Wurm
+  Eyvind Earle
+  Ezra Stoller
+  FAILE
+  Fairfield Porter
+  Faith Ringgold
+  Fan Ho
+  Fang Lijun
+  Farel Dalrymple
+  Fay Godwin
+  Felice Casorati
+  Felicia Simion
+  Félicien Rops
+  Felipe Pantone
+  Ferdinand Hodler
+  Fernand Khnopff
+  Fernand Leger
+  Fernando Amorsolo
+  Fernando Botero
+  Fernando Chamarelli
+  Filip Dujardin
+  Filippino Lippi
+  Finn Juhl
+  Florence Henri
+  Florence Knoll
+  Ford Madox Brown
+  Fra Angelico
+  Frances Hodgkins
+  Francesca Woodman
+  Francesco Francavilla
+  Francis Bacon
+  Francis Coates Jones
+  Francis Picabia
+  Francisco Goya
+  Francisco Zurbaran
+  Franco Fontana
+  François Boucher
+  Francois Schuiten
+  Frank Auerbach
+  Frank Cho
+  Frank Frazetta
+  Frank Gehry
+  Frank Horvat
+  Frank Kozik
+  Frank Lloyd Wright
+  Frank Miller
+  Frank Quitely
+  Frank Stella
+  Frank Thorne
+  Frank Weston Benson
+  Frank Xavier Leyendecker
+  Franklin Booth
+  Frans Hals
+  Frans Lanting
+  Frans Masereel
+  Frans Snyders
+  Frantisek Kupka
+  Franz Kline
+  Franz Marc
+  Franz Sedlacek
+  Franz Stuck
+  Franz West
+  Franz Xaver Winterhalter
+  Fred Tomaselli
+  Frederic Bazille
+  Frederic Edwin Church
+  Frederic Remington
+  Frederick Leighton
+  Frederick Mccubbin
+  Frida Kahlo
+  Friedel Dzubas
+  Friedensreich Hundertwasser
+  Frieke Janssens
+  Fritz Henle
+  Fritz Scholder
+  Fumihiko Maki
+  Gabriele Munter
+  Gaetano Pesce
+  Gareth Pugh
+  Garry Trudeau
+  Garry Winogrand
+  Gary Baseman
+  Gary Bunt
+  Gary Larson
+  Gary Panter
+  Gaston Bussiere
+  Gaston La Touche
+  Gaston Lachaise
+  Gediminas Pranckevicius
+  Geertgen Tot Sint Jans
+  Gemma Correll
+  Gene Colan
+  Genndy Tartakovsky
+  Gentile Bellini
+  Geof Darrow
+  Geof Kern
+  Geoff Johns
+  Geoffrey Beene
+  George B. Bridgman
+  George Barris
+  George Bellows
+  George Birrell
+  George Condo
+  George Cruikshank
+  George Frederic Watts
+  George Grosz
+  George Hurrell
+  George Inness
+  George Luks
+  George Perez
+  George Segal
+  George Stubbs
+  Georges Braque
+  Georges Lacombe
+  Georges Melies
+  Georges Rouault
+  Georges Seurat
+  Georges Valmier
+  Georges Wolinski
+  Georgia O’Keeffe
+  Georgios Jakobides
+  Gerald Brom
+  Gerald Scarfe
+  Gerard David
+  Gerard van Honthorst
+  Gerda Taro
+  Gerda Wegener
+  Gerhard Richter
+  Gertrude Abercrombie
+  Gertrude Käsebier
+  Giacomo Balla
+  Gian Lorenzo Bernini
+  Gil Elvgren
+  Gil Kane
+  Gilbert Shelton
+  Gino Severini
+  Giorgio Armani
+  Giorgio de Chirico
+  Giorgio Morandi
+  Giorgione
+  Giotto Di Bondone
+  Giovanni Battista Piranesi
+  Giovanni Battista Tiepolo
+  Giovanni Bellini
+  Giuseppe Arcimboldo
+  Gjon Mili
+  Glen Keane
+  Glenn Fabry
+  Glenn Ligon
+  Go Nagai
+  Gordon Matta-Clark
+  Gordon Parks
+  Goro Fujita
+  Gottfried Helnwein
+  Govert Flinck
+  Graciela Iturbide
+  Graham Sutherland
+  Grandma Moses
+  Grant Wood
+  Gray Malin
+  Gray Morrow
+  Greg 'Craola' Simkins
+  Greg Hildebrandt
+  Gregory Crewdson
+  Grete Stern
+  Gucci
+  Guido Borelli da Caluso
+  Guido Crepax
+  Gustaf Tenggren
+  Gustav Klimt
+  Gustav Vigeland
+  Gustave Caillebotte
+  Gustave Courbet
+  Gustave Doré
+  Gustave Moreau
+  Guy Bourdin
+  Guy Buffet
+  Guy Coheleach
+  Guy Harvey
+  Guy Rose
+  Gwen John
+  H.R. Giger
+  Haider Ackermann
+  Hajime Isayama
+  Hajime Sorayama
+  Hal Foster
+  Hanna-Barbera
+  Hannah Höch
+  Hanne Darboven
+  Hans Baldung
+  Hans Bellmer
+  Hans Hofmann
+  Hans Holbein
+  Hans Memling
+  Harold Edgerton
+  Harriet Backer
+  Harry Callahan
+  Harry Clarke
+  Harry Seidler
+  Harvey Kurtzman
+  Hasui Kawase
+  Hayao Miyazaki
+  Hector Guimard
+  Heinrich Kley
+  Helen Frankenthaler
+  Helen Levitt
+  Helen Musselwhite
+  Helmut Newton
+  Hendrick Avercamp
+  Hendrick Goltzius
+  Hendrik Kerstens
+  Henri Cartier-Bresson
+  Henri de Toulouse-Lautrec
+  Henri Fantin-Latour
+  Henri Harpignies
+  Henri Le Sidaner
+  Henri Martin
+  Henri Matisse
+  Henri Rousseau
+  Henri-Edmond Cross
+  Henry Darger
+  Henry Fuseli
+  Henry Justice Ford
+  Henry Moore
+  Henry Moret
+  Henry Ossawa Tanner
+  Henry Scott Tuke
+  Henry Twachtman
+  Herb Lubalin
+  Herb Ritts
+  Herbert Bayer
+  Hergé
+  Herve Leger
+  Hieronymus Bosch
+  Hilla Becher
+  Hilma af Klint
+  Hipgnosis
+  Hippolyte Delaroche
+  Hiro Mashima
+  Hirohiko Araki
+  Hiromu Arakawa
+  Hiroshi Nagai
+  Hiroshi Sugimoto
+  Hiroshi Yoshida
+  Honoré Daumier
+  Hopare
+  Hope Gangloff
+  Horace Pippin
+  Horst P. Horst
+  Howard Chandler Christy
+  Howard Chaykin
+  Howard Finster
+  Howard Hodgkin
+  Howard Pyle
+  Hsiao-Ron Cheng
+  Hubert de Givenchy
+  Hubert Robert
+  Hubert Van Eyck
+  Hugh Ferriss
+  Hugh Kretschmer
+  Hugo Pratt
+  Hyacinthe Rigaud
+  I. M. Pei
+  Iain Faulkner
+  Ian Davenport
+  Ian McQue
+  Ian Miller
+  Ida Rentoul Outhwaite
+  Igor Morski
+  Ilse Bing
+  Ilya Kuvshinov
+  Ilya Mashkov
+  Ilya Repin
+  Imogen Cunningham
+  Ingmar Bergman
+  Ingrid Baars
+  Inio Asano
+  Iris Scott
+  Iris Van Herpen
+  Irma Stern
+  Irving Amen
+  Irving Penn
+  Isaac Julien
+  Isaac Levitan
+  Isaac Maimon
+  Isaac Mizrahi
+  Isaiah Zagar
+  Isamu Noguchi
+  Ismail Inceoglu
+  Issei Suda
+  Issey Miyake
+  Ithell Colquhoun
+  Ito Shinsui
+  Ivan Aivazovsky
+  Ivan Albright
+  Ivan Bilibin
+  Ivan Chermayeff
+  Ivan Kramskoi
+  Ivan Marchuk
+  Ivan Reis
+  Ivan Shishkin
+  Iwan Baan
+  Iwona Lifsches
+  J. Scott Campbell
+  J.C. Leyendecker
+  J.M.W. Turner
+  Jacek Yerka
+  Jack Butler Yeats
+  Jack Davis
+  Jack Gaughan
+  Jack Kirby
+  Jack Ohman
+  Jack Vettriano
+  Jack Whitten
+  Jackie Ormes
+  Jackson Pollock
+  Jacob Hashimoto
+  Jacob Jordaens
+  Jacob Lawrence
+  Jacob van Ruisdael
+  Jacques Callot
+  Jacques Henri Lartigue
+  Jacques Tardi
+  Jacques Villon
+  Jae Lee
+  Jakub Rozalski
+  James Abbott McNeill Whistler
+  James Bidgood
+  James Brooks
+  James Bullough
+  James C. Christensen
+  James Dyson
+  James Ensor
+  James Gillray
+  James Guthrie
+  James Jean
+  James McIntosh Patrick
+  James Montgomery Flagg
+  James Nachtwey
+  James Nares
+  James Paick
+  James Pradier
+  James R. Eads
+  James Rosenquist
+  James Stirling
+  James Turrell
+  James Van Der Zee
+  James Welling
+  Jamie Baldridge
+  Jamie Hewlett
+  Jamini Roy
+  Jan Berenstain
+  Jan Brett
+  Jan Brueghel The Elder
+  Jan Davidsz de Heem
+  Jan Matejko
+  Jan Saudek
+  Jan Švankmajer
+  Jan Toorop
+  Jan Van Eyck
+  Jan van Goyen
+  Jan-Baptist Bosschaert
+  Jasmine Becket-Griffith
+  Jason Edmiston
+  Jason Freeny
+  Jason Rhoades
+  Jasper Johns
+  Jay DeFeo
+  Jay Maisel
+  Jean Arp
+  Jean Beraud
+  Jean Delville
+  Jean Dubuffet
+  Jean Frederic Bazille
+  Jean Giraud
+  Jean Léon Gérôme
+  Jean Metzinger
+  Jean Nouvel
+  Jean Paul Gaultier
+  Jean Prouvé
+  Jean Tinguely
+  Jean-Antoine Watteau
+  Jean-Baptiste Monge
+  Jean-Baptiste Simeon Chardin
+  Jean-Baptiste-Camille Corot
+  Jean-François Millet
+  Jean-Honoré Fragonard
+  Jean-Louis Forain
+  Jean-Michel Basquiat
+  Jean-Pierre Gibrat
+  Jean-Pierre Vasarely
+  Jeanne Mammen
+  Jeff Easley
+  Jeff Koons
+  Jeff Lemire
+  Jeff Wall
+  Jeffrey Catherine Jones
+  Jeffrey Milstein
+  Jeffrey T. Larson
+  Jenny Holzer
+  Jenny Saville
+  Jeremy Geddes
+  Jeremy Lipking
+  Jerry Pinkney
+  Jerry Uelsmann
+  Jessie Willcox Smith
+  Jillian Tamaki
+  Jim Aparo
+  Jim Burns
+  Jim Dine
+  Jim Fitzpatrick
+  Jim Henson
+  Jim Lee
+  Jim Starlin
+  Jim Steranko
+  Jim Woodring
+  Jimmy Chin
+  Jimmy Choo
+  Jimmy Ernst
+  Joan Miro
+  Joan Mitchell
+  Joana Vasconcelos
+  Joaquín Sorolla
+  Joaquin Sorolla
+  Joe Cornish
+  Joe Fenton
+  Joe Jusko
+  Joe Kubert
+  Joe Shuster
+  Joel Meyerowitz
+  Joel Sartore
+  Joel-Peter Witkin
+  Johan Christian Dahl
+  Johannes Itten
+  Johannes Vermeer
+  John Atkinson Grimshaw
+  John Baldessari
+  John Batho
+  John Bauer
+  John Berkey
+  John Blanche
+  John Buscema
+  John Byrne
+  John Chamberlain
+  John Constable
+  John Currin
+  John Divola
+  John Duncan
+  John Dyer Baizley
+  John Everett Millais
+  John Frederick Kensett
+  John Frederick William Herschel
+  John French Sloan
+  John Galliano
+  John Harris
+  John Howe
+  John Hoyland
+  John James Audubon
+  John Kenn Mortensen
+  John Kricfalusi
+  John Lautner
+  John Martin
+  John Perceval
+  John Peter Russell
+  John Philip Falter
+  John Romita Jr
+  John Schoenherr
+  John Severin
+  John Singer Sargent
+  John Singleton Copley
+  John Tenniel
+  John Varvatos
+  John William Waterhouse
+  Jon Foster
+  Jon Klassen
+  Jonathan Adler
+  Jonathan Ive
+  Joost Swarte
+  Jørn Utzon
+  José Clemente Orozco
+  José Guadalupe Posada
+  Josef Albers
+  Josef Capek
+  Josef Koudelka
+  Josef Sudek
+  Joseph Beuys
+  Joseph Clement Coll
+  Joseph Cornell
+  Joseph Ducreux
+  Joseph Kosuth
+  Joseph Stella
+  Joseph Wright Of Derby
+  Josephine Wall
+  Josh Agle
+  Josh Kirby
+  Juan Gris
+  Judy Chicago
+  Jules Bastien-Lepage
+  Jules Feiffer
+  Jules Joseph Lefebvre
+  Julia Margaret Cameron
+  Julie Blackmon
+  Julie Mehretu
+  Julius Shulman
+  Jun Kaneko
+  Junji Ito
+  Junya Ishigami
+  Junya Watanabe
+  Kadir Nelson
+  Kaethe Butcher
+  Kaffe Fassett
+  Kara Walker
+  Karel Appel
+  Karel Thole
+  Karen Knorr
+  Karim Rashid
+  Karl Blossfeldt
+  Karl Bryullov
+  Karl Schmidt-Rottluff
+  Karol Bak
+  Kate Greenaway
+  Kate Spade
+  Käthe Kollwitz
+  Kathleen Lolley
+  Kathy Fornal
+  Katia Chausheva
+  Katsuhiro Otomo
+  Katsushika Hokusai
+  Katsuya Terada
+  Kawacy
+  Kawanabe Kyōsai
+  Kawase Hasui
+  Kay Nielsen
+  Kay Sage
+  Kazimir Malevich
+  Kazuki Takamatsu
+  Kazumasa Nagai
+  Kazuo Oga
+  Kazuo Shiraga
+  Kees Scherer
+  Kees van Dongen
+  Kehinde Wiley
+  Keiichi Tanaami
+  Keith Giffen
+  Keith Haring
+  Keith Mallett
+  Keith Negley
+  Kelly Freas
+  Kelly McKernan
+  Kelly Wearstler
+  Ken Price
+  Ken Sugimori
+  Kengo Kuma
+  Kenneth Noland
+  Kenny Scharf
+  Kent Monkman
+  Kevin Eastman
+  Kevin Maguire
+  Kiki Smith
+  Kikuji Kawada
+  Kilian Eng
+  Kitagawa Utamaro
+  Koloman Moser
+  Konstantin Chaykin
+  Konstantin Korovin
+  Konstantin Makovsky
+  Krenz Cushart
+  Kurt Schwitters
+  Kuzma Petrov-Vodkin
+  L. S. Lowry
+  Ladislav Sutnar
+  Larry Burrows
+  Larry Carlson
+  Larry Elmore
+  Larry Poons
+  Larry Sultan
+  Larry Zox
+  László Moholy-Nagy
+  Laure Albin Guillot
+  Laure Prouvost
+  Laurel Burch
+  Laurent Baheux
+  Laurent Grasso
+  Laurie Greasley
+  Laurie Lipton
+  Lawren Harris
+  Lawrence Alma-Tadema
+  Le Corbusier
+  Lebbeus Woods
+  Lee Bontecou
+  Lee Friedlander
+  Lee Jeffries
+  Lee Krasner
+  Lee Madgwick
+  Lee Miller
+  Leni Riefenstahl
+  Leo Lesser Ury
+  Léon Bakst
+  Leon Kossoff
+  Leonardo da Vinci
+  Leonetto Cappiello
+  Leonid Afremov
+  Leonor Fini
+  Leonora Carrington
+  LeRoy Neiman
+  Les Edwards
+  Levalet
+  Lewis Baltz
+  Lewis Hine
+  Li Wei
+  Liam Gillick
+  Limbourg brothers
+  Lin Fengmian
+  Lina Bo Bardi
+  Liniers
+  Lisa Frank
+  Lisa Pressman
+  Lisette Model
+  Liu Bolin
+  Liu Xiaodong
+  Liu Ye
+  Lois Dodd
+  Lois Van Baarle
+  Loretta Lux
+  Lorna Simpson
+  Lotte Reiniger
+  Louis Anquetin
+  Louis Comfort Tiffany
+  Louis Janmot
+  Louis Kahn
+  Louis Majorelle
+  Louis Rhead
+  Louis Sullivan
+  Louis Wain
+  Louis Welden Hawkins
+  Louise Bourgeois
+  Louise Dahl-Wolfe
+  Louise Nevelson
+  Lovis Corinth
+  Lubaina Himid
+  Luc Schuiten
+  Lucas Cranach The Elder
+  Lucas Foglia
+  Lucian Freud
+  Ludwig Bemelmans
+  Ludwig Mies van der Rohe
+  Luis Barragán
+  Luis Quiles
+  Luis Royo
+  Lygia Clark
+  Lynda Benglis
+  Lynsey Addario
+  Lyonel Feininger
+  Lyubov Popova
+  M. F. Husain
+  M.C. Escher
+  Mab Graves
+  Magdalena Abakanowicz
+  Maggi Hambling
+  MagnaLuna
+  Maia Flore
+  Makoto Shinkai
+  Malcolm Liepke
+  Malcolm Teasdale
+  Mamoru Oshii
+  Man Ray
+  Mandy Disher
+  Manolo Blahnik
+  Mao Hamaguchi
+  Marc Adamus
+  Marc Chagall
+  Marc Lagrange
+  Marc Muench
+  Marc Newson
+  Marc Quinn
+  Marc Silvestri
+  Marc Simonetti
+  Marcel Breuer
+  Marcel Broodthaers
+  Marcel Duchamp
+  Marcel Dzama
+  Marcin Sobas
+  Marco Mazzoni
+  Margaret Bourke-White
+  Margaret Keane
+  Margaret Macdonald Mackintosh
+  Margaret Olley
+  Margaret Preston
+  Maria Lassnig
+  Maria Sibylla Merian
+  Marianna Rothen
+  Marianne North
+  Marianne Stokes
+  Marianne von Werefkin
+  Marie Bracquemond
+  Marie Laurencin
+  Marie Severin
+  Marie Spartali Stillman
+  Mariko Mori
+  Marino Marini
+  Mario Botta
+  Mario Giacomelli
+  Mario Testino
+  Marion Peck
+  Marjane Satrapi
+  Marjorie Miller
+  Mark Allante
+  Mark Bradford
+  Mark Brooks
+  Mark Catesby
+  Mark Gertler
+  Mark Hearld
+  Mark Riddick
+  Mark Rothko
+  Mark Ryden
+  Mark Tobey
+  Marko Manev
+  Marlene Dumas
+  Marsden Hartley
+  Marsel van Oosten
+  Marta Bevacqua
+  Martha Rosler
+  Martin Creed
+  Martin Grelle
+  Martin Johnson Heade
+  Martin Parr
+  Martin Schoeller
+  Martin Schongauer
+  Martin Stranka
+  Martin Whatson
+  Martine Franck
+  Martiros Saryan
+  Mary Anning
+  Mary Blair
+  Mary Bradish Titcomb
+  Mary Cassatt
+  Mary Ellen Mark
+  Mary Fedden
+  Mary Heilmann
+  Mary Katrantzou
+  Mary Quant
+  Masaaki Sasamoto
+  Masaccio
+  Masamune Shirow
+  Masashi Kishimoto
+  Massimo Vignelli
+  Mat Collishaw
+  Mathew B. Brady
+  Mati Klarwein
+  Matt Groening
+  Matt Molloy
+  Matthäus Merian the Elder
+  Matthäus Merian the Younger
+  Matthias Grünewald
+  Matthias Jung
+  Maurice Chabas
+  Maurice de Vlaminck
+  Maurice Denis
+  Maurice Prendergast
+  Maurice Sendak
+  Maurizio Cattelan
+  Max Beckmann
+  Max Dupain
+  Max Ernst
+  Max Gimblett
+  Max Liebermann
+  Max Pechstein
+  Max Rive
+  Max Weber
+  Maxfield Parrish
+  Maxime Maufra
+  Maya Deren
+  mcbess
+  Mead Schaeffer
+  Mel Bochner
+  Méret Oppenheim
+  Meryl McMaster
+  Michael Bierut
+  Michael Deforge
+  Michael Heizer
+  Michael Kaluta
+  Michael Kenna
+  Michael Kidner
+  Michael Parkes
+  Michael Shainblum
+  Michael Wesely
+  Michael Whelan
+  Michal Karcz
+  Michel Gondry
+  Michelangelo
+  Mick Rock
+  Mickalene Thomas
+  Miho Hirano
+  Mika Ninagawa
+  Mikalojus Konstantinas Ciurlionis
+  Mike Allred
+  Mike Grell
+  Mike Hinge
+  Mike Kelley
+  Mike Mignola
+  Mike Zeck
+  Mikel Janin
+  Mikhail Nesterov
+  Mikhail Vrubel
+  Miki Asai
+  Mikko Lagerstedt
+  Miles Aldridge
+  Milo Manara
+  Milton Avery
+  Milton Caniff
+  Milton Glaser
+  Minor Martin White
+  Minoru Yamasaki
+  MirroredSea
+  Miss Aniela
+  Mitch O'Connell
+  Miuccia Prada
+  Moebius
+  Mona Hatoum
+  Morag Myerscough
+  Morris Hirshfield
+  Morris Louis
+  Morris Scott Dollens
+  Moshe Safdie
+  Moto Hagio
+  Mr. Brainwash
+  N.C. Wyeth
+  Nadav Kander
+  Nam June Paik
+  Nan Goldin
+  Naoki Urasawa
+  Naomi Okubo
+  Naoto Hattori
+  Naoya Hatakeyama
+  Natalia Goncharova
+  Nate Berkus
+  Nathan Wirth
+  Naum Gabo
+  Neal Adams
+  Nedroid
+  Neil Welliver
+  Nek Chand
+  Nell Dorr
+  Nicholas Hely Hutchinson
+  Nicholas Roerich
+  Nick Alm
+  Nick Brandt
+  Nick Knight
+  Nick Park
+  Nick Veasey
+  Nick Walker
+  Nicola Samori
+  Nicolae Grigorescu
+  Nicolaes Maes
+  Nicolas De Stael
+  Nicolas Poussin
+  Niki de Saint Phalle
+  Njideka Akunyili Crosby
+  Noah Bradley
+  Nobuyoshi Araki
+  Nora Heysen
+  Noriyoshi Ohrai
+  Norman Bluhm
+  Norman Foster
+  Norman McLaren
+  Norman Parkinson
+  Norman Rockwell
+  Norval Morrisseau
+  Nychos
+  Odd Nerdrum
+  Odilon Redon
+  Oglaf
+  Ohara Koson
+  Okuda San Miguel
+  Olafur Eliasson
+  Olive Cotton
+  Olivia Locher
+  Olivier Rousteing
+  Olivier Valsecchi
+  Ori Gersht
+  Orlando Arocena
+  Osamu Tezuka
+  Oscar de la Renta
+  Oscar Gustave Rejlander
+  Oscar Niemeyer
+  OSGEMEOS
+  Oskar Fischinger
+  Oskar Kokoschka
+  Oskar Schlemmer
+  Ossip Zadkine
+  Oswaldo Guayasamin
+  Otl Aicher
+  Otto Dix
+  Ozwald Boateng
+  Pablo Picasso
+  Paco Rabanne
+  Pam Hawkes
+  Paola Navone
+  Paulo Mendes da Rocha
+  Paolo Pellegrin
+  Paolo Roversi
+  Paolo Soleri
+  Paolo Uccello
+  Paolo Veronese
+  Parmigianino
+  Pascal Campion
+  Pat Steir
+  Patek Philippe
+  Patricia Piccinini
+  Patrick Demarchelier
+  Patrick Heron
+  Patrick Nagel
+  Patrick Woodroffe
+  Patty Maher
+  Paul Barson
+  Paul Cadmus
+  Paul Caponigro
+  Paul Catherall
+  Paul Cesar Helleu
+  Paul Cezanne
+  Paul Delaroche
+  Paul Delvaux
+  Paul Fusco
+  Paul Gauguin
+  Paul Gulacy
+  Paul Gustav Fischer
+  Paul Klee
+  Paul Laffoley
+  Paul Lehr
+  Paul McCarthy
+  Paul Nicklen
+  Paul Outerbridge
+  Paul Pope
+  Paul Rand
+  Paul Ranson
+  Paul Serusier
+  Paul Signac
+  Paul Strand
+  Paula Modersohn-Becker
+  Paula Rego
+  Paula Scher
+  Peder Severin Kroyer
+  Pegi Nicol MacLeod
+  Pentti Sammallahti
+  Pete Souza
+  Pete Turner
+  Peter Andrew Jones
+  Peter Bagge
+  Peter Blake
+  Peter Doig
+  Peter Dombrovskis
+  Peter Eisenman
+  Peter Elson
+  Peter Gric
+  Peter Henry Emerson
+  Peter Lik
+  Peter Lindbergh
+  Peter Max
+  Peter Mohrbacher
+  Peter Paul Rubens
+  Peter Robert Keil
+  Peter Saville
+  Peter Voulkos
+  Peter Zumthor
+  Petra Collins
+  Philip Guston
+  Philip Johnson
+  Philip-Lorca diCorcia
+  Philipp Otto Runge
+  Philippe Caza
+  Philippe Druillet
+  Philippe Halsman
+  Philippe Starck
+  Phlegm
+  Piero della Francesca
+  Piero Manzoni
+  Pierre Adolphe Vallette
+  Pierre Alechinsky
+  Pierre Bonnard
+  Pierre Cardin
+  Pierre Paulin
+  Pierre Puvis de Chavannes
+  Pierre Soulages
+  Pierre-Auguste Renoir
+  Piet Hein Eek
+  Piet Mondrian
+  Pieter Aertsen
+  Pieter Bruegel the Elder
+  Pieter Brueghel the Younger
+  Pieter Claesz
+  Pieter de Hooch
+  Pietro Bernini
+  Pietro Rotari
+  Pino Daeni
+  Piper Thibodeau
+  Pixelkitties
+  Pontormo
+  Pushead
+  Qi Baishi
+  Quentin Blake
+  Rachel Maclean
+  Rachel Ruysch
+  Rachel Whiteread
+  Raf Simons
+  Rafael Albuquerque
+  Rafal Olbinski
+  Ragnar Axelsson
+  Raimonds Staprans
+  Raina Telgemeier
+  Raja Ravi Varma
+  Ralph Albert Blakelock
+  Ralph Bakshi
+  Ralph Eugene Meatyard
+  Ralph Gibson
+  Ralph McQuarrie
+  Ralph Rucci
+  Ralph Steadman
+  Randolph Caldecott
+  Raoul De Keyser
+  Raoul Dufy
+  Raoul Hausmann
+  Raphael
+  Raphael Soyer
+  Ravi Zupa
+  Ray Caesar
+  Ray Collins
+  Ray Eames
+  Ray Harryhausen
+  Ray Johnson
+  Ray Metzker
+  Raymond Briggs
+  Raymond Leech
+  Raymond Pettibon
+  Raymond Swanland
+  Rebecca Guay
+  Rebecca Louise Law
+  Rebecca Sugar
+  Red Grooms
+  Regina Valluzzi
+  Reginald Marsh
+  Rei Kawakubo
+  Rem Koolhaas
+  Rembrandt
+  Remedios Varo
+  Ren Hang
+  René Burri
+  Rene Lalique
+  Rene Magritte
+  Renzo Piano
+  RETNA
+  Revok
+  Reylia Slaby
+  RHADS
+  Riccardo Tisci
+  Richard Anuszkiewicz
+  Richard Avedon
+  Richard Corben
+  Richard Dadd
+  Richard Diebenkorn
+  Richard Doyle
+  Richard Hamilton
+  Richard Hescox
+  Richard Kern
+  Richard Lindner
+  Richard Long
+  Richard Meier
+  Richard Misrach
+  Richard Neutra
+  Richard Pousette-Dart
+  Richard Powers
+  Richard Rogers
+  Richard Scarry
+  Richard Serra
+  Richard Tuttle
+  Rick Owens
+  Rineke Dijkstra
+  Rinko Kawauchi
+  ROA
+  Rob Gonsalves
+  Rob Liefeld
+  Robert Adams
+  Robert Bechtle
+  Robert Campin
+  Robert Capa
+  Robert Crumb
+  Robert Delaunay
+  Robert Frank
+  Robert Indiana
+  Robert Mangold
+  Robert Mapplethorpe
+  Robert McCall
+  Robert McGinnis
+  Robert Motherwell
+  Robert Rauschenberg
+  Robert Smithson
+  Robert Venturi
+  Robert Williams
+  Roberto Burle Marx
+  Roberto Cavalli
+  Roberto Ferri
+  Roberto Matta
+  Rockwell Kent
+  Rodney Matthews
+  Rodney Smith
+  Roger Ballen
+  Roger Deakins
+  Roger Dean
+  Roger Fenton
+  Roger Vivier
+  Rogier dan der Weyden
+  Roland Topor
+  Rolf Armstrong
+  Romare Bearden
+  Romero Britto
+  Ron English
+  Ron Haviv
+  Ron Mueck
+  Ron Walotsky
+  Roni Horn
+  Rosa Bonheur
+  Rose Wylie
+  Rosso Fiorentino
+  Roy Lichtenstein
+  Roz Chast
+  Rube Goldberg
+  Rufino Tamayo
+  Rumiko Takahashi
+  Russ Mills
+  Ruth Bernhard
+  Ryan Dyar
+  Ryan Hewett
+  Ryan McGinley
+  Ryan Ottley
+  Ryo Takemasa
+  Ryohei Hase
+  Sacha Goldberger
+  Sal Buscema
+  Sally Mann
+  Salomon van Ruysdael
+  Salvador Dali
+  Salvatore Ferragamo
+  Sam Francis
+  Sam Gilliam
+  Sam Guay
+  Sam Toft
+  Samuel Peploe
+  Sandra Chevrier
+  Sandro Botticelli
+  Sandy Skoglund
+  Sandy Welch
+  Santiago Calatrava
+  Santiago Caruso
+  Sarah Andersen
+  Sarah Lucas
+  Sarah Morris
+  Satoshi Kon
+  Satyajit Ray
+  Saul Bass
+  Saul Leiter
+  Saul Steinberg
+  Saul Tepper
+  Scarlett Hooft Graafland
+  Scott McCloud
+  Sebastiano Ricci
+  Sebastião Salgado
+  Sergei Eisenstein
+  Sergei Parajanov
+  Sergey Prokudin-Gorsky
+  Sergio Aragones
+  Sergio Toppi
+  Shaun Tan
+  Shawn Coss
+  Shawn Heinrichs
+  Sheila Hicks
+  Shepard Fairey
+  Sherree Valentine Daines
+  Shigeo Fukuda
+  Shigeru Ban
+  Shintaro Kago
+  Shirin Neshat
+  Shusei Nagaoka
+  Sidney Nolan
+  Sigmar Polke
+  Simon Bisley
+  Simon Denny
+  Simon Stalenhag
+  Simone Martini
+  Skottie Young
+  Slim Aarons
+  Smug
+  Sofonisba Anguissola
+  Sol Lewitt
+  Sonia Delaunay
+  Sophie Blackall
+  Sophie Gengembre Anderson
+  Sophie Taeuber-Arp
+  Sou Fujimoto
+  Spike Jonze
+  Stan Berenstain
+  Stan Brakhage
+  Stan VanDerBeek
+  Stanley Donwood
+  Stanley Spencer
+  Stanley William Hayter
+  Stanton Macdonald-Wright
+  Stefan Gesell
+  Stefan Sagmeister
+  Stefano Gabbana
+  Stella McCartney
+  Stephan Martiniere
+  Stephanie Law
+  Stephen Burrows
+  Stephen Gammell
+  Stephen Hillenburg
+  Stephen Shore
+  Stevan Dohanos
+  Steve Dillon
+  Steve Ditko
+  Steve McNiven
+  Steve Rude
+  Steven Holl
+  Steven Klein
+  Steven Meisel
+  Storm Thorgerson
+  Stuart Davis
+  Studio Ghibli
+  Sui Ishida
+  Susan Meiselas
+  Suzanne Valadon
+  Swoon
+  Syd Mead
+  Tadanori Yokoo
+  Tadao Ando
+  Takashi Miike
+  Takashi Murakami
+  Takato Yamamoto
+  Takehiko Inoue
+  Takeshi Obata
+  Tamara De Lempicka
+  Tami Bone
+  Tang Yau Hoong
+  Tara McPherson
+  Taras Loboda
+  Taro Okamoto
+  Tarsila do Amaral
+  Tatsuo Miyajima
+  Tatsuro Kiuchi
+  teamLab
+  Ted Degrazia
+  Ted Nasmith
+  Terence Cuneo
+  Terrence Malick
+  Terry Oakes
+  Terry Redlin
+  Terry Richardson
+  Tex Avery
+  Theo Van Doesburg
+  Theodor de Bry
+  Theodore Clement Steele
+  Théodore Géricault
+  Theodore Robinson
+  Theophile Steinlen
+  Thierry Mugler
+  Thom Browne
+  Thomas Barbèy
+  Thomas Cole
+  Thomas Eakins
+  Thomas Gainsborough
+  Thomas Hart Benton
+  Thomas Kinkade
+  Thomas Moran
+  Thomas Nast
+  Thomas Schaller
+  Thomas Struth
+  Tillie Walden
+  Tim Bradstreet
+  Tim Burton
+  Tim Flach
+  Tim Hawkinson
+  Tim Hildebrandt
+  Tim Walker
+  Tim White
+  Tina Barney
+  Tina Modotti
+  Tintoretto
+  Titian
+  Titus Kaphar
+  TJ Drysdale
+  Todd Hido
+  Todd McFarlane
+  Todd Schorr
+  Tom Bagshaw
+  Tom Hammick
+  Tom Lovell
+  Tom of Finland
+  Tom Thomson
+  Tom Tomorrow
+  Tom Wesselmann
+  Tomer Hanuka
+  Tomi Ungerer
+  Tommaso Masaccio
+  Tommy Hilfiger
+  Tomokazu Matsuyama
+  Toni Frissell
+  Tony Cragg
+  Tony DiTerlizzi
+  Tony Fitzpatrick
+  Tony Oursler
+  Tony Roberts
+  Tory Burch
+  Toshiko Okanoue
+  Toshio Saeki
+  Toshio Shibata
+  Tove Jansson
+  Toyo Ito
+  Tracey Emin
+  Tracie Grimwood
+  Travis Charest
+  Trey Ratcliff
+  Tristan Eaton
+  Troy Brooks
+  Tsuguharu Foujita
+  Tsutomu Nihei
+  Tyler Kirkham
+  Tyrus Wong
+  Uemura Shōen
+  Umberto Boccioni
+  Ursula von Rydingsvard
+  Utagawa Kuniyoshi
+  Valentin Serov
+  Valerie Hegarty
+  Vanessa Bell
+  Vania Zouravliov
+  Vasily Perov
+  Vasily Surikov
+  Vasily Vereshchagin
+  Vernor Panton
+  Veronika Pinke
+  Vhils
+  Victo Ngai
+  Victor Brauner
+  Victor Enrich
+  Victor Horta
+  Victor Moscoso
+  Victor Nizovtsev
+  Victor Vasarely
+  Vija Celmins
+  Vik Muniz
+  Viktor Vasnetsov
+  Vilhelm Hammershoi
+  Vince Colletta
+  Vince Ray
+  Vincent Callebaut
+  Vincent Van Gogh
+  Virgil Abloh
+  Virgil Finlay
+  Virginia Frances Sterrett
+  Vito Acconci
+  Vittore Carpaccio
+  Vittorio Matteo Corcos
+  Vivian Maier
+  Viviane Sassen
+  Vivienne Westwood
+  Vladimir Kush
+  W. Eugene Smith
+  W. Heath Robinson
+  Walker Evans
+  Wally Wood
+  Walt Simonson
+  Walter Crane
+  Walter Gropius
+  Walter Langley
+  Walter Launt Palmer
+  Wangechi Mutu
+  Warwick Goble
+  Wassily Kandinsky
+  Wayne Barlowe
+  Wayne Thiebaud
+  Weegee
+  Wenceslaus Hollar
+  Wendy Froud
+  Wes Anderson
+  Wes Wilson
+  Wifredo Lam
+  Will Barnet
+  Will Eisner
+  Willard Leroy Metcalf
+  Willem de Kooning
+  Willem Haenraets
+  Willem van Aelst
+  Willi Baumeister
+  William Blake
+  William Copley
+  William Eggleston
+  William Eugene Smith
+  William Glackens
+  William Gropper
+  William Henry Fox Talbot
+  William Hogarth
+  William Holman Hunt
+  William Klein
+  William Langson Lathrop
+  William McTaggart
+  William Merritt Chase
+  William Michael Harnett
+  William Morris
+  William Nicholson
+  William Powell Frith
+  William Steig
+  William Stout
+  William Tillyer
+  William Timlin
+  William Turner
+  William Wegman
+  William Wray
+  William Zorach
+  William-Adolphe Bouguereau
+  Winifred Knights
+  Winslow Homer
+  Winsor McCay
+  Wolf Kahn
+  Wolf Vostell
+  Wolfgang Suschitzky
+  Wolfgang Tillmans
+  Worthington Whittredge
+  Wu Guanzhong
+  Yaacov Agam
+  Yayoi Kusama
+  Yiannis Moralis
+  Yigal Ozeri
+  Yinka Shonibare
+  Yoh Nagao
+  Yohji Yamamoto
+  Yoji Shinkawa
+  Yoshitaka Amano
+  Yoshitomo Nara
+  Yoshiyuki Tomino
+  Yousuf Karsh
+  Yuko Shimizu
+  Yusaku Kamekura
+  Yuumei
+  Yves Klein
+  Yves Tanguy
+  Yvonne Coomber
+  Zac Posen
+  Zack Snyder
+  Zaha Hadid
+  Zanele Muholi
+  Zaria Forman
+  Zdzisław Beksiński
+  Zena Holloway
+  Zhang Huan
+  Zhang Kechun
+  Adrian Frutiger
+  Agostino Arrivabene
+  Aldo Rossi
+</details>
+
+
+
+<details>
+<summary>摄影师</summary>
+- Aaron Siskind
+- Alessio Albi
+- Alfred Eisenstaedt
+- Alfred Stieglitz
+- Alyssa Monks
+- André Kertész
+- Andreas Gursky
+- Andrew Wyeth
+- Anne Geddes
+- Annie Leibovitz
+- Ansel Adams
+- Arnold Newman
+- August Sander
+- Balthus
+- Berenice Abbott
+- Bill Brandt
+- Bill Henson
+- Brassaï (Gyula Halász)
+- Brooke Shaden
+- Bruce Davidson
+- Bruce Weber
+- Bunny Yeager
+- Carleton Watkins
+- Carrie Mae Weems
+- Chuck Close
+- Cindy Sherman
+- Clarence H. White
+- Claude Cahun
+- Danny Lyon
+- David LaChapelle
+- Dawoud Bey
+- Diane Arbus
+- Don McCullin
+- Dora Maar
+- Dorothea Lange
+- Duane Michals
+- Eadweard Muybridge
+- Edward Burtynsky
+- Edward Curtis
+- Edward Ruscha
+- Edward Steichen
+- Edward Weston
+- Elliott Erwitt
+- Ernst Haas
+- Eugene Atget
+- Fan Ho
+- Francesca Woodman
+- Frans Lanting
+- Garry Winogrand
+- Georges Melies
+- Gerda Taro
+- Gertrude Käsebier
+- Gordon Parks
+- Graciela Iturbide
+- Gregory Crewdson
+- Harold Edgerton
+- Helen Levitt
+- Helmut Newton
+- Hendrik Kerstens
+- Henri Cartier-Bresson
+- Hugh Kretschmer
+- Irving Penn
+- Jacques Henri Lartigue
+- James Nachtwey
+- James Van Der Zee
+- Jay Maisel
+- Jerry Uelsmann
+- Joel Peter Witkin
+- Joel Sartore
+- John Frederick William Herschel
+- Josef Sudek
+- Julia Margaret Cameron
+- Karl Blossfeldt
+- Larry Burrows
+- László Moholy-Nagy (photography)
+- Lee Jeffries
+- Lewis Hine
+- Lorna Simpson
+- Lynsey Addario
+- Margaret Bourke-White
+- Mario Testino
+- Martin Parr
+- Martin Schoeller
+- Mary Ellen Mark
+- Mathew B. Brady
+- Méret Oppenheim
+- Meryl McMaster
+- Mick Rock
+- Miles Aldridge
+- Minor Martin White
+- Nan Goldin
+- Nathan Wirth
+- Olive Cotton
+- Olivier Rousteing
+- Patrick Demarchelier
+- Paul Nicklen
+- Paul Outerbridge
+- Paul Strand
+- Pete Souza
+- Peter Dombrovskis
+- Peter Henry Emerson
+- Peter Lik
+- Peter Lindbergh
+- Philip-Lorca diCorcia
+- Philippe Halsman
+- Ralph Gibson
+- Richard Avedon
+- Robert Adams
+- Robert Bechtle
+- Robert Capa
+- Robert Frank
+- Robert Mapplethorpe
+- Roger Fenton
+- Ruth Bernhard
+- Sally Mann
+- Sebastião Salgado
+- Shirin Neshat
+- Stefan Gesell
+- Steven Meisel
+- Susan Meiselas
+- Vivian Maier
+- Vivian Maier
+- Viviane Sassen
+- Walker Evans
+- Wes Anderson
+- William Eggleston
+- William Eugene Smith
+- William Henry Fox Talbot
+- Yinka Shonibare
+- Yousuf Karsh
+- Man Ray
+- Robert Mapplethorpe
+</details>
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>House Yeung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.whyeung.eu.org/Midjourney_Handbook/" title="Midjourney使用手册">https://www.whyeung.eu.org/Midjourney_Handbook/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/AIGC/" rel="tag"># AIGC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Prompt_Engineering_for_ChatGPT.md/" rel="prev" title="Prompt Engineering for ChatGPT">
+      <i class="fa fa-chevron-left"></i> Prompt Engineering for ChatGPT
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IPV6_Remote/" rel="next" title="利用公网ipv6搭建外网远程访问服务">
+      利用公网ipv6搭建外网远程访问服务 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Upscale"><span class="nav-text">Upscale</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variation"><span class="nav-text">Variation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E7%94%9F%E6%88%90"><span class="nav-text">重新生成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prompt"><span class="nav-text">Prompt</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6"><span class="nav-text">框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%84%E5%BD%B1"><span class="nav-text">摄影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%BC%AB"><span class="nav-text">动漫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%81%AF%E5%85%89"><span class="nav-text">灯光</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-text">类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stock-Photo"><span class="nav-text">Stock Photo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logo"><span class="nav-text">Logo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%BB%E9%A3%8E"><span class="nav-text">画风</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E9%A3%8E%E6%A0%BC"><span class="nav-text">增加风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E7%94%BB"><span class="nav-text">插画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%83%8F"><span class="nav-text">头像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F"><span class="nav-text">游戏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%89%A9"><span class="nav-text">实物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E7%89%A9"><span class="nav-text">人物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A3%8E%E6%99%AF"><span class="nav-text">风景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%89%BA%E6%9C%AF%E5%AE%B6%E5%92%8C%E6%91%84%E5%BD%B1%E5%B8%88"><span class="nav-text">艺术家和摄影师</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="House Yeung"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">House Yeung</p>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+</div>
+
+
+   <div class="feed-link motion-element">
+     <a href="/atom.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HouseYeung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HouseYeung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw social-icon"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chiachvn@protonmail.com" title="E-Mail → mailto:chiachvn@protonmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw social-icon"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/yjj0708" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;yjj0708" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw social-icon"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/220180251" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;220180251" rel="noopener" target="_blank"><i class="fas fa-book fa-fw social-icon"></i>豆瓣</a>
+      </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-telegram fa-fw social-icon" data-qr="/images/tele.jpg"></i>telegram</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/tele.jpg" alt="telegram QR Code">
+      </div>
+    </div>
+  </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-qq fa-fw social-icon" data-qr="/images/qq.jpg"></i>QQ</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/qq.jpg" alt="QQ QR Code">
+      </div>
+    </div>
+  </span>
+  </div>
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/MacOS_Run_Windows_Games/" title="在Mac OS运行Windows游戏" target="_blank">在Mac OS运行Windows游戏</a>
+          </li>
+        
+          <li>
+            <a href="/Baichuan_2_deploy/" title="百川2大模型本地部署" target="_blank">百川2大模型本地部署</a>
+          </li>
+        
+          <li>
+            <a href="/Moonlight_and_Zerotier/" title="利用Moonlight和Zerotier高画质低延迟串流PC" target="_blank">利用Moonlight和Zerotier高画质低延迟串流PC</a>
+          </li>
+        
+          <li>
+            <a href="/IOS_Mod_App/" title="在IOS设备上安装Mod App" target="_blank">在IOS设备上安装Mod App</a>
+          </li>
+        
+          <li>
+            <a href="/copilot/" title="GitHub Copilot前瞻" target="_blank">GitHub Copilot前瞻</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">House Yeung</span>
+
+
+
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT</a> 强力驱动
+  </div>
+
+  <!-- 网站运行时间的设置 -->
+  <span id="timeDate">载入天数...</span>
+  <!--       <span id="times">载入时分秒...</span> -->
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("01/29/2023 20:00:00"); //此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+<!--      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒."; -->
+      }
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '1bc492ee578abeb05eb9',
+      clientSecret: 'bb1b4ace40b99384c011b62ef1ab7983bf4abfe2',
+      repo        : 'Blog_Comment',
+      owner       : 'HouseYeung',
+      admin       : ['HouseYeung'],
+      id          : '91f521245a6b50a005f96eb41b5d684f',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

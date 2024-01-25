@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.whyeung.eu.org","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="ChatGPT提示语工程介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prompt Engineering for ChatGPT">
+<meta property="og:url" content="https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/index.html">
+<meta property="og:site_name" content="星灯博客">
+<meta property="og:description" content="ChatGPT提示语工程介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-14T16:26:46.000Z">
+<meta property="article:modified_time" content="2023-04-14T16:26:46.000Z">
+<meta property="article:author" content="House Yeung">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="ChatGPT">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Prompt Engineering for ChatGPT | 星灯博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LPQBZDMF"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-35LPQBZDMF');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="星灯博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星灯博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Whyeung Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="House Yeung">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星灯博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Prompt Engineering for ChatGPT
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-04-15 00:26:46" itemprop="dateCreated datePublished" datetime="2023-04-15T00:26:46+08:00">2023-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tutorials/" itemprop="url" rel="index"><span itemprop="name">Tutorials</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span></span>
+            </span>
+<!--
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>NaN:aN</span>
+            </span> 
+-->
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>ChatGPT提示语工程介绍</center>
+
+<span id="more"></span>
+<br />
+<br />
+
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><ul>
+<li><p><strong>问答问题</strong></p>
+<p><strong><strong>To do and Not To do</strong></strong></p>
+<p>Instead of just saying what not to do, say what to do instead. 与其告知模型不能干什么，不妨告诉模型能干什么。</p>
+</li>
+<li><p><strong>基于示例回答</strong></p>
+<p><strong><strong>增加示例</strong></strong></p>
+<p>如果你无法用文字准确解释问题或指示，你可以在 prompt 里增加一些案例</p>
+</li>
+<li><p><strong>推理</strong></p>
+</li>
+<li><p><strong>写代码</strong></p>
+<ol>
+<li>撰写招聘信息</li>
+<li>撰写电商平台的货物描述</li>
+<li>撰写短视频脚本</li>
+<li>甚至让它写代码都可以</li>
+</ol>
+<p>在 prompt 最后，增加一个代码的引导，告知 AI 我已经将条件描述完了，你可以写代码了。同样的道理，如果你想让 AI 写 Python 代码，那 import 会是比较好的提示。但需要注意，这个只是告知 AI 可以写代码了，并不能告知 AI 写何种代码，你仍然需要在 prompt 里增加提示，告知 AI 要生成何种语言的代码。</p>
+</li>
+<li><p><strong>改写内容</strong></p>
+<p>除了从 0 生成内容外，你也可以先给 AI 一段已经写好的内容，然后让 AI 对其进行修改，让 AI 帮你将内容改得更好。实际的场景有如：</p>
+<ol>
+<li>翻译：将中文文档翻译成英文，亦或者将英文翻译成中文。关于翻译，我还想强调，像 ChatGPT 除了能翻译人类的语言外，还能翻译编程语言，比如将 Python 代码翻译成 Haskell 代码。</li>
+<li>修改：修改内容的语法，甄别内容里的错别字。</li>
+<li>润色：润色文章，将内容改成另一种风格。</li>
+</ol>
+<p><code>Please rewrite the following sentences to make them easier to understand.</code></p>
+<p><strong>增加 Role（角色）或人物</strong></p>
+<p>就是在 prompt 里增加一些 role（角色）相关的内容，让 AI 生成的内容更符合你的需求。</p>
+<p>比如还是上面那个 rewrite 的例子，我在例子前加入这样的一段话，我让 AI 假设自己是一个小学老师，并且很擅长将复杂的内容转变成 7、8岁小朋友也能听懂的话，然后再改写这段话：</p>
+</li>
+<li><p><strong>信息解释</strong></p>
+<ol>
+<li>解释代码：比如你看到一段 Python 的代码，但你看不懂，你可以让 AI 解释下代码的含义。</li>
+<li>解释论文：看某篇论文看不懂，或者论文里的某一段看不懂，你也可以让 AI 解释。</li>
+</ol>
+</li>
+<li><p><strong>信息总结</strong></p>
+<ol>
+<li>信息总结：顾名思义，就是对一堆信息信息进行总结。</li>
+<li>信息解释：这个跟改写内容有点像，但这个更偏向于解释与总结。下一章会给大家介绍更多的例子。</li>
+<li>信息提取：提取信息里的某一段内容，比如从一大段文字中，找到关键内容，并分类。</li>
+</ol>
+<p><strong><strong>使用 ”“” 符号将指令和需要处理的文本分开</strong></strong></p>
+<p>可以用 “”“ 将指令和文本分开。根据我的测试，如果你的文本有多段，增加 ”“” 会提升 AI 反馈的准确性（这个技巧来自于 OpenAI 的 API <a target="_blank" rel="noopener" href="https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api">最佳实践文档</a>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Please summarize the following sentences to make them easier to understand.</span><br><span class="line"></span><br><span class="line">Text: &quot;&quot;&quot;</span><br><span class="line">OpenAI is an American artificial intelligence (AI) research laboratory consisting of the non-profit OpenAI Incorporated (OpenAI Inc.) and its for-profit subsidiary corporation OpenAI Limited Partnership (OpenAI LP). OpenAI conducts AI research with the declared intention of promoting and developing a friendly AI. OpenAI systems run on the fifth most powerful supercomputer in the world.[5][6][7] The organization was founded in San Francisco in 2015 by Sam Altman, Reid Hoffman, Jessica Livingston, Elon Musk, Ilya Sutskever, Peter Thiel and others,[8][1][9] who collectively pledged US$1 billion. Musk resigned from the board in 2018 but remained a donor. Microsoft provided OpenAI LP with a $1 billion investment in 2019 and a second multi-year investment in January 2023, reported to be $10 billion.[10]</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>信息提取</strong></p>
+<ol>
+<li>将一大段文字，甚至网页里的内容，按要求转为一个表格。按照这个思路你可以尝试做一个更智能的，更易懂的爬虫插件。</li>
+<li>按照特定格式对文章内的进行信息归类。</li>
+</ol>
+<p><strong><strong>通过示例来阐述需要输出的格式</strong></strong></p>
+<p>假设你想让 AI 总结一篇非常非常长的文章，并且按照特定格式给你总结，那你可以在文章前面明确输出的格式。它的意思其实是让 ChatGPT 按 Topic 总结，每个 Topic 里按照无序列表（就是里面那个 -）将每个 Topic 的主要观点罗列出来。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Summarize the main points of the following speech</span><br><span class="line">Use the following format:</span><br><span class="line">Topic 1: &lt;topic_name_1&gt;</span><br><span class="line">- &lt;point_1&gt;</span><br><span class="line">..</span><br><span class="line">Topic 2: &lt;topic_name_2&gt;</span><br><span class="line">- &lt;point_1&gt;</span><br><span class="line">..</span><br><span class="line">Topic 10: ..</span><br><span class="line"></span><br><span class="line">Text: &quot;&quot;&quot; </span><br><span class="line">Thank you so much, Fred, for that lovely introduction. And thanks to the Atlantic Council for hosting me today.</span><br><span class="line"></span><br><span class="line">The course of the global economy over the past two years has been shaped by COVID-19 and our efforts to fight the pandemic. It’s now evident, though, that the war between Russia and Ukraine has redrawn the contours of the world economic outlook. Vladimir Putin’s unprovoked attack on Ukraine and its people is taking a devastating human toll, with lives tragically lost, families internally displaced or becoming refugees, and communities and cities destroyed.</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="ChatGPT-Prompt-Framework"><a href="#ChatGPT-Prompt-Framework" class="headerlink" title="ChatGPT Prompt Framework"></a><strong>ChatGPT Prompt Framework</strong></h2><p>  Elavis Saravia <a target="_blank" rel="noopener" href="https://github.com/dair-ai/Prompt-Engineering-Guide/blob/main/guides/prompts-intro.md">总结</a>的框架，他认为一个 prompt 里需包含以下几个元素：</p>
+<ul>
+<li><strong>Instruction（必须）：</strong> 指令，即你希望模型执行的具体任务。</li>
+<li><strong>Context（选填）：</strong> 背景信息，或者说是上下文信息，这可以引导模型做出更好的反应。</li>
+<li><strong>Input Data（选填）：</strong> 输入数据，告知模型需要处理的数据。</li>
+<li><strong>Output Indicator（选填）：</strong> 输出指示器，告知模型我们要输出的类型或格式。</li>
+</ul>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/mattnigh/ChatGPT3-Free-Prompt-List">Matt Nigh</a> 的 CRISPE Framework，这个 framework 更加复杂，但完备性会比较高，比较适合用于编写 prompt 模板。CRISPE 分别代表以下含义：</p>
+<ul>
+<li><strong>CR：</strong> Capacity and Role（能力与角色）。你希望 ChatGPT 扮演怎样的角色。</li>
+<li><strong>I：</strong> Insight（洞察力），背景信息和上下文（坦率说来我觉得用 Context 更好）。</li>
+<li><strong>S：</strong> Statement（指令），你希望 ChatGPT 做什么。</li>
+<li><strong>P：</strong> Personality（个性），你希望 ChatGPT 以什么风格或方式回答你。</li>
+<li><strong>E：</strong> Experiment（尝试），要求 ChatGPT 为你提供多个答案。</li>
+</ul>
+<p><strong>Zero-Shot Prompts</strong></p>
+<p>  Zero-Shot Prompting 是一种自然语言处理技术，可以让计算机模型根据提示或指令进行任务处理。各位常用的 ChatGPT 就用到这个技术。</p>
+<pre><code>1. Zero-Shot Prompting 技术依赖于预训练的语言模型，这些模型可能会受到训练数据集的限制和偏见。比如在使用ChatGPT 的时候，它常常会在一些投资领域，使用男性的「他」，而不是女性的「她」。那是因为训练 ChatGPT的数据里，提到金融投资领域的内容，多为男性。
+2. 尽管 Zero-Shot Prompting 技术不需要为每个任务训练单独的模型，但为了获得最佳性能，它需要大量的样本数据进行微调。像 ChatGPT 就是一个例子，它的样本数量是过千亿。
+3. 由于 Zero-Shot Prompting 技术的灵活性和通用性，它的输出有时可能不够准确，或不符合预期。这可能需要对模型进行进一步的微调或添加更多的提示文本来纠正。
+</code></pre>
+<ul>
+<li><strong>Zero-Shot Chain of Thought</strong></li>
+</ul>
+<p>  这个技巧使用起来非常简单，只需要在问题的结尾里放一句 <code>Let‘s think step by step</code><br>   （让我们一步步地思考），模型输出的答案会更加准确。</p>
+<ul>
+<li><p><strong>Few-Shot Prompting</strong></p>
+<p>我们在技巧2 中，提到我们可以给模型一些示例，从而让模型返回更符合我们需求的答案。这个技巧其实使用了一个叫 Few-Shot 的方法。</p>
+</li>
+<li><p><strong>Few-Shot Chain of Thought</strong></p>
+</li>
+</ul>
+<p>  通过向大语言模型展示一些少量的样例，并在样例中解释推理过程，大语言模型在回答提示时也会显示推理过程。这种推理的解释往往会引导出更准确的结果。</p>
+<p>  思维链有以下特点：</p>
+<pre><code>1. &quot;the label space and the distribution of the
+   input text specified by the demonstrations are both key (regardless of
+   whether the labels are correct for individual inputs)&quot;
+   标签空间和输入文本的分布都是关键因素（无论这些标签是否正确）。
+2. the format you use also plays a
+   key role in performance, even if you just use random labels, this is
+   much better than no labels at all. 即使只是使用随机标签，使用适当的格式也能提高性能。
+</code></pre>
+<ul>
+<li><strong>Self-Consistency</strong></li>
+</ul>
+<p>  Self-Consistency 自洽是对 Chain of Thought 的一个补充，它能让模型生成多个思维链，然后取最多数答案的作为最终结果。</p>
+<p><strong>PAL Models</strong></p>
+<p>  全称为 Program-Aided Language Models</p>
+<p>  Luyu Gao 的解决方法是在 prompt 里引入代码，并引导模型使用代码来运算和思考</p>
+<p><strong>搭建基于知识库内容的机器人</strong></p>
+<p>  我们好像可以用这个方法来解决限制 token 的问题，我们仅需要传符合某个意图的文档给 AI，然后 AI 仅用该文档来生成答案：</p>
+<p>  比如还是上面的那个客服机器人的例子，当用户提问「忘记密码怎么办？」时，匹配到了「登录」相关的意图，接着匹配知识库中相同或相近意图的文档，比如「登录异常处理解决方案文档」，最后我们将这份文档传给 GPT-3，它再拿这个文档内容生成答案。</p>
+<p>  GPTIndex 这个库简单理解就是做上图左边的那个部分，它的工作原理是这这样的：</p>
+<pre><code>1. 创建知识库或文档索引
+2. 找到最相关的索引
+3. 最后将对应索引的内容给 GPT-3
+</code></pre>
+<p>  所以如果你想用这个技术做客服机器人，建议你：</p>
+<pre><code>1. 通过一些引导问题来先明确用户的意图，就是类似传统客服机器人那样，搞几个按钮，先让用户点击（比如无法登录）。
+2. 如果相似度太低，建议增加兜底的回答「很抱歉，我无法回答你的问题，你需要转为人工客服吗？」
+</code></pre>
+<h2 id="我的补充"><a href="#我的补充" class="headerlink" title="我的补充"></a>我的补充</h2><blockquote>
+<p>不建议同时使用多条提示语<br>英语的效果要远好于其他语言<br>如果无法正常登录，开通会员后可以通过邮件获取登录链接</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>House Yeung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/" title="Prompt Engineering for ChatGPT">https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/ChatGPT/" rel="tag"># ChatGPT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Technology_and_Society/" rel="prev" title="技术与社会">
+      <i class="fa fa-chevron-left"></i> 技术与社会
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Midjourney_Handbook/" rel="next" title="Midjourney使用手册">
+      Midjourney使用手册 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChatGPT-Prompt-Framework"><span class="nav-text">ChatGPT Prompt Framework</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A1%A5%E5%85%85"><span class="nav-text">我的补充</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="House Yeung"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">House Yeung</p>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+</div>
+
+
+   <div class="feed-link motion-element">
+     <a href="/atom.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HouseYeung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HouseYeung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw social-icon"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chiachvn@protonmail.com" title="E-Mail → mailto:chiachvn@protonmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw social-icon"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/yjj0708" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;yjj0708" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw social-icon"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/220180251" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;220180251" rel="noopener" target="_blank"><i class="fas fa-book fa-fw social-icon"></i>豆瓣</a>
+      </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-telegram fa-fw social-icon" data-qr="/images/tele.jpg"></i>telegram</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/tele.jpg" alt="telegram QR Code">
+      </div>
+    </div>
+  </span>
+  <span class="links-of-author-item">
+    <div class="social-link">
+      <a href="#"><i class="fab fa-qq fa-fw social-icon" data-qr="/images/qq.jpg"></i>QQ</a>
+      <div class="social-qr-tooltip">
+        <img class="qr-image" src="/images/qq.jpg" alt="QQ QR Code">
+      </div>
+    </div>
+  </span>
+  </div>
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/MacOS_Run_Windows_Games/" title="在Mac OS运行Windows游戏" target="_blank">在Mac OS运行Windows游戏</a>
+          </li>
+        
+          <li>
+            <a href="/Baichuan_2_deploy/" title="百川2大模型本地部署" target="_blank">百川2大模型本地部署</a>
+          </li>
+        
+          <li>
+            <a href="/Moonlight_and_Zerotier/" title="利用Moonlight和Zerotier高画质低延迟串流PC" target="_blank">利用Moonlight和Zerotier高画质低延迟串流PC</a>
+          </li>
+        
+          <li>
+            <a href="/IOS_Mod_App/" title="在IOS设备上安装Mod App" target="_blank">在IOS设备上安装Mod App</a>
+          </li>
+        
+          <li>
+            <a href="/copilot/" title="GitHub Copilot前瞻" target="_blank">GitHub Copilot前瞻</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">House Yeung</span>
+
+
+
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT</a> 强力驱动
+  </div>
+
+  <!-- 网站运行时间的设置 -->
+  <span id="timeDate">载入天数...</span>
+  <!--       <span id="times">载入时分秒...</span> -->
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("01/29/2023 20:00:00"); //此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 ";
+<!--      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒."; -->
+      }
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '1bc492ee578abeb05eb9',
+      clientSecret: 'bb1b4ace40b99384c011b62ef1ab7983bf4abfe2',
+      repo        : 'Blog_Comment',
+      owner       : 'HouseYeung',
+      admin       : ['HouseYeung'],
+      id          : 'def67ae28251c6d3528683478cadf6c1',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

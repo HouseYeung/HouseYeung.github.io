@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>星灯博客</title>
+  
+  <subtitle>Whyeung Blog</subtitle>
+  <link href="https://www.whyeung.eu.org/atom.xml" rel="self"/>
+  
+  <link href="https://www.whyeung.eu.org/"/>
+  <updated>2024-01-25T15:30:30.000Z</updated>
+  <id>https://www.whyeung.eu.org/</id>
+  
+  <author>
+    <name>House Yeung</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在Mac OS运行Windows游戏</title>
+    <link href="https://www.whyeung.eu.org/MacOS_Run_Windows_Games/"/>
+    <id>https://www.whyeung.eu.org/MacOS_Run_Windows_Games/</id>
+    <published>2024-01-25T15:30:30.000Z</published>
+    <updated>2024-01-25T15:30:30.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;ARM也要跑x86！&lt;/center&gt;</summary>
+    
+    
+    <content src="https://cdn.jsdelivr.net/gh/HouseYeung/Image_Host@main/img/MacBook-Air-M2-Chip-Purple-Feature.webp" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Mac" scheme="https://www.whyeung.eu.org/tags/Mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>百川2大模型本地部署</title>
+    <link href="https://www.whyeung.eu.org/Baichuan_2_deploy/"/>
+    <id>https://www.whyeung.eu.org/Baichuan_2_deploy/</id>
+    <published>2023-12-19T01:07:18.000Z</published>
+    <updated>2023-12-19T01:07:18.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;第一次本地部署大模型&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="LLM" scheme="https://www.whyeung.eu.org/tags/LLM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用Moonlight和Zerotier高画质低延迟串流PC</title>
+    <link href="https://www.whyeung.eu.org/Moonlight_and_Zerotier/"/>
+    <id>https://www.whyeung.eu.org/Moonlight_and_Zerotier/</id>
+    <published>2023-11-25T13:47:33.000Z</published>
+    <updated>2023-11-25T13:47:33.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;最好的远程串流方式&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Internet" scheme="https://www.whyeung.eu.org/tags/Internet/"/>
+    
+    <category term="Remote" scheme="https://www.whyeung.eu.org/tags/Remote/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在IOS设备上安装Mod App</title>
+    <link href="https://www.whyeung.eu.org/IOS_Mod_App/"/>
+    <id>https://www.whyeung.eu.org/IOS_Mod_App/</id>
+    <published>2023-10-11T18:22:37.000Z</published>
+    <updated>2023-10-11T18:22:37.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;相比Android过于繁琐了&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="IOS" scheme="https://www.whyeung.eu.org/tags/IOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GitHub Copilot前瞻</title>
+    <link href="https://www.whyeung.eu.org/copilot/"/>
+    <id>https://www.whyeung.eu.org/copilot/</id>
+    <published>2023-09-20T13:54:33.000Z</published>
+    <updated>2023-09-20T13:54:33.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;还在等copilot chat&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>next主题社交链接添加二维码图片</title>
+    <link href="https://www.whyeung.eu.org/Next_1/"/>
+    <id>https://www.whyeung.eu.org/Next_1/</id>
+    <published>2023-08-25T17:37:54.000Z</published>
+    <updated>2023-08-25T17:37:54.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;next主题美化&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Blog" scheme="https://www.whyeung.eu.org/tags/Blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《未来的底片》歌词解读</title>
+    <link href="https://www.whyeung.eu.org/WeiLaiDeDiPian/"/>
+    <id>https://www.whyeung.eu.org/WeiLaiDeDiPian/</id>
+    <published>2023-08-18T21:10:48.000Z</published>
+    <updated>2023-08-18T21:10:48.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;应该会是网上最正确的解读&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Reviews" scheme="https://www.whyeung.eu.org/categories/Reviews/"/>
+    
+    
+    <category term="Music" scheme="https://www.whyeung.eu.org/tags/Music/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iPad连接主机开启显示器功能</title>
+    <link href="https://www.whyeung.eu.org/iPad_As_Monitor/"/>
+    <id>https://www.whyeung.eu.org/iPad_As_Monitor/</id>
+    <published>2023-08-16T17:48:24.000Z</published>
+    <updated>2023-08-16T17:48:24.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;吃灰的采集卡终于有用了&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Technology" scheme="https://www.whyeung.eu.org/tags/Technology/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows11 因硬盘格式更新失败修复记录</title>
+    <link href="https://www.whyeung.eu.org/Windows_Update_Bug_Fixes/"/>
+    <id>https://www.whyeung.eu.org/Windows_Update_Bug_Fixes/</id>
+    <published>2023-08-16T16:24:05.000Z</published>
+    <updated>2023-08-16T16:24:05.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;起因是我当初换系统盘时选择了错误的格式&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Windows" scheme="https://www.whyeung.eu.org/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows被忽视的实用功能（一）</title>
+    <link href="https://www.whyeung.eu.org/Windows_Features_1/"/>
+    <id>https://www.whyeung.eu.org/Windows_Features_1/</id>
+    <published>2023-07-05T15:30:30.000Z</published>
+    <updated>2023-07-05T15:30:30.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;让你的电脑更好用&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Windows" scheme="https://www.whyeung.eu.org/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023上半年我买了什么</title>
+    <link href="https://www.whyeung.eu.org/What_Did_I_Buy_2023/"/>
+    <id>https://www.whyeung.eu.org/What_Did_I_Buy_2023/</id>
+    <published>2023-06-28T14:59:31.000Z</published>
+    <updated>2023-06-28T14:59:31.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;我的购物清单&lt;/center&gt;</summary>
+    
+    
+    
+    <category term="Reviews" scheme="https://www.whyeung.eu.org/categories/Reviews/"/>
+    
+    
+    <category term="Shopping" scheme="https://www.whyeung.eu.org/tags/Shopping/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Stable Diffusion的视频生成实验</title>
+    <link href="https://www.whyeung.eu.org/Video_Generation/"/>
+    <id>https://www.whyeung.eu.org/Video_Generation/</id>
+    <published>2023-06-18T16:56:13.000Z</published>
+    <updated>2023-06-18T16:56:13.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;对于目前视频生成技术的尝试和总结&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Video_Generation.png" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="AIGC" scheme="https://www.whyeung.eu.org/tags/AIGC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>城镇化与城市财政问题</title>
+    <link href="https://www.whyeung.eu.org/Urbanization%20/"/>
+    <id>https://www.whyeung.eu.org/Urbanization%20/</id>
+    <published>2023-06-18T16:46:36.000Z</published>
+    <updated>2023-06-18T16:46:36.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;我的社会学课程期末作业，构建一个学术档案&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Urbanization.jpg" type="image"/>
+    
+    
+    <category term="Opinion" scheme="https://www.whyeung.eu.org/categories/Opinion/"/>
+    
+    
+    <category term="Society" scheme="https://www.whyeung.eu.org/tags/Society/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>新冠康复日记</title>
+    <link href="https://www.whyeung.eu.org/COVID-19/"/>
+    <id>https://www.whyeung.eu.org/COVID-19/</id>
+    <published>2023-06-02T18:00:23.000Z</published>
+    <updated>2023-06-02T18:00:23.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;与病毒相伴的一周&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/COVID-19.jpeg" type="image"/>
+    
+    
+    <category term="Expression" scheme="https://www.whyeung.eu.org/categories/Expression/"/>
+    
+    
+    <category term="Health" scheme="https://www.whyeung.eu.org/tags/Health/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>怎么用Github</title>
+    <link href="https://www.whyeung.eu.org/Github_Tutorial/"/>
+    <id>https://www.whyeung.eu.org/Github_Tutorial/</id>
+    <published>2023-05-22T16:12:20.000Z</published>
+    <updated>2023-05-22T16:12:20.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;Git和Github的简单教程&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Github_Tutorial.jpg" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Learning" scheme="https://www.whyeung.eu.org/tags/Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Bridging Divinity and Intelligence: A Glimpse into the Future</title>
+    <link href="https://www.whyeung.eu.org/Future_of_AI/"/>
+    <id>https://www.whyeung.eu.org/Future_of_AI/</id>
+    <published>2023-05-22T00:31:34.000Z</published>
+    <updated>2023-05-22T00:31:34.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;A Dialogic Exploration with Newbing on The Future of Humanity and Artificial Intelligence&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Future_of_AI.jpg" type="image"/>
+    
+    
+    <category term="Opinion" scheme="https://www.whyeung.eu.org/categories/Opinion/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="ChatGPT" scheme="https://www.whyeung.eu.org/tags/ChatGPT/"/>
+    
+    <category term="English" scheme="https://www.whyeung.eu.org/tags/English/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>An Early Review of ChatGPT Plugins</title>
+    <link href="https://www.whyeung.eu.org/ChatGPT_Plugins/"/>
+    <id>https://www.whyeung.eu.org/ChatGPT_Plugins/</id>
+    <published>2023-05-20T01:05:35.000Z</published>
+    <updated>2023-05-20T01:05:35.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;Navigating the Potentials and Limitations of AI Interaction Through OpenAI&#39;s ChatGPT Plugins&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/ChatGPT_Plugins.jpg" type="image"/>
+    
+    
+    <category term="Reviews" scheme="https://www.whyeung.eu.org/categories/Reviews/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="ChatGPT" scheme="https://www.whyeung.eu.org/tags/ChatGPT/"/>
+    
+    <category term="English" scheme="https://www.whyeung.eu.org/tags/English/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用公网ipv6搭建外网远程访问服务</title>
+    <link href="https://www.whyeung.eu.org/IPV6_Remote/"/>
+    <id>https://www.whyeung.eu.org/IPV6_Remote/</id>
+    <published>2023-05-08T15:20:49.000Z</published>
+    <updated>2023-05-08T15:20:49.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;基于Windows自带的远程桌面连接&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/IPV6_Remote.webp" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Internet" scheme="https://www.whyeung.eu.org/tags/Internet/"/>
+    
+    <category term="Remote" scheme="https://www.whyeung.eu.org/tags/Remote/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Midjourney使用手册</title>
+    <link href="https://www.whyeung.eu.org/Midjourney_Handbook/"/>
+    <id>https://www.whyeung.eu.org/Midjourney_Handbook/</id>
+    <published>2023-04-15T18:37:24.000Z</published>
+    <updated>2023-04-15T18:37:24.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;摘自 &lt;a href=&quot;https://learningprompt.wiki/docs/midjourney-learning-path&quot;&gt;Learning Prompt&lt;/a&gt;&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Midjourney_Handbook.webp" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="AIGC" scheme="https://www.whyeung.eu.org/tags/AIGC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Prompt Engineering for ChatGPT</title>
+    <link href="https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/"/>
+    <id>https://www.whyeung.eu.org/Prompt_Engineering_for_ChatGPT.md/</id>
+    <published>2023-04-14T16:26:46.000Z</published>
+    <updated>2023-04-14T16:26:46.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;ChatGPT提示语工程介绍&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/ChatGPT_Prompts.png" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="ChatGPT" scheme="https://www.whyeung.eu.org/tags/ChatGPT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术与社会</title>
+    <link href="https://www.whyeung.eu.org/Technology_and_Society/"/>
+    <id>https://www.whyeung.eu.org/Technology_and_Society/</id>
+    <published>2023-03-23T09:45:09.000Z</published>
+    <updated>2023-03-23T09:45:09.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;我在社会学课程的演讲&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Technology_and_Society.jpg" type="image"/>
+    
+    
+    <category term="Opinion" scheme="https://www.whyeung.eu.org/categories/Opinion/"/>
+    
+    
+    <category term="Technology" scheme="https://www.whyeung.eu.org/tags/Technology/"/>
+    
+    <category term="Society" scheme="https://www.whyeung.eu.org/tags/Society/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Stable Diffusion使用手册</title>
+    <link href="https://www.whyeung.eu.org/Stable_Diffusion_Handbook/"/>
+    <id>https://www.whyeung.eu.org/Stable_Diffusion_Handbook/</id>
+    <published>2023-03-23T09:33:20.000Z</published>
+    <updated>2023-03-23T09:33:20.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;web ui&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Stable_Diffusion_Handbook.jpg" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="AIGC" scheme="https://www.whyeung.eu.org/tags/AIGC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python！</title>
+    <link href="https://www.whyeung.eu.org/Python101/"/>
+    <id>https://www.whyeung.eu.org/Python101/</id>
+    <published>2023-03-05T21:00:49.000Z</published>
+    <updated>2023-03-05T21:00:49.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;菜鸟教程Python笔记&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Python101.png" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Learning" scheme="https://www.whyeung.eu.org/tags/Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Collection of ChatGPT Prompts</title>
+    <link href="https://www.whyeung.eu.org/ChatGPT_Prompts/"/>
+    <id>https://www.whyeung.eu.org/ChatGPT_Prompts/</id>
+    <published>2023-02-27T14:07:18.000Z</published>
+    <updated>2023-02-27T14:07:18.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;ChatGPT提示语收集&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/ChatGPT_Prompts.png" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="AI" scheme="https://www.whyeung.eu.org/tags/AI/"/>
+    
+    <category term="ChatGPT" scheme="https://www.whyeung.eu.org/tags/ChatGPT/"/>
+    
+    <category term="English" scheme="https://www.whyeung.eu.org/tags/English/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>参加Global Game Jam 2023是怎样的体验</title>
+    <link href="https://www.whyeung.eu.org/GGJ23/"/>
+    <id>https://www.whyeung.eu.org/GGJ23/</id>
+    <published>2023-02-06T17:18:09.000Z</published>
+    <updated>2023-02-06T17:18:09.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;我的第一次game jam（可能也是最后一次）&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/GGJ23.jpg" type="image"/>
+    
+    
+    <category term="Events" scheme="https://www.whyeung.eu.org/categories/Events/"/>
+    
+    
+    <category term="Game" scheme="https://www.whyeung.eu.org/tags/Game/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>夜歌</title>
+    <link href="https://www.whyeung.eu.org/Song_of_Night/"/>
+    <id>https://www.whyeung.eu.org/Song_of_Night/</id>
+    <published>2023-01-30T08:24:18.000Z</published>
+    <updated>2023-01-30T08:24:18.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;高中参加作文比赛的初稿&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Song_of_Night.jpg" type="image"/>
+    
+    
+    <category term="Expression" scheme="https://www.whyeung.eu.org/categories/Expression/"/>
+    
+    
+    <category term="Memories" scheme="https://www.whyeung.eu.org/tags/Memories/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Markdown</title>
+    <link href="https://www.whyeung.eu.org/Markdown/"/>
+    <id>https://www.whyeung.eu.org/Markdown/</id>
+    <published>2023-01-29T16:30:00.000Z</published>
+    <updated>2023-01-29T16:30:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;center&gt;本博客的第一篇文章会是Markdown笔记...&lt;/center&gt;</summary>
+    
+    
+    <content src="https://raw.githubusercontent.com/HouseYeung/Image_Host/main/Cover_Image/Hello_Gridea.png" type="image"/>
+    
+    
+    <category term="Tutorials" scheme="https://www.whyeung.eu.org/categories/Tutorials/"/>
+    
+    
+    <category term="Learning" scheme="https://www.whyeung.eu.org/tags/Learning/"/>
+    
+  </entry>
+  
+</feed>
