@@ -217,7 +217,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="House Yeung">
-      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -260,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span></span>
+              <span>1.5k</span>
             </span>
 <!--
             <span class="post-meta-item" title="阅读时长">
@@ -268,7 +268,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>NaN:aN</span>
+              <span>1 分钟</span>
             </span> 
 -->
 
@@ -290,62 +290,62 @@
 <h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p>github是一个基于git的远程代码托管平台，所以要用github我们首先要安装git。其实github也可以在网页上直接上传文件，但操作非常的不方便，还有许多限制。而借助git就方便很多。</p>
 <p>git是一个版本管理工具，可以在电脑上创建你文件的历史版本创库，这样你就可以在手滑的时候进行版本还原，或者进行一些奇怪修改的时候创建分支。</p>
 <p>首先我们设置自己本地的用户名和邮箱。右键文件夹打开git bush</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;user name&quot;</span><br><span class="line">git config --global user.email &quot;user@mail.com&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config <span class="attr">--global</span> user<span class="selector-class">.name</span> <span class="string">&quot;user name&quot;</span></span><br><span class="line">git config <span class="attr">--global</span> user<span class="selector-class">.email</span> <span class="string">&quot;user@mail.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><p>我们新建一个ssh密钥,默认位置为C:\Users&lt;username&gt;.ssh</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen</span></span><br></pre></td></tr></table></figure>
 
 <p>打开id_rsa.pub，复制里面的全部内容到github账户-设置-SSH and GPG keys-新建SSH key下面</p>
 <p>这样本地就以向github推送了</p>
 <h3 id="本地克隆git"><a href="#本地克隆git" class="headerlink" title="本地克隆git"></a>本地克隆git</h3><p>我们在github里新建一个仓库repository。这时只有一个README.md文件，我们点击右上角绿色的Code，在SSH里复制地址，在本地想要克隆仓库的位置打开git bash</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;paste the ssh-link you&#x27;ve just copied&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">&lt;paste</span> the ssh-link you&#x27;ve just copied&gt;</span><br></pre></td></tr></table></figure>
 
 <p>接下来用cd进入仓库文件夹，用下面代码可以查看里面所有文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -a</span><br></pre></td></tr></table></figure>
 
 <p>可以用下面代码查看当前状态，例如改动</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git status</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="git本地"><a href="#git本地" class="headerlink" title="git本地"></a>git本地</h3><p>先在本地创建一个仓库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">init</span></span><br></pre></td></tr></table></figure>
 
 <p>这样我们就有一个隐藏文件夹.git来存放不同版本</p>
 <p>再去github新建一个空的仓库，里面有教程如何同步仓库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/&lt;user_name&gt;/repo.git</span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> remote <span class="keyword">add</span> origin https:<span class="comment">//github.com/&lt;user_name&gt;/repo.git</span></span><br><span class="line"><span class="symbol">git</span> branch -M main</span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> -u origin main</span><br></pre></td></tr></table></figure>
 
 <h3 id="提交改动"><a href="#提交改动" class="headerlink" title="提交改动"></a>提交改动</h3><p>可用下面代码提交全部改动</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;update&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git <span class="keyword">commit</span> -m &quot;update&quot;</span><br></pre></td></tr></table></figure>
 
 <p>也可以逐个提交</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add README.md</span><br><span class="line">git commit -m &quot;update README&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> README.md</span><br><span class="line">git <span class="keyword">commit</span> -m &quot;update README&quot;</span><br></pre></td></tr></table></figure>
 
 <p>commit前可以用下面代码撤回暂存区的更改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git reset</span></span><br></pre></td></tr></table></figure>
 
 <p>最后把本地仓库推送到github</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><p>可以用fork把github开源项目克隆到自己仓库，再拉到本地</p>
 <p>左上角的master里能看到不同分支</p>
 <p>master：主分支</p>
 <p>develop&#x2F;dev：性能开发分支</p>
 <p>也可以用下面代码拉取分支</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b &lt;name of the branch&gt; &lt;web URL of the repo&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">-b</span> <span class="tag">&lt;name of the branch&gt;</span> <span class="tag">&lt;web URL of the repo&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>新建工作分支</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> checkout -<span class="keyword">b</span> dev</span><br></pre></td></tr></table></figure>
 
 <p>查看当前分支</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git branch</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><p>查看本地仓库和哪些远程仓库有链接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git remote -v</span></span><br></pre></td></tr></table></figure>
 
 <p>新建链接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add upstream https://github.com/&lt;user_name&gt;/repo.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote <span class="keyword">add</span><span class="language-bash"> upstream https://github.com/&lt;user_name&gt;/repo.git</span></span><br></pre></td></tr></table></figure>
 
 <p>将本地当前分支的代码推送到远程指定的分支上</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;远程主机名&gt; &lt;本地分支名&gt; &lt;远程分支名&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push <span class="tag">&lt;<span class="name">远程主机名</span>&gt;</span> <span class="tag">&lt;<span class="name">本地分支名</span>&gt;</span> <span class="tag">&lt;<span class="name">远程分支名</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>远程主机名：一般为origin。如果当前分支与多个主机存在追踪关系，则可以使用-u选项指定一个默认主机，这样后面就可以不加任何参数使用git push。</p>
 <p>本地分支名：git branch里的分支</p>
@@ -462,7 +462,7 @@
     <img class="site-author-image" itemprop="image" alt="House Yeung"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">House Yeung</p>
-  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。</div>
 </div>
 
 

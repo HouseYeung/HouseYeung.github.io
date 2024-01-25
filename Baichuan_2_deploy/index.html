@@ -218,7 +218,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="House Yeung">
-      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -261,7 +261,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span></span>
+              <span>2.1k</span>
             </span>
 <!--
             <span class="post-meta-item" title="阅读时长">
@@ -269,7 +269,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>NaN:aN</span>
+              <span>2 分钟</span>
             </span> 
 -->
 
@@ -325,7 +325,7 @@
 <p>用该命令安装<br><code>pip install https://github.com/jllllll/bitsandbytes-windows-webui/releases/download/wheels/bitsandbytes-0.41.0-py3-none-win_amd64.whl</code></p>
 <h3 id="4-修改代码"><a href="#4-修改代码" class="headerlink" title="4.修改代码"></a>4.修改代码</h3><p>把所有”baichuan-inc&#x2F;Baichuan2-13B-Chat”改成本地模型位置。如果把baichuan-inc文件夹放在Baichuan2文件夹里，那么就可以改成”.&#x2F;baichuan-inc&#x2F;Baichuan2-13B-Chat”，Baichuan2-13B-Chat为你下载的模型文件夹。</p>
 <p>为了避免报错’BaichuanTokenizer’ object has no attribute ‘sp_model’按照下面代码修改tokenization_baichuan.py</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">self.vocab_file = vocab_file</span><br><span class="line">self.add_bos_token = add_bos_token</span><br><span class="line">self.add_eos_token = add_eos_token</span><br><span class="line">self.sp_model = spm.SentencePieceProcessor(**self.sp_model_kwargs)</span><br><span class="line">self.sp_model.Load(vocab_file)</span><br><span class="line">super().__init__(</span><br><span class="line">    bos_token=bos_token,</span><br><span class="line">    eos_token=eos_token,</span><br><span class="line">    unk_token=unk_token,</span><br><span class="line">    pad_token=pad_token,</span><br><span class="line">    add_bos_token=add_bos_token,</span><br><span class="line">    add_eos_token=add_eos_token,</span><br><span class="line">    sp_model_kwargs=self.sp_model_kwargs,</span><br><span class="line">    clean_up_tokenization_spaces=clean_up_tokenization_spaces,</span><br><span class="line">    **kwargs,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">self.vocab_file = vocab_file</span><br><span class="line">self.add_bos_token = add_bos_token</span><br><span class="line">self.add_eos_token = add_eos_token</span><br><span class="line">self.sp_model = spm.SentencePieceProcessor(**self.sp_model_kwargs)</span><br><span class="line">self.sp_model.Load(vocab_file)</span><br><span class="line">super().__init__(</span><br><span class="line">    <span class="attribute">bos_token</span>=bos_token,</span><br><span class="line">    <span class="attribute">eos_token</span>=eos_token,</span><br><span class="line">    <span class="attribute">unk_token</span>=unk_token,</span><br><span class="line">    <span class="attribute">pad_token</span>=pad_token,</span><br><span class="line">    <span class="attribute">add_bos_token</span>=add_bos_token,</span><br><span class="line">    <span class="attribute">add_eos_token</span>=add_eos_token,</span><br><span class="line">    <span class="attribute">sp_model_kwargs</span>=self.sp_model_kwargs,</span><br><span class="line">    <span class="attribute">clean_up_tokenization_spaces</span>=clean_up_tokenization_spaces,</span><br><span class="line">    **kwargs,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p><code>python cli_demo.py</code>在命令行运行</p>
 <p><code>streamlit run web_demo.py</code>在网页运行</p>
@@ -440,7 +440,7 @@
     <img class="site-author-image" itemprop="image" alt="House Yeung"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">House Yeung</p>
-  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。</div>
 </div>
 
 

@@ -217,7 +217,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="House Yeung">
-      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -260,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span></span>
+              <span>2.7k</span>
             </span>
 <!--
             <span class="post-meta-item" title="阅读时长">
@@ -268,7 +268,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>NaN:aN</span>
+              <span>2 分钟</span>
             </span> 
 -->
 
@@ -302,23 +302,23 @@
 <p>brew环境自动切换，先进入配置文件</p>
 <p><code>nano ~/.zshrc</code></p>
 <p>粘贴下面内容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; &#x27;EOF&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">if [ &quot;$(arch)&quot; = &quot;arm64&quot; ]; then</span><br><span class="line">    eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;</span><br><span class="line">else</span><br><span class="line">    eval &quot;$(/usr/local/bin/brew shellenv)&quot;</span><br><span class="line">fi</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">&#x27;EOF&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="subst">$(arch)</span>&quot;</span> = <span class="string">&quot;arm64&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/usr/local/bin/brew shellenv)</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
 <p>按下 Ctrl+ X，然后按Y（表示“是”）来保存更改，并且按 Enter键退出。</p>
 <p>重新加载</p>
 <p><code>source ~/.zshrc</code></p>
 <p>接下来要编译GPTK，非常耗时且不必要，我大概跑了一个小时，期间第一次听到macbook的风扇</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap apple/apple https://gitee.com/ineo6/homebrew-apple.git</span><br><span class="line">brew -v install apple/apple/game-porting-toolkit</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap apple/apple https://gitee.com/ineo6/homebrew-apple.git</span><br><span class="line">brew -v install apple/apple/game-porting-toolkit</span><br></pre></td></tr></table></figure>
 
 <p>在<a target="_blank" rel="noopener" href="https://developer.apple.com/download/all/">Apple开发者下载网站</a>下载Game_porting_toolkit，挂载后执行，注意下载的版本区别</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ditto /Volumes/Game\ Porting\ Toolkit-1.1/redist/lib/ `brew --prefix game-porting-toolkit`/lib/</span><br><span class="line">cp /Volumes/Game\ Porting\ Toolkit*/gameportingtoolkit* /usr/local/bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ditto <span class="regexp">/Volumes/</span>Game\ Porting\ Toolkit-<span class="number">1.1</span><span class="regexp">/redist/</span>lib<span class="regexp">/ `brew --prefix game-porting-toolkit`/</span>lib/</span><br><span class="line">cp <span class="regexp">/Volumes/</span>Game\ Porting\ Toolkit*<span class="regexp">/gameportingtoolkit* /u</span>sr<span class="regexp">/local/</span>bin</span><br></pre></td></tr></table></figure>
 
 <p>配置Wine prefix</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WINEPREFIX=~/my-game-prefix `brew --prefix game-porting-toolkit`/bin/wine64 winecfg</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WINEPREFIX=~<span class="string">/my-game-prefix</span> `brew <span class="params">--prefix</span> game-porting-toolkit`<span class="string">/bin/wine64</span> winecfg</span><br></pre></td></tr></table></figure>
 
 <p>把系统版本改成win10</p>
 <p>接下来就可以尝试安装steam了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gameportingtoolkit ~/my-game-prefix ~/Downloads/SteamSetup.exe</span><br><span class="line">gameportingtoolkit ~/my-game-prefix &#x27;C:\Program Files (x86)/Steam/steam.exe&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gameportingtoolkit ~<span class="string">/my-game-prefix</span> ~<span class="string">/Downloads/SteamSetup.exe</span></span><br><span class="line">gameportingtoolkit ~<span class="string">/my-game-prefix</span> &#x27;C:\Program Files <span class="params">(x86)</span><span class="string">/Steam/steam.exe</span>&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>虽然大概率是进不去的，还要复制config、userdata、registry.vdf三个文件到下面这个目录</p>
 <p><code>~/my-game-prefix/drive_c/Program Files (x86)/Steam</code></p>
@@ -510,7 +510,7 @@
     <img class="site-author-image" itemprop="image" alt="House Yeung"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">House Yeung</p>
-  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。</div>
 </div>
 
 

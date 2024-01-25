@@ -218,7 +218,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="House Yeung">
-      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)">
+      <meta itemprop="description" content="欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -261,7 +261,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span></span>
+              <span>4.8k</span>
             </span>
 <!--
             <span class="post-meta-item" title="阅读时长">
@@ -269,7 +269,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>NaN:aN</span>
+              <span>4 分钟</span>
             </span> 
 -->
 
@@ -334,7 +334,7 @@
 </ol>
 <p><strong><strong>使用 ”“” 符号将指令和需要处理的文本分开</strong></strong></p>
 <p>可以用 “”“ 将指令和文本分开。根据我的测试，如果你的文本有多段，增加 ”“” 会提升 AI 反馈的准确性（这个技巧来自于 OpenAI 的 API <a target="_blank" rel="noopener" href="https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api">最佳实践文档</a>）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Please summarize the following sentences to make them easier to understand.</span><br><span class="line"></span><br><span class="line">Text: &quot;&quot;&quot;</span><br><span class="line">OpenAI is an American artificial intelligence (AI) research laboratory consisting of the non-profit OpenAI Incorporated (OpenAI Inc.) and its for-profit subsidiary corporation OpenAI Limited Partnership (OpenAI LP). OpenAI conducts AI research with the declared intention of promoting and developing a friendly AI. OpenAI systems run on the fifth most powerful supercomputer in the world.[5][6][7] The organization was founded in San Francisco in 2015 by Sam Altman, Reid Hoffman, Jessica Livingston, Elon Musk, Ilya Sutskever, Peter Thiel and others,[8][1][9] who collectively pledged US$1 billion. Musk resigned from the board in 2018 but remained a donor. Microsoft provided OpenAI LP with a $1 billion investment in 2019 and a second multi-year investment in January 2023, reported to be $10 billion.[10]</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Please</span> summarize the following sentences to make them easier to understand.</span><br><span class="line"></span><br><span class="line"><span class="type">Text</span>: <span class="comment">&quot;&quot;</span><span class="comment">&quot;</span></span><br><span class="line"><span class="comment">OpenAI is an American artificial intelligence (AI) research laboratory consisting of the non-profit OpenAI Incorporated (OpenAI Inc.) and its for-profit subsidiary corporation OpenAI Limited Partnership (OpenAI LP). OpenAI conducts AI research with the declared intention of promoting and developing a friendly AI. OpenAI systems run on the fifth most powerful supercomputer in the world.[5][6][7] The organization was founded in San Francisco in 2015 by Sam Altman, Reid Hoffman, Jessica Livingston, Elon Musk, Ilya Sutskever, Peter Thiel and others,[8][1][9] who collectively pledged US$1 billion. Musk resigned from the board in 2018 but remained a donor. Microsoft provided OpenAI LP with a $1 billion investment in 2019 and a second multi-year investment in January 2023, reported to be $10 billion.[10]</span></span><br><span class="line"><span class="comment">&quot;</span><span class="comment">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>信息提取</strong></p>
 <ol>
@@ -343,7 +343,7 @@
 </ol>
 <p><strong><strong>通过示例来阐述需要输出的格式</strong></strong></p>
 <p>假设你想让 AI 总结一篇非常非常长的文章，并且按照特定格式给你总结，那你可以在文章前面明确输出的格式。它的意思其实是让 ChatGPT 按 Topic 总结，每个 Topic 里按照无序列表（就是里面那个 -）将每个 Topic 的主要观点罗列出来。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Summarize the main points of the following speech</span><br><span class="line">Use the following format:</span><br><span class="line">Topic 1: &lt;topic_name_1&gt;</span><br><span class="line">- &lt;point_1&gt;</span><br><span class="line">..</span><br><span class="line">Topic 2: &lt;topic_name_2&gt;</span><br><span class="line">- &lt;point_1&gt;</span><br><span class="line">..</span><br><span class="line">Topic 10: ..</span><br><span class="line"></span><br><span class="line">Text: &quot;&quot;&quot; </span><br><span class="line">Thank you so much, Fred, for that lovely introduction. And thanks to the Atlantic Council for hosting me today.</span><br><span class="line"></span><br><span class="line">The course of the global economy over the past two years has been shaped by COVID-19 and our efforts to fight the pandemic. It’s now evident, though, that the war between Russia and Ukraine has redrawn the contours of the world economic outlook. Vladimir Putin’s unprovoked attack on Ukraine and its people is taking a devastating human toll, with lives tragically lost, families internally displaced or becoming refugees, and communities and cities destroyed.</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Summarize</span> the main points of the following speech</span><br><span class="line"><span class="type">Use</span> the following format:</span><br><span class="line"><span class="type">Topic</span> <span class="number">1</span>: &lt;topic_name_1&gt;</span><br><span class="line">- &lt;point_1&gt;</span><br><span class="line">..</span><br><span class="line"><span class="type">Topic</span> <span class="number">2</span>: &lt;topic_name_2&gt;</span><br><span class="line">- &lt;point_1&gt;</span><br><span class="line">..</span><br><span class="line"><span class="type">Topic</span> <span class="number">10</span>: ..</span><br><span class="line"></span><br><span class="line"><span class="type">Text</span>: <span class="comment">&quot;&quot;</span><span class="comment">&quot; </span></span><br><span class="line"><span class="comment">Thank you so much, Fred, for that lovely introduction. And thanks to the Atlantic Council for hosting me today.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">The course of the global economy over the past two years has been shaped by COVID-19 and our efforts to fight the pandemic. It’s now evident, though, that the war between Russia and Ukraine has redrawn the contours of the world economic outlook. Vladimir Putin’s unprovoked attack on Ukraine and its people is taking a devastating human toll, with lives tragically lost, families internally displaced or becoming refugees, and communities and cities destroyed.</span></span><br><span class="line"><span class="comment">...</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&quot;</span><span class="comment">&quot;&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="ChatGPT-Prompt-Framework"><a href="#ChatGPT-Prompt-Framework" class="headerlink" title="ChatGPT Prompt Framework"></a><strong>ChatGPT Prompt Framework</strong></h2><p>  Elavis Saravia <a target="_blank" rel="noopener" href="https://github.com/dair-ai/Prompt-Engineering-Guide/blob/main/guides/prompts-intro.md">总结</a>的框架，他认为一个 prompt 里需包含以下几个元素：</p>
 <ul>
@@ -520,7 +520,7 @@
     <img class="site-author-image" itemprop="image" alt="House Yeung"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">House Yeung</p>
-  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。(站点迁移和维护中，预计一周后恢复更多内容)</div>
+  <div class="site-description" itemprop="description">欢迎来到星灯博客。让我们一同眺望星空下的灯火，探索社会和宇宙的奥秘。</div>
 </div>
 
 
